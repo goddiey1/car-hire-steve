@@ -1,0 +1,198 @@
+[
+  {
+    "id": "1",
+    "slug": "toyota-noah",
+    "brand": "Toyota",
+    "model": "Noah",
+    "category": "Minivan",
+    "price_per_day": 8000,
+    "currency": "KSH",
+    "images": [
+      "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785355629/Toyota-noah_l4ws7r.png"
+    ],
+    "specs": {
+      "seats": 7,
+      "transmission": "Automatic",
+      "fuel_type": "Petrol"
+    },
+    "drivetrain": "2WD",
+    "luggage": "5 Large Suitcases",
+    "badge": "Group Travel",
+    "features": [
+      "Group Travel",
+      "Extra Luggage Space"
+    ],
+    "available": true,
+    "image_alts": [
+      "Toyota Noah Minivan available for self-drive hire and airport transfer in Nairobi JKIA - Photo 1"
+    ]
+  },
+  {
+    "id": "2",
+    "slug": "toyota-fielder",
+    "brand": "Toyota",
+    "model": "Fielder",
+    "category": "Estate",
+    "price_per_day": 5000,
+    "currency": "KSH",
+    "images": [
+      "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785355578/toyota-fielder_xkpzxb.png"
+    ],
+    "specs": {
+      "seats": 5,
+      "transmission": "Automatic",
+      "fuel_type": "Petrol"
+    },
+    "drivetrain": "2WD",
+    "luggage": "4 Large Suitcases",
+    "badge": "Practical",
+    "features": [
+      "Spacious Boot",
+      "Fuel Efficient"
+    ],
+    "available": true,
+    "image_alts": [
+      "Toyota Fielder Estate available for self-drive hire and airport transfer in Nairobi JKIA - Photo 1"
+    ]
+  },
+  {
+    "id": "3",
+    "slug": "toyota-prado-tx",
+    "brand": "Toyota",
+    "model": "Prado TX",
+    "category": "SUV",
+    "price_per_day": 15000,
+    "currency": "KSH",
+    "images": [
+      "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785355578/prado_tx_qseohl.png"
+    ],
+    "specs": {
+      "seats": 7,
+      "transmission": "Automatic",
+      "fuel_type": "Diesel"
+    },
+    "drivetrain": "4WD / 4x4",
+    "luggage": "4 Large Suitcases",
+    "badge": "Best for Safaris",
+    "features": [
+      "Off-Road Capable",
+      "Spacious Interior"
+    ],
+    "available": true,
+    "image_alts": [
+      "Toyota Prado TX SUV available for self-drive hire and airport transfer in Nairobi JKIA - Photo 1"
+    ]
+  },
+  {
+    "id": "4",
+    "slug": "toyota-axio",
+    "brand": "Toyota",
+    "model": "Axio",
+    "category": "Sedan",
+    "price_per_day": 5000,
+    "currency": "KSH",
+    "images": [
+      "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785355578/toyota-axio_xlgitx.png"
+    ],
+    "specs": {
+      "seats": 5,
+      "transmission": "Automatic",
+      "fuel_type": "Petrol"
+    },
+    "drivetrain": "2WD",
+    "luggage": "2 Large Suitcases",
+    "badge": "Economy Choice",
+    "features": [
+      "City Cruising",
+      "Fuel Efficient"
+    ],
+    "available": true,
+    "image_alts": [
+      "Toyota Axio Sedan available for self-drive hire and airport transfer in Nairobi JKIA - Photo 1"
+    ]
+  },
+  {
+    "id": "5",
+    "slug": "toyota-rav4",
+    "brand": "Toyota",
+    "model": "RAV4",
+    "category": "SUV",
+    "price_per_day": 8000,
+    "currency": "KSH",
+    "images": [
+      "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785356845/copy_of_toyota-rav4_bjn0ur.jpg"
+    ],
+    "specs": {
+      "seats": 5,
+      "transmission": "Automatic",
+      "fuel_type": "Petrol"
+    },
+    "drivetrain": "4WD / 4x4",
+    "luggage": "3 Large Suitcases",
+    "badge": "Popular SUV",
+    "features": [
+      "Compact SUV",
+      "Fuel Efficient"
+    ],
+    "available": true,
+    "image_alts": [
+      "Toyota RAV4 SUV available for self-drive hire and airport transfer in Nairobi JKIA - Photo 1"
+    ]
+  },
+  {
+    "id": "6",
+    "slug": "lexus-570",
+    "brand": "Lexus",
+    "model": "570",
+    "category": "SUV",
+    "price_per_day": 35000,
+    "currency": "KSH",
+    "images": [
+      "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785434869/toyota_Lexus_570_mul3av.jpg"
+    ],
+    "specs": {
+      "seats": 7,
+      "transmission": "Automatic",
+      "fuel_type": "Petrol"
+    },
+    "drivetrain": "4WD / 4x4",
+    "luggage": "5 Large Suitcases",
+    "badge": "Luxury",
+    "features": [
+      "Premium Comfort",
+      "Off-Road Capable"
+    ],
+    "available": true,
+    "image_alts": [
+      "Lexus 570 SUV available for self-drive hire and airport transfer in Nairobi JKIA - Photo 1"
+    ]
+  },
+  {
+    "id": "7",
+    "slug": "toyota-land-cruiser-v8",
+    "brand": "Toyota",
+    "model": "Land Cruiser V8",
+    "category": "SUV",
+    "price_per_day": 25000,
+    "currency": "KSH",
+    "images": [
+      "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785434870/toyota-land-cruiser-v8_zcog9a.png"
+    ],
+    "specs": {
+      "seats": 7,
+      "transmission": "Automatic",
+      "fuel_type": "Diesel"
+    },
+    "drivetrain": "4WD / 4x4",
+    "luggage": "5 Large Suitcases",
+    "badge": "Premium",
+    "features": [
+      "High Performance",
+      "Spacious Interior"
+    ],
+    "available": true,
+    "image_alts": [
+      "Toyota Land Cruiser V8 SUV available for self-drive hire and airport transfer in Nairobi JKIA - Photo 1"
+    ]
+  }
+]
