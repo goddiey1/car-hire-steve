@@ -1,50 +1,99 @@
+"use client";
+
 import Link from "next/link";
-import { type ComponentPropsWithoutRef, type ReactNode } from "react";
+import {
+  Button as HeroButton,
+  buttonVariants,
+  cn,
+  type ButtonRootProps,
+} from "@heroui/react";
+import { type MouseEventHandler, type ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "inverse" | "whatsapp";
-
-const variantClasses: Record<Variant, string> = {
-  primary:
-    "bg-expedition-accent text-white hover:bg-expedition-accent-hover dark:bg-expedition-accent dark:hover:bg-expedition-accent-hover",
-  secondary:
-    "border border-expedition-sand-dark bg-transparent text-expedition-forest hover:border-expedition-accent dark:border-expedition-forest-light dark:text-expedition-sand dark:hover:border-expedition-accent",
-  inverse:
-    "border border-expedition-sand/40 bg-transparent text-expedition-sand hover:bg-expedition-sand hover:text-expedition-forest",
-  whatsapp:
-    "bg-[#25D366] text-white hover:bg-[#1ebd5b] shadow-sm",
-};
-
-const baseClasses =
-  "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-expedition-accent focus-visible:ring-offset-2 active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none";
+type AppVariant = "primary" | "secondary" | "inverse" | "whatsapp" | "outline" | "ghost";
+type HeroVariant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "danger"
+  | "danger-soft"
+  | "tertiary";
 
 type CommonProps = {
   children: ReactNode;
-  variant?: Variant;
+  variant?: AppVariant;
   className?: string;
+  fullWidth?: boolean;
+  isDisabled?: boolean;
+  disabled?: boolean;
+  isIconOnly?: boolean;
+  size?: ButtonRootProps["size"];
+  "aria-label"?: string;
 };
 
-type ButtonAsButton = CommonProps &
-  Omit<ComponentPropsWithoutRef<"button">, keyof CommonProps> & {
-    href?: undefined;
-  };
+type ButtonAsButton = CommonProps & {
+  href?: undefined;
+  type?: "button" | "submit" | "reset";
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onPress?: ButtonRootProps["onPress"];
+};
 
-type ButtonAsLink = CommonProps &
-  Omit<ComponentPropsWithoutRef<"a">, keyof CommonProps | "href"> & {
-    href: string;
-  };
+type ButtonAsLink = CommonProps & {
+  href: string;
+  target?: string;
+  rel?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+};
 
-type ButtonProps = ButtonAsButton | ButtonAsLink;
+export type ButtonProps = ButtonAsButton | ButtonAsLink;
+
+function mapVariant(variant: AppVariant): {
+  heroVariant: HeroVariant;
+  extraClass?: string;
+} {
+  switch (variant) {
+    case "whatsapp":
+      return { heroVariant: "primary", extraClass: "button--whatsapp" };
+    case "inverse":
+      return {
+        heroVariant: "outline",
+        extraClass:
+          "border-expedition-sand/40 bg-transparent text-expedition-sand hover:bg-expedition-sand hover:text-expedition-forest",
+      };
+    case "secondary":
+      return { heroVariant: "secondary" };
+    case "outline":
+      return { heroVariant: "outline" };
+    case "ghost":
+      return { heroVariant: "ghost" };
+    case "primary":
+    default:
+      return { heroVariant: "primary" };
+  }
+}
 
 export default function Button({
   children,
   variant = "primary",
   className = "",
+  fullWidth,
+  size = "lg",
+  isDisabled,
+  disabled,
+  isIconOnly,
+  "aria-label": ariaLabel,
   ...props
 }: ButtonProps) {
-  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`.trim();
+  const { heroVariant, extraClass } = mapVariant(variant);
+  const classes = cn(
+    isIconOnly ? "min-h-11 min-w-11" : "min-h-[48px] font-semibold",
+    buttonVariants({ variant: heroVariant, size, fullWidth, isIconOnly }),
+    extraClass,
+    className,
+  );
 
   if ("href" in props && props.href) {
-    const { href, ...rest } = props;
+    const { href, onClick, target, rel } = props;
     const isHashOrExternal =
       href.startsWith("#") ||
       href.startsWith("http") ||
@@ -53,23 +102,48 @@ export default function Button({
 
     if (isHashOrExternal) {
       return (
-        <a href={href} className={classes} {...rest}>
+        <a
+          href={href}
+          className={classes}
+          onClick={onClick}
+          target={target}
+          rel={rel}
+          aria-label={ariaLabel}
+        >
           {children}
         </a>
       );
     }
 
     return (
-      <Link href={href} className={classes} {...rest}>
+      <Link href={href} className={classes} onClick={onClick} aria-label={ariaLabel}>
         {children}
       </Link>
     );
   }
 
-  const { type, ...rest } = props as ButtonAsButton;
+  const { type, onClick, onPress } = props as ButtonAsButton;
+
   return (
-    <button type={type ?? "button"} className={classes} {...rest}>
+    <HeroButton
+      type={type ?? "button"}
+      variant={heroVariant}
+      size={size}
+      fullWidth={fullWidth}
+      isIconOnly={isIconOnly}
+      isDisabled={isDisabled ?? disabled}
+      aria-label={ariaLabel}
+      className={cn(
+        isIconOnly ? "min-h-11 min-w-11" : "min-h-[48px] font-semibold",
+        extraClass,
+        className,
+      )}
+      onPress={(e) => {
+        onPress?.(e);
+        onClick?.(e as unknown as Parameters<NonNullable<ButtonAsButton["onClick"]>>[0]);
+      }}
+    >
       {children}
-    </button>
+    </HeroButton>
   );
 }

@@ -18,7 +18,7 @@ export default function AirportFastLane() {
               Just landed at NBO?
             </h2>
             <p className="mt-1 text-sm text-expedition-forest/75 dark:text-expedition-sand/75">
-              Skip route planning — jump straight to airport pickup and transfer details.
+              Skip the taxi queue — jump straight to airport pickup.
             </p>
           </div>
         </div>

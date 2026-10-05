@@ -1,10 +1,11 @@
 @import "tailwindcss";
+@import "@heroui/styles";
 
 /* next-themes toggles .dark on <html>; make Tailwind dark: follow that class */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-brand-green: #25D366;
+  --color-brand-green: #25d366;
   --color-brand-dark: #1a2e1f;
   --color-expedition-sand: #f4efe6;
   --color-expedition-sand-dark: #e3d9c8;
@@ -16,16 +17,68 @@
   --font-display: var(--font-dm-serif), "DM Serif Display", Georgia, "Times New Roman", serif;
 }
 
-:root {
+/* Expedition brand → HeroUI semantic tokens */
+:root,
+.light,
+[data-theme="light"] {
+  color-scheme: light;
   --background: #f4efe6;
   --foreground: #1a2e1f;
-  color-scheme: light;
+  --surface: #faf7f1;
+  --surface-foreground: #1a2e1f;
+  --surface-secondary: #e3d9c8;
+  --surface-secondary-foreground: #1a2e1f;
+  --surface-tertiary: #e3d9c8;
+  --surface-tertiary-foreground: #1a2e1f;
+  --overlay: #faf7f1;
+  --overlay-foreground: #1a2e1f;
+  --muted: color-mix(in oklab, #1a2e1f 55%, transparent);
+  --default: #e3d9c8;
+  --default-foreground: #1a2e1f;
+  --accent: #c45c26;
+  --accent-foreground: #ffffff;
+  --accent-hover: #a84d1f;
+  --field-background: #ffffff;
+  --field-foreground: #1a2e1f;
+  --field-placeholder: color-mix(in oklab, #1a2e1f 40%, transparent);
+  --field-border: #e3d9c8;
+  --field-border-width: 1px;
+  --border: #e3d9c8;
+  --separator: #e3d9c8;
+  --focus: #c45c26;
+  --link: #1a2e1f;
+  --radius: 0.375rem;
+  --field-radius: 0.375rem;
 }
 
-.dark {
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
   --background: #1a2e1f;
   --foreground: #f4efe6;
-  color-scheme: dark;
+  --surface: #2d4a32;
+  --surface-foreground: #f4efe6;
+  --surface-secondary: #243a29;
+  --surface-secondary-foreground: #f4efe6;
+  --surface-tertiary: #243a29;
+  --surface-tertiary-foreground: #f4efe6;
+  --overlay: #2d4a32;
+  --overlay-foreground: #f4efe6;
+  --muted: color-mix(in oklab, #f4efe6 55%, transparent);
+  --default: #2d4a32;
+  --default-foreground: #f4efe6;
+  --accent: #c45c26;
+  --accent-foreground: #ffffff;
+  --accent-hover: #a84d1f;
+  --field-background: color-mix(in oklab, #1a2e1f 60%, #2d4a32 40%);
+  --field-foreground: #f4efe6;
+  --field-placeholder: color-mix(in oklab, #f4efe6 40%, transparent);
+  --field-border: color-mix(in oklab, #2d4a32 70%, #f4efe6 30%);
+  --field-border-width: 1px;
+  --border: color-mix(in oklab, #2d4a32 70%, #f4efe6 30%);
+  --separator: color-mix(in oklab, #2d4a32 70%, #f4efe6 30%);
+  --focus: #c45c26;
+  --link: #f4efe6;
 }
 
 .font-display {
@@ -38,10 +91,35 @@ body {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* Match existing expedition primary button feel */
+@layer components {
+  .button--primary {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  .button--primary:hover,
+  .button--primary[data-hovered] {
+    background-color: var(--accent-hover);
+  }
+
+  .button--whatsapp {
+    background-color: #25d366;
+    color: #ffffff;
+  }
+
+  .button--whatsapp:hover,
+  .button--whatsapp[data-hovered] {
+    background-color: #1ebd5b;
+  }
 }
 
 section[id] {
   scroll-margin-top: 5.5rem;
+  scroll-margin-bottom: 5.5rem;
 }
 
 @media (max-width: 639px) {
@@ -49,6 +127,19 @@ section[id] {
   select,
   textarea {
     font-size: 16px;
+  }
+
+  html {
+    scroll-padding-bottom: 6rem;
+  }
+
+  /* Room for fixed MobileActionBar */
+  main#main-content {
+    padding-bottom: 6rem;
+  }
+
+  [data-fleet-card] {
+    scroll-margin-bottom: 6rem;
   }
 }
 

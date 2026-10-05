@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
+import { Button, Drawer, useOverlayState } from "@heroui/react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { siteConfig } from "@/lib/site";
+import AppButton from "@/components/ui/Button";
 
 const navLinks = [
   { href: "#fleet", label: "Vehicles" },
@@ -17,8 +19,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const solid = !isHome || isScrolled;
+  const menuState = useOverlayState();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,19 +30,6 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (!mobileMenuOpen) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileMenuOpen(false);
-    };
-    document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
-    };
-  }, [mobileMenuOpen]);
 
   return (
     <nav
@@ -55,7 +44,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between gap-3">
           <Link
             href="/"
-            className="min-w-0"
+            className="min-w-0 max-w-[58%] sm:max-w-none"
             aria-label={`${siteConfig.name} home`}
           >
             <span
@@ -84,64 +73,77 @@ export default function Navbar() {
               </Link>
             ))}
             <ThemeToggle isScrolled={solid} />
-            <a
+            <AppButton
               href={isHome ? "#fleet" : "/#fleet"}
-              className={`inline-flex min-h-[40px] items-center justify-center rounded-md px-5 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+              variant={solid ? "primary" : "inverse"}
+              size="md"
+              className={
                 solid
-                  ? "bg-expedition-accent text-white hover:bg-expedition-accent-hover focus-visible:ring-expedition-accent"
-                  : "bg-expedition-sand text-expedition-forest hover:bg-white focus-visible:ring-expedition-sand"
-              }`}
+                  ? ""
+                  : "border-0 bg-expedition-sand text-expedition-forest hover:bg-white hover:text-expedition-forest"
+              }
             >
               View fleet
-            </a>
+            </AppButton>
           </div>
 
           <div className="flex items-center gap-1 md:hidden">
             <ThemeToggle isScrolled={solid} />
-            <button
-              type="button"
-              className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 dark:focus-visible:ring-white ${
+            <Button
+              isIconOnly
+              variant="ghost"
+              aria-label="Open menu"
+              onPress={menuState.open}
+              className={`min-h-[44px] min-w-[44px] ${
                 solid
                   ? "text-expedition-forest dark:text-expedition-sand"
                   : "text-expedition-sand"
               }`}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-menu"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+              <Menu className="h-6 w-6" />
+            </Button>
+            {menuState.isOpen ? (
+              <Drawer>
+                <Drawer.Backdrop
+                  isOpen={menuState.isOpen}
+                  onOpenChange={menuState.setOpen}
+                >
+                  <Drawer.Content placement="top" className="mt-[env(safe-area-inset-top)] max-h-[calc(100svh-4rem)]">
+                    <Drawer.Dialog className="rounded-none border-b border-expedition-sand-dark bg-expedition-sand dark:border-expedition-forest-light dark:bg-expedition-forest">
+                      <Drawer.Header className="flex items-center justify-between border-b border-expedition-sand-dark/70 px-4 py-3 dark:border-expedition-forest-light/50">
+                        <Drawer.Heading className="text-base font-semibold">Menu</Drawer.Heading>
+                        <Drawer.CloseTrigger />
+                      </Drawer.Header>
+                      <Drawer.Body className="p-0">
+                        {navLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={isHome ? link.href : `/${link.href}`}
+                            onClick={() => menuState.close()}
+                            className="flex min-h-[48px] items-center border-b border-expedition-sand-dark/70 px-4 py-3.5 text-base font-medium text-expedition-forest dark:border-expedition-forest-light/50 dark:text-expedition-sand"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                        <div className="p-3">
+                          <AppButton
+                            href={isHome ? "#fleet" : "/#fleet"}
+                            onClick={() => menuState.close()}
+                            className="w-full"
+                            fullWidth
+                          >
+                            View fleet
+                          </AppButton>
+                        </div>
+                      </Drawer.Body>
+                    </Drawer.Dialog>
+                  </Drawer.Content>
+                </Drawer.Backdrop>
+              </Drawer>
+            ) : null}
           </div>
         </div>
       </div>
-
-      {mobileMenuOpen && (
-        <div
-          id="mobile-menu"
-          className="absolute left-0 top-full flex max-h-[calc(100svh-4rem)] w-full flex-col overflow-y-auto border-b border-t border-expedition-sand-dark bg-expedition-sand dark:border-expedition-forest-light dark:bg-expedition-forest md:hidden"
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={isHome ? link.href : `/${link.href}`}
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[48px] items-center border-b border-expedition-sand-dark/70 px-4 py-3.5 text-base font-medium text-expedition-forest dark:border-expedition-forest-light/50 dark:text-expedition-sand"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="p-3">
-            <a
-              href={isHome ? "#fleet" : "/#fleet"}
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[48px] w-full items-center justify-center rounded-md bg-expedition-accent px-5 py-3.5 font-semibold text-white"
-            >
-              View fleet
-            </a>
-          </div>
-        </div>
-      )}
     </nav>
   );
 }

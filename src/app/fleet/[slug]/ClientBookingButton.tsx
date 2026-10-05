@@ -20,7 +20,7 @@ export default function ClientBookingButton({
   return (
     <>
       <Button
-        onClick={() => setIsModalOpen(true)}
+        onPress={() => setIsModalOpen(true)}
         className="w-full min-h-[56px] text-lg"
       >
         <CalendarCheck className="h-6 w-6" />

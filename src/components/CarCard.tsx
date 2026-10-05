@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
-import { Settings, Users, Fuel, Briefcase, Compass } from "lucide-react";
+import { Users, Compass } from "lucide-react";
+import { Card } from "@heroui/react";
 import BookingModal from "./BookingModal";
 import Button from "@/components/ui/Button";
 
@@ -29,13 +30,9 @@ export interface Car {
   available: boolean;
 }
 
-function shortenLuggage(text: string) {
-  return text.replace(" Large Suitcases", " bags").replace(" Suitcases", " bags");
-}
-
 function optimizeCloudinaryUrl(url: string) {
   if (url.includes("res.cloudinary.com") && url.includes("/upload/")) {
-    return url.replace("/upload/", "/upload/f_auto,q_auto,w_800,c_fit/");
+    return url.replace("/upload/", "/upload/f_auto,q_auto,w_1000,c_fit/");
   }
   return url;
 }
@@ -51,8 +48,11 @@ export default function CarCard({ car }: { car: Car }) {
 
   return (
     <>
-      <div className="group flex h-full flex-col overflow-hidden rounded-lg border border-expedition-sand-dark/80 bg-white dark:border-expedition-forest-light/50 dark:bg-expedition-forest">
-        <div className="relative aspect-[16/10] overflow-hidden bg-expedition-sand sm:aspect-[4/3] dark:bg-expedition-forest-light/40">
+      <Card className="group flex h-full flex-col border-0 bg-transparent shadow-none">
+        <Link
+          href={`/fleet/${car.slug}`}
+          className="relative block aspect-[4/3] overflow-hidden bg-expedition-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-expedition-accent focus-visible:ring-offset-2"
+        >
           <Image
             src={optimizeCloudinaryUrl(car.images[activeImageIndex])}
             alt={
@@ -62,121 +62,93 @@ export default function CarCard({ car }: { car: Car }) {
             }
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-contain p-6 transition-transform duration-700 sm:group-hover:scale-105"
+            className="object-contain p-5 transition-transform duration-700 group-hover:scale-105 sm:p-10"
           />
 
-          {car.images.length > 1 && (
-            <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
-              {car.images.map((_, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  aria-label={`Show ${car.brand} ${car.model} photo ${index + 1}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveImageIndex(index);
-                  }}
-                  className={`h-1.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-expedition-accent ${
-                    index === activeImageIndex
-                      ? "w-4 bg-expedition-accent"
-                      : "w-1.5 bg-expedition-forest/30 dark:bg-expedition-sand/40"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-expedition-forest/90 via-expedition-forest/25 to-transparent"
+            aria-hidden="true"
+          />
 
-          <div className="absolute left-3 top-3 flex flex-wrap items-start gap-1.5 sm:left-4 sm:top-4">
-            <span className="rounded-md bg-expedition-sand px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-expedition-forest shadow-sm dark:bg-expedition-forest dark:text-expedition-sand sm:text-xs">
+          <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-2 sm:left-5 sm:top-5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-expedition-sand/90 sm:text-[11px]">
               {car.category}
             </span>
             {car.badge && (
-              <span className="rounded-md bg-expedition-accent px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white sm:text-xs">
+              <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-expedition-accent sm:text-[11px]">
                 {car.badge}
               </span>
             )}
           </div>
-        </div>
 
-        <div className="flex flex-grow flex-col p-4 sm:p-6">
-          <div className="mb-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-              <Link
-                href={`/fleet/${car.slug}`}
-                className="transition-colors hover:text-expedition-accent"
-              >
-                <h3 className="font-display text-xl tracking-tight text-expedition-forest dark:text-expedition-sand sm:text-2xl">
-                  {car.brand} {car.model}
-                </h3>
-              </Link>
-              <div className="shrink-0 sm:text-right">
-                <span className="text-xs text-expedition-forest/55 dark:text-expedition-sand/55">From</span>
-                <p className="text-lg font-semibold tracking-tight text-expedition-forest dark:text-expedition-sand sm:text-xl">
-                  {priceLabel}
-                  <span className="text-xs font-normal text-expedition-forest/55 dark:text-expedition-sand/55"> / day</span>
-                </p>
-              </div>
+          <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5">
+            <Card.Title className="font-display text-xl leading-tight tracking-tight text-expedition-sand sm:text-3xl">
+              {car.brand} {car.model}
+            </Card.Title>
+          </div>
+        </Link>
+
+        {car.images.length > 1 && (
+          <div className="mt-3 flex gap-1.5" role="tablist" aria-label={`${car.brand} ${car.model} photos`}>
+            {car.images.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                role="tab"
+                aria-selected={index === activeImageIndex}
+                aria-label={`Show ${car.brand} ${car.model} photo ${index + 1}`}
+                onClick={() => setActiveImageIndex(index)}
+                className={`h-1 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-expedition-accent ${
+                  index === activeImageIndex
+                    ? "w-6 bg-expedition-accent"
+                    : "w-1.5 bg-expedition-forest/25 hover:bg-expedition-forest/40 dark:bg-expedition-sand/30"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+
+        <Card.Content className="mt-4 flex flex-1 flex-col p-0">
+          <div className="flex items-end justify-between gap-3 border-b border-expedition-sand-dark/70 pb-4 dark:border-expedition-forest-light/40">
+            <div>
+              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-expedition-forest/50 dark:text-expedition-sand/50">
+                From
+              </p>
+              <p className="mt-0.5 text-xl font-semibold tracking-tight text-expedition-forest dark:text-expedition-sand">
+                {priceLabel}
+                <span className="text-sm font-normal text-expedition-forest/55 dark:text-expedition-sand/55">
+                  {" "}
+                  / day
+                </span>
+              </p>
             </div>
-
-            {car.features?.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {car.features.map((feature, i) => (
-                  <span
-                    key={i}
-                    className="rounded-md border border-expedition-sand-dark/80 px-2 py-0.5 text-[11px] text-expedition-forest/70 dark:border-expedition-forest-light/50 dark:text-expedition-sand/70 sm:text-xs"
-                  >
-                    {feature}
-                  </span>
-                ))}
-              </div>
-            )}
+            <p className="max-w-[45%] text-right text-xs leading-snug text-expedition-forest/65 dark:text-expedition-sand/65">
+              {transmissionShort} · {car.specs.fuel_type}
+            </p>
           </div>
 
-          <div className="mb-5 grid grid-cols-2 border-y border-expedition-sand-dark/70 py-3 dark:border-expedition-forest-light/40 sm:grid-cols-5 sm:divide-x sm:divide-expedition-sand-dark/70 dark:sm:divide-expedition-forest-light/40 sm:py-4">
-            <div className="flex items-center gap-2 p-2 sm:flex-col sm:items-center sm:gap-1.5 sm:p-0 sm:text-center">
-              <Users className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" strokeWidth={1.5} />
-              <span className="text-xs text-expedition-forest/75 dark:text-expedition-sand/75">
-                {car.specs.seats} seats
-              </span>
-            </div>
-            <div className="flex items-center gap-2 p-2 sm:flex-col sm:items-center sm:gap-1.5 sm:p-0 sm:text-center">
-              <Settings className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" strokeWidth={1.5} />
-              <span className="text-xs text-expedition-forest/75 dark:text-expedition-sand/75">
-                <span className="sm:hidden">{transmissionShort}</span>
-                <span className="hidden sm:inline">{car.specs.transmission}</span>
-              </span>
-            </div>
-            <div className="flex items-center gap-2 p-2 sm:flex-col sm:items-center sm:gap-1.5 sm:p-0 sm:text-center">
-              <Fuel className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" strokeWidth={1.5} />
-              <span className="text-xs text-expedition-forest/75 dark:text-expedition-sand/75">
-                {car.specs.fuel_type}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 p-2 sm:flex-col sm:items-center sm:gap-1.5 sm:p-0 sm:text-center">
-              <Compass className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" strokeWidth={1.5} />
-              <span className="text-xs text-expedition-forest/75 dark:text-expedition-sand/75">
-                {car.drivetrain}
-              </span>
-            </div>
-            <div className="col-span-2 flex items-center gap-2 p-2 sm:col-span-1 sm:flex-col sm:items-center sm:gap-1.5 sm:p-0 sm:text-center">
-              <Briefcase className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" strokeWidth={1.5} />
-              <span className="text-xs text-expedition-forest/75 dark:text-expedition-sand/75">
-                <span className="sm:hidden">{shortenLuggage(car.luggage)}</span>
-                <span className="hidden sm:inline">{car.luggage}</span>
-              </span>
-            </div>
-          </div>
+          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-expedition-forest/75 dark:text-expedition-sand/75">
+            <li className="inline-flex items-center gap-1.5">
+              <Users className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" strokeWidth={1.5} />
+              {car.specs.seats} seats
+            </li>
+            <li className="inline-flex items-center gap-1.5">
+              <Compass className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" strokeWidth={1.5} />
+              {car.drivetrain}
+            </li>
+          </ul>
 
           <Button
             type="button"
-            onClick={() => setIsModalOpen(true)}
-            className="mt-auto w-full"
+            onPress={() => setIsModalOpen(true)}
+            className="relative z-10 mt-5 w-full sm:mt-6"
+            fullWidth
           >
-            <span className="sm:hidden">Check Availability</span>
-            <span className="hidden sm:inline">Check Availability &amp; Book</span>
+            <span className="sm:hidden">Check availability</span>
+            <span className="hidden sm:inline">Check availability &amp; book</span>
           </Button>
-        </div>
-      </div>
+        </Card.Content>
+      </Card>
 
       <BookingModal
         isOpen={isModalOpen}

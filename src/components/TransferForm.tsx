@@ -14,20 +14,19 @@ import {
   Check,
   ArrowRight,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Card, Input, Label, Radio, RadioGroup } from "@heroui/react";
 import { siteConfig, whatsappGreeting } from "@/lib/site";
 import { submitEnquiry } from "@/lib/submit-enquiry";
 import Button from "@/components/ui/Button";
+import Field from "@/components/ui/Field";
 
 const airports = [
   { value: "JKIA", label: "JKIA", sub: "Jomo Kenyatta" },
   { value: "Wilson Airport", label: "Wilson", sub: "Domestic & safari" },
 ] as const;
 
-const inputClass =
+const boardInputClass =
   "w-full rounded-md border-0 bg-transparent px-0 py-2 text-base text-expedition-sand outline-none placeholder:text-expedition-sand/35 focus:ring-0 sm:text-sm";
-const lightInputClass =
-  "w-full rounded-md border border-expedition-sand-dark/80 bg-white px-3 py-3 text-base text-expedition-forest outline-none placeholder:text-expedition-forest/35 focus:border-expedition-accent focus:ring-1 focus:ring-expedition-accent dark:border-expedition-forest-light/50 dark:bg-expedition-forest/50 dark:text-expedition-sand dark:placeholder:text-expedition-sand/35 sm:py-2.5 sm:text-sm";
 
 export default function TransferForm() {
   const [step, setStep] = useState<"form" | "success">("form");
@@ -77,7 +76,7 @@ export default function TransferForm() {
       setStep("success");
     } catch (error) {
       setSubmissionError(
-        error instanceof Error ? error.message : "We could not send your request. Please try again."
+        error instanceof Error ? error.message : "We could not send your request. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -92,22 +91,12 @@ export default function TransferForm() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="relative w-full max-w-4xl overflow-hidden rounded-xl shadow-lg"
+    <Card
+      className="relative w-full max-w-4xl overflow-x-clip rounded-xl border-0 p-0 shadow-lg"
+      data-transfer-form
     >
-      <AnimatePresence mode="wait">
-        {step === "form" ? (
-          <motion.form
-            key="form"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onSubmit={handleSubmit}
-            className="overflow-hidden"
-          >
+      {step === "form" ? (
+        <form onSubmit={handleSubmit} className="min-w-0">
             <input
               type="text"
               name="website"
@@ -119,10 +108,9 @@ export default function TransferForm() {
               className="hidden"
             />
 
-            {/* Flight-board header */}
-            <div className="bg-expedition-forest px-4 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6">
-              <div className="mb-5 flex items-start justify-between gap-3">
-                <div>
+            <div className="bg-expedition-forest px-3 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6">
+              <div className="mb-4 flex items-start justify-between gap-3 sm:mb-5">
+                <div className="min-w-0">
                   <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-expedition-accent">
                     Arrival desk
                   </p>
@@ -130,83 +118,88 @@ export default function TransferForm() {
                     Book airport pickup
                   </h3>
                 </div>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-expedition-accent/20 text-expedition-accent">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-expedition-accent/20 text-expedition-accent">
                   <Plane className="h-5 w-5" aria-hidden="true" strokeWidth={1.5} />
                 </span>
               </div>
 
-              <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-expedition-sand/50">
+              <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.18em] text-expedition-sand/50 sm:mb-3">
                 Landing at
               </p>
-              <div
-                className="grid grid-cols-2 gap-2"
-                role="radiogroup"
+              <RadioGroup
                 aria-label="Pickup airport"
+                value={formData.airport}
+                onChange={(value) =>
+                  setFormData((prev) => ({ ...prev, airport: String(value) }))
+                }
+                className="grid w-full min-w-0 grid-cols-2 gap-2"
               >
                 {airports.map((airport) => {
                   const selected = formData.airport === airport.value;
                   return (
-                    <button
+                    <Radio
                       key={airport.value}
-                      type="button"
-                      role="radio"
-                      aria-checked={selected}
-                      onClick={() =>
-                        setFormData((prev) => ({ ...prev, airport: airport.value }))
-                      }
-                      className={`rounded-lg px-3 py-3 text-left transition-colors sm:px-4 ${
+                      value={airport.value}
+                      className={`w-full min-w-0 rounded-lg px-2.5 py-2.5 text-left transition-colors sm:px-4 sm:py-3 ${
                         selected
                           ? "bg-expedition-accent text-white"
                           : "bg-expedition-forest-light/40 text-expedition-sand/80 hover:bg-expedition-forest-light/60"
                       }`}
                     >
-                      <span className="block text-sm font-semibold sm:text-base">
-                        {airport.label}
-                      </span>
-                      <span
-                        className={`mt-0.5 block text-[11px] ${
-                          selected ? "text-white/80" : "text-expedition-sand/50"
-                        }`}
-                      >
-                        {airport.sub}
-                      </span>
-                    </button>
+                      <Radio.Control className="sr-only">
+                        <Radio.Indicator />
+                      </Radio.Control>
+                      <Radio.Content className="!flex w-full min-w-0 !flex-col !items-start !gap-0.5">
+                        <span className="w-full truncate text-sm font-semibold sm:text-base">
+                          {airport.label}
+                        </span>
+                        <span
+                          className={`w-full truncate text-[11px] leading-tight ${
+                            selected ? "text-white/80" : "text-expedition-sand/50"
+                          }`}
+                        >
+                          {airport.sub}
+                        </span>
+                      </Radio.Content>
+                    </Radio>
                   );
                 })}
-              </div>
+              </RadioGroup>
 
-              {/* Route strip */}
-              <div className="mt-5 rounded-lg bg-expedition-forest-light/30 p-4">
-                <div className="flex items-stretch gap-3">
+              <div className="mt-4 rounded-lg bg-expedition-forest-light/30 p-3 sm:mt-5 sm:p-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-3">
                   <div className="flex min-w-0 flex-1 flex-col">
-                    <label
-                      htmlFor="transfer-airport-display"
-                      className="text-[10px] font-medium uppercase tracking-[0.15em] text-expedition-sand/50"
-                    >
+                    <Label className="text-[10px] font-medium uppercase tracking-[0.15em] text-expedition-sand/50">
                       From
-                    </label>
+                    </Label>
                     <div className="mt-1 flex items-center gap-2 text-expedition-sand">
                       <Plane className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" />
-                      <span id="transfer-airport-display" className="truncate text-sm font-semibold">
-                        {formData.airport}
-                      </span>
+                      <span className="truncate text-sm font-semibold">{formData.airport}</span>
                     </div>
                   </div>
 
-                  <div className="flex flex-col items-center justify-center px-1">
+                  <div className="hidden items-center justify-center px-1 sm:flex">
                     <ArrowRight className="h-4 w-4 text-expedition-accent" aria-hidden="true" />
+                  </div>
+                  <div
+                    className="flex items-center gap-2 text-expedition-sand/40 sm:hidden"
+                    aria-hidden="true"
+                  >
+                    <div className="h-px flex-1 bg-expedition-sand/20" />
+                    <ArrowRight className="h-3.5 w-3.5 text-expedition-accent" />
+                    <div className="h-px flex-1 bg-expedition-sand/20" />
                   </div>
 
                   <div className="flex min-w-0 flex-1 flex-col">
-                    <label
+                    <Label
                       htmlFor="transfer-destination"
                       className="text-[10px] font-medium uppercase tracking-[0.15em] text-expedition-sand/50"
                     >
                       Drop-off
-                    </label>
-                    <div className="mt-1 flex items-center gap-2">
+                    </Label>
+                    <div className="mt-1 flex min-w-0 items-center gap-2">
                       <MapPin className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" />
-                      <input
+                      <Input
                         id="transfer-destination"
                         name="destination"
                         type="text"
@@ -214,24 +207,23 @@ export default function TransferForm() {
                         value={formData.destination}
                         onChange={handleChange}
                         placeholder="Hotel or address"
-                        className={inputClass}
+                        className={`min-w-0 flex-1 border-0 bg-transparent shadow-none ${boardInputClass}`}
                       />
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Timetable */}
-              <div className="mt-3 grid grid-cols-3 gap-2 sm:gap-3">
-                <div className="rounded-lg bg-expedition-forest-light/30 px-3 py-2.5">
-                  <label
+              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
+                <div className="min-w-0 rounded-lg bg-expedition-forest-light/30 px-2.5 py-2 sm:px-3 sm:py-2.5">
+                  <Label
                     htmlFor="transfer-date"
                     className="flex items-center gap-1 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-sand/50"
                   >
                     <Calendar className="h-3 w-3" aria-hidden="true" />
                     Date
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id="transfer-date"
                     name="date"
                     type="date"
@@ -239,134 +231,111 @@ export default function TransferForm() {
                     min={minDate}
                     value={formData.date}
                     onChange={handleChange}
-                    className={`${inputClass} [color-scheme:dark]`}
+                    className={`min-w-0 max-w-full border-0 bg-transparent shadow-none [color-scheme:dark] ${boardInputClass}`}
                   />
                 </div>
-                <div className="rounded-lg bg-expedition-forest-light/30 px-3 py-2.5">
-                  <label
+                <div className="min-w-0 rounded-lg bg-expedition-forest-light/30 px-2.5 py-2 sm:px-3 sm:py-2.5">
+                  <Label
                     htmlFor="transfer-time"
                     className="text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-sand/50"
                   >
                     Time
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id="transfer-time"
                     name="time"
                     type="time"
                     required
                     value={formData.time}
                     onChange={handleChange}
-                    className={`${inputClass} [color-scheme:dark]`}
+                    className={`min-w-0 max-w-full border-0 bg-transparent shadow-none [color-scheme:dark] ${boardInputClass}`}
                   />
                 </div>
-                <div className="rounded-lg bg-expedition-forest-light/30 px-3 py-2.5">
-                  <label
+                <div className="col-span-2 min-w-0 rounded-lg bg-expedition-forest-light/30 px-2.5 py-2 sm:col-span-1 sm:px-3 sm:py-2.5">
+                  <Label
                     htmlFor="transfer-flight-number"
                     className="text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-sand/50"
                   >
-                    Flight
-                  </label>
-                  <input
+                    Flight (optional)
+                  </Label>
+                  <Input
                     id="transfer-flight-number"
                     name="flightNumber"
                     type="text"
                     value={formData.flightNumber}
                     onChange={handleChange}
                     placeholder="KQ100"
-                    className={inputClass}
+                    className={`min-w-0 border-0 bg-transparent shadow-none ${boardInputClass}`}
                   />
                 </div>
               </div>
             </div>
 
-            {/* Light details band */}
-            <div className="border border-t-0 border-expedition-sand-dark/60 bg-expedition-sand px-4 py-5 dark:border-expedition-forest-light/40 dark:bg-expedition-sand/10 sm:px-6 sm:py-6">
-              <div className="mb-4 grid grid-cols-2 gap-3">
-                <div>
-                  <label
-                    htmlFor="transfer-passengers"
-                    className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-forest/55 dark:text-expedition-sand/55"
-                  >
-                    <Users className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" />
-                    Passengers
-                  </label>
-                  <select
+            <div className="min-w-0 border border-t-0 border-expedition-sand-dark/60 bg-expedition-sand px-3 py-4 dark:border-expedition-forest-light/50 dark:bg-expedition-forest-light/25 sm:px-6 sm:py-6">
+              <div className="mb-3 grid grid-cols-2 gap-2 sm:mb-4 sm:gap-3">
+                <div className="min-w-0">
+                  <Field
                     id="transfer-passengers"
+                    label="Passengers"
+                    as="select"
                     name="passengers"
                     value={formData.passengers}
                     onChange={handleChange}
-                    className={lightInputClass}
+                    icon={<Users className="h-3.5 w-3.5" />}
                   >
                     {[1, 2, 3, 4, 5, 6, 7].map((n) => (
                       <option key={n} value={n}>
                         {n} {n === 1 ? "guest" : "guests"}
                       </option>
                     ))}
-                  </select>
+                  </Field>
                 </div>
-                <div>
-                  <label
-                    htmlFor="transfer-luggage"
-                    className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-forest/55 dark:text-expedition-sand/55"
-                  >
-                    <Briefcase className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" />
-                    Luggage
-                  </label>
-                  <select
+                <div className="min-w-0">
+                  <Field
                     id="transfer-luggage"
+                    label="Luggage"
+                    as="select"
                     name="luggage"
                     value={formData.luggage}
                     onChange={handleChange}
-                    className={lightInputClass}
+                    icon={<Briefcase className="h-3.5 w-3.5" />}
                   >
                     {[0, 1, 2, 3, 4, 5, 6, 7].map((n) => (
                       <option key={n} value={n}>
                         {n} {n === 1 ? "bag" : "bags"}
                       </option>
                     ))}
-                  </select>
+                  </Field>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="transfer-name"
-                    className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-forest/55 dark:text-expedition-sand/55"
-                  >
-                    <User className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" />
-                    Name
-                  </label>
-                  <input
+                <div className="min-w-0">
+                  <Field
                     id="transfer-name"
+                    label="Name"
                     name="name"
                     type="text"
                     required
                     onChange={handleChange}
-                    className={lightInputClass}
+                    icon={<User className="h-3.5 w-3.5" />}
                   />
                 </div>
-                <div>
-                  <label
-                    htmlFor="transfer-email"
-                    className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-forest/55 dark:text-expedition-sand/55"
-                  >
-                    <Mail className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" />
-                    Email
-                  </label>
-                  <input
+                <div className="min-w-0">
+                  <Field
                     id="transfer-email"
+                    label="Email"
                     name="email"
                     type="email"
                     required
                     onChange={handleChange}
-                    className={lightInputClass}
+                    icon={<Mail className="h-3.5 w-3.5" />}
                   />
                 </div>
               </div>
 
-              <div className="mt-5">
-                <Button type="submit" disabled={isSubmitting} className="w-full">
+              <div className="mt-4 sm:mt-5">
+                <Button type="submit" disabled={isSubmitting} className="w-full" fullWidth>
                   {isSubmitting ? (
                     <span className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
                   ) : (
@@ -377,20 +346,15 @@ export default function TransferForm() {
                   )}
                 </Button>
                 {submissionError && (
-                  <p role="alert" className="mt-2 text-sm text-red-600 dark:text-red-400">
+                  <p role="alert" className="mt-2 text-sm text-danger">
                     {submissionError}
                   </p>
                 )}
               </div>
             </div>
-          </motion.form>
-        ) : (
-          <motion.div
-            key="success"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="border border-expedition-sand-dark/60 bg-expedition-sand px-6 py-12 text-center dark:border-expedition-forest-light/40 dark:bg-expedition-forest sm:px-10"
-          >
+        </form>
+      ) : (
+          <div className="border border-expedition-sand-dark/60 bg-expedition-sand px-6 py-12 text-center dark:border-expedition-forest-light/40 dark:bg-expedition-forest sm:px-10">
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-expedition-accent text-white">
               <Check className="h-8 w-8" strokeWidth={2} />
             </div>
@@ -409,23 +373,23 @@ export default function TransferForm() {
               <Button
                 type="button"
                 variant="whatsapp"
-                onClick={handleWhatsApp}
+                onPress={handleWhatsApp}
                 className="mx-auto w-full max-w-md"
               >
                 <MessageCircle className="h-5 w-5" aria-hidden="true" />
                 <span>Continue on WhatsApp →</span>
               </Button>
             )}
-            <button
+            <Button
               type="button"
-              onClick={() => setStep("form")}
-              className="mt-6 text-sm font-medium text-expedition-forest/60 hover:text-expedition-accent dark:text-expedition-sand/60"
+              variant="ghost"
+              onPress={() => setStep("form")}
+              className="mt-6 text-sm font-medium text-expedition-forest/60 dark:text-expedition-sand/60"
             >
               Book another pickup
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+            </Button>
+          </div>
+      )}
+    </Card>
   );
 }

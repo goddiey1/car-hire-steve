@@ -23,11 +23,11 @@ export default function ExpeditionHero() {
           {siteConfig.tagline}. Browse the fleet or book a JKIA pickup — confirm by form or
           WhatsApp.
         </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-          <Button href="#fleet" variant="primary">
+        <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
+          <Button href="#fleet" variant="primary" className="w-full sm:w-auto">
             View fleet
           </Button>
-          <Button href="#transfers" variant="inverse">
+          <Button href="#transfers" variant="inverse" className="w-full sm:w-auto">
             Airport transfer
           </Button>
         </div>

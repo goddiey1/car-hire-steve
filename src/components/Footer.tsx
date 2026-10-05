@@ -2,8 +2,16 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 
+const links = [
+  { href: "/#fleet", label: "Vehicles" },
+  { href: "/#transfers", label: "Airport" },
+  { href: "/#trip-steps", label: "How it works" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms-and-conditions", label: "Terms & Conditions" },
+] as const;
+
 const linkClass =
-  "inline-flex min-h-11 items-center transition-colors hover:text-expedition-sand";
+  "inline-flex min-h-11 items-center text-sm font-medium text-expedition-sand/80 transition-colors hover:text-expedition-sand";
 
 export default function Footer() {
   const phoneDisplay = siteConfig.phone.replace(/(\+\d{3})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
@@ -11,88 +19,62 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="border-t border-expedition-forest-light bg-expedition-forest pb-28 pt-10 text-expedition-sand/70 sm:py-16 sm:pb-16"
+      className="border-t border-expedition-forest-light bg-expedition-forest pb-28 pt-10 text-expedition-sand/70 sm:pb-14 sm:pt-14"
     >
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-12">
-          <div className="md:col-span-1">
-            <p className="mb-6 text-xl font-semibold tracking-tight text-expedition-sand">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">
+          <div className="max-w-md">
+            <p className="font-display text-3xl tracking-tight text-expedition-sand sm:text-4xl">
               {siteConfig.name}
             </p>
-            <p className="text-sm leading-relaxed">
+            <p className="mt-3 text-sm leading-relaxed text-expedition-sand/70">
               {siteConfig.description}
             </p>
           </div>
 
-          <div>
-            <h2 className="mb-6 text-base font-semibold text-expedition-sand">Quick Links</h2>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <Link href="/#fleet" className={linkClass}>
-                  Vehicles
-                </Link>
-              </li>
-              <li>
-                <Link href="/#transfers" className={linkClass}>
-                  Airport
-                </Link>
-              </li>
-              <li>
-                <Link href="/#trip-steps" className={linkClass}>
-                  How it works
-                </Link>
-              </li>
-              <li>
-                <a href="#contact" className={linkClass}>
-                  Contact Us
-                </a>
-              </li>
-              <li>
-                <Link href="/privacy" className={linkClass}>
-                  Privacy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms-and-conditions" className={linkClass}>
-                  Terms &amp; Conditions
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="md:col-span-2">
-            <h2 className="mb-6 text-base font-semibold text-expedition-sand">Contact Us</h2>
-            <div className="space-y-4 text-sm">
-              <p className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 shrink-0 text-expedition-accent" aria-hidden="true" />
-                <span>
-                  {siteConfig.location.area}, {siteConfig.location.city}, {siteConfig.location.country}
-                  <br />
-                  <span className="text-expedition-sand/50">Available for airport pickups (JKIA &amp; Wilson)</span>
+          <address className="flex flex-col gap-3 text-sm not-italic text-expedition-sand/85 md:max-w-sm">
+            <p className="flex items-start gap-3">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" />
+              <span>
+                {siteConfig.location.area}, {siteConfig.location.city}, {siteConfig.location.country}
+                <span className="mt-1 block text-expedition-sand/50">
+                  Airport pickups at JKIA &amp; Wilson
                 </span>
+              </span>
+            </p>
+            {siteConfig.phone && (
+              <p className="flex items-center gap-3">
+                <Phone className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" />
+                <a href={`tel:${siteConfig.phone}`} className={linkClass}>
+                  {phoneDisplay}
+                </a>
               </p>
-              {siteConfig.phone && (
-                <p className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 shrink-0 text-expedition-accent" aria-hidden="true" />
-                  <a href={`tel:${siteConfig.phone}`} className="transition-colors hover:text-expedition-sand">
-                    {phoneDisplay}
-                  </a>
-                </p>
-              )}
-              {siteConfig.email && (
-                <p className="flex items-center gap-3">
-                  <Mail className="h-5 w-5 shrink-0 text-expedition-accent" aria-hidden="true" />
-                  <a href={`mailto:${siteConfig.email}`} className="transition-colors hover:text-expedition-sand">
-                    {siteConfig.email}
-                  </a>
-                </p>
-              )}
-            </div>
-          </div>
+            )}
+            {siteConfig.email && (
+              <p className="flex items-center gap-3">
+                <Mail className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" />
+                <a href={`mailto:${siteConfig.email}`} className={`${linkClass} break-all`}>
+                  {siteConfig.email}
+                </a>
+              </p>
+            )}
+          </address>
         </div>
 
-        <div className="mt-12 border-t border-expedition-forest-light/60 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+        <div className="mt-8 flex flex-col gap-4 border-t border-expedition-forest-light/60 pt-6 sm:mt-10 sm:flex-row sm:items-center sm:justify-between">
+          <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-1">
+            {links.map((link) => (
+              <Link key={link.href} href={link.href} className={linkClass}>
+                {link.label}
+              </Link>
+            ))}
+            <a href="#contact" className={linkClass}>
+              Contact
+            </a>
+          </nav>
+          <p className="text-sm text-expedition-sand/55">
+            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

@@ -1,3 +1,6 @@
+"use client";
+
+import { Input, InputGroup, Label, cn } from "@heroui/react";
 import { type ComponentPropsWithoutRef, type ReactNode } from "react";
 
 type FieldProps = {
@@ -20,44 +23,70 @@ export default function Field({
   children,
   ...props
 }: FieldProps) {
-  const controlClasses =
-    `w-full rounded-md border border-expedition-sand-dark bg-expedition-sand/40 py-3 text-expedition-forest ${
-      icon ? "pl-10" : "pl-3"
-    } pr-3 text-base outline-none transition-colors placeholder:text-expedition-forest/40 focus:border-expedition-accent focus:ring-1 focus:ring-expedition-accent dark:border-expedition-forest-light dark:bg-expedition-forest/40 dark:text-expedition-sand dark:placeholder:text-expedition-sand/40 dark:focus:border-expedition-accent dark:focus:ring-expedition-accent sm:py-2.5 sm:text-sm ${className}`.trim();
+  const labelClass =
+    "mb-1.5 block text-xs font-medium uppercase tracking-[0.12em] text-expedition-forest/60 dark:text-expedition-sand/60";
 
-  return (
-    <div className="space-y-1.5">
-      <label
-        htmlFor={id}
-        className="block text-xs font-medium uppercase tracking-[0.12em] text-expedition-forest/60 dark:text-expedition-sand/60"
-      >
-        {label}
-      </label>
-      <div className="relative">
-        {icon && (
-          <span
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-expedition-forest/45 dark:text-expedition-sand/45"
-            aria-hidden="true"
-          >
-            {icon}
-          </span>
-        )}
-        {as === "select" ? (
+  if (as === "select") {
+    const selectProps = props as ComponentPropsWithoutRef<"select">;
+    return (
+      <div className="space-y-0">
+        <Label htmlFor={id} className={labelClass}>
+          {label}
+        </Label>
+        <div className="relative">
+          {icon && (
+            <span
+              className="pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-expedition-forest/45 dark:text-expedition-sand/45"
+              aria-hidden="true"
+            >
+              {icon}
+            </span>
+          )}
           <select
             id={id}
-            className={`${controlClasses} appearance-none`}
-            {...(props as ComponentPropsWithoutRef<"select">)}
+            className={cn(
+              "w-full appearance-none rounded-md border border-expedition-sand-dark bg-white py-3 pr-3 text-base text-expedition-forest outline-none transition-colors focus:border-expedition-accent focus:ring-1 focus:ring-expedition-accent dark:border-expedition-forest-light dark:bg-expedition-forest/40 dark:text-expedition-sand sm:py-2.5 sm:text-sm",
+              icon ? "pl-10" : "pl-3",
+              className,
+            )}
+            {...selectProps}
           >
             {children}
           </select>
-        ) : (
-          <input
-            id={id}
-            className={controlClasses}
-            {...(props as ComponentPropsWithoutRef<"input">)}
-          />
-        )}
+        </div>
       </div>
+    );
+  }
+
+  const inputProps = props as ComponentPropsWithoutRef<"input">;
+
+  if (icon) {
+    return (
+      <div className="space-y-0">
+        <Label htmlFor={id} className={labelClass}>
+          {label}
+        </Label>
+        <InputGroup fullWidth className={cn("min-h-[48px] min-w-0 max-w-full", className)}>
+          <InputGroup.Prefix className="text-expedition-forest/45 dark:text-expedition-sand/45">
+            {icon}
+          </InputGroup.Prefix>
+          <InputGroup.Input id={id} className="min-w-0" {...inputProps} />
+        </InputGroup>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-0">
+      <Label htmlFor={id} className={labelClass}>
+        {label}
+      </Label>
+      <Input
+        id={id}
+        fullWidth
+        className={cn("min-h-[48px]", className)}
+        {...inputProps}
+      />
     </div>
   );
 }

@@ -106,7 +106,7 @@ export default function RootLayout({
       className={`${inter.variable} ${dmSerif.variable} scroll-smooth`}
       suppressHydrationWarning
     >
-      <body className="font-sans antialiased bg-expedition-sand dark:bg-expedition-forest text-expedition-forest dark:text-expedition-sand transition-colors duration-300">
+      <body className="overflow-x-clip bg-background font-sans text-foreground antialiased transition-colors duration-300">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

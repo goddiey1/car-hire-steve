@@ -22,15 +22,15 @@ export default function SectionHeading({
   return (
     <div className={`max-w-2xl ${alignClass} ${className}`.trim()}>
       {eyebrow && (
-        <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-expedition-accent">
+        <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-accent">
           {eyebrow}
         </p>
       )}
-      <h2 className="font-display text-2xl font-normal tracking-tight text-expedition-forest dark:text-expedition-sand sm:text-4xl">
+      <h2 className="font-display text-2xl font-normal tracking-tight text-foreground sm:text-4xl">
         {title}
       </h2>
       {description && (
-        <p className="mt-3 text-sm leading-relaxed text-expedition-forest/75 dark:text-expedition-sand/75 sm:mt-4 sm:text-base">
+        <p className="mt-3 text-sm leading-relaxed text-muted sm:mt-4 sm:text-base">
           {description}
         </p>
       )}
