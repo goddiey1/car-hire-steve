@@ -63,7 +63,7 @@ export default function TransferForm() {
 
   const handleWhatsApp = () => {
     if (!siteConfig.whatsapp) return;
-    const text = `Hello DAZ safaris and tours! I just sent a transfer request via email and want a fast response.\n\n*From:* ${formData.airport}\n*To:* ${formData.destination}\n*Date:* ${formData.date}\n*Time:* ${formData.time}\n*Flight:* ${formData.flightNumber || "N/A"}\n*Passengers:* ${formData.passengers}\n*Luggage:* ${formData.luggage} bags`;
+    const text = `Hello Stevinson Adventure! I just sent a transfer request via email and want a fast response.\n\n*From:* ${formData.airport}\n*To:* ${formData.destination}\n*Date:* ${formData.date}\n*Time:* ${formData.time}\n*Flight:* ${formData.flightNumber || "N/A"}\n*Passengers:* ${formData.passengers}\n*Luggage:* ${formData.luggage} bags`;
     const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };

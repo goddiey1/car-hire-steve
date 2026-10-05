@@ -47,12 +47,12 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-3 sm:px-4 md:px-6">
         <div className="flex items-center justify-between gap-3">
-          <Link href="/" className="flex items-center gap-1.5 sm:gap-2 group min-w-0" aria-label="DAZ safaris and tours home">
+          <Link href="/" className="flex items-center gap-1.5 sm:gap-2 group min-w-0" aria-label="Stevinson Adventure home">
             <div className="bg-blue-500 text-white p-1.5 sm:p-2 rounded-lg group-hover:bg-blue-600 transition-colors shrink-0">
               <Car className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
             </div>
             <span className={`text-lg sm:text-xl font-bold tracking-tight transition-colors truncate ${isScrolled ? "text-neutral-900 dark:text-white" : "text-white"}`}>
-              DAZ<span className="text-blue-500">Hire</span>
+              Stevinson<span className="text-blue-500">Adventure</span>
             </span>
           </Link>
 

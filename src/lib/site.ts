@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: "DAZ safaris and tours",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://dazsafarisandtours.com",
+  name: "Stevinson Adventure",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://StevinsonAdventure.com",
   description:
     "Premium car hire and airport transfers in Nairobi, Kenya. Self-drive and chauffeur-driven vehicles for international tourists. JKIA & Wilson Airport pickups with WhatsApp booking.",
   locale: "en_KE",

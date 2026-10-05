@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | DAZ safaris and tours",
+  title: "Terms & Conditions | Stevinson Adventure",
   description: "Car hire terms, insurance information, and vehicle-use conditions.",
   alternates: {
     canonical: `${siteConfig.url}/terms-and-conditions`,
@@ -61,7 +61,7 @@ export default function TermsAndConditionsPage() {
       <div className="mx-auto w-full max-w-4xl px-6 py-16 sm:px-10 lg:py-24">
       <header className="max-w-2xl border-b border-slate-300 pb-10">
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-amber-700">
-          DAZ safaris and tours
+          Stevinson Adventure
         </p>
         <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
           Terms &amp; Conditions

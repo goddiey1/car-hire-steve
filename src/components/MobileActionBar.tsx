@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/site";
 
 export default function MobileActionBar() {
   const message = encodeURIComponent(
-    "Hello DAZ safaris and tours! I'd like a quick quote for car hire or an airport transfer."
+    "Hello Stevinson Adventure! I'd like a quick quote for car hire or an airport transfer."
   );
 
   return (

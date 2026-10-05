@@ -18,8 +18,8 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "DAZ safaris and tours | Premium Car Rental & Airport Transfers in Nairobi",
-    template: "%s | DAZ safaris and tours",
+    default: "Stevinson Adventure | Premium Car Rental & Airport Transfers in Nairobi",
+    template: "%s | Stevinson Adventure",
   },
   description: siteConfig.description,
   keywords: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     "self drive Kenya",
     "safari car hire",
     "Nairobi airport transfer",
-    "DAZ safaris and tours",
+    "Stevinson Adventure",
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
@@ -40,20 +40,20 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: "DAZ safaris and tours | Premium Car Rental & Airport Transfers in Nairobi",
+    title: "Stevinson Adventure | Premium Car Rental & Airport Transfers in Nairobi",
     description: siteConfig.description,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "DAZ safaris and tours — premium car rental and airport transfers in Nairobi",
+        alt: "Stevinson Adventure — premium car rental and airport transfers in Nairobi",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DAZ safaris and tours | Car Hire & Airport Transfers in Nairobi",
+    title: "Stevinson Adventure | Car Hire & Airport Transfers in Nairobi",
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "DAZ safaris and tours",
+    title: "Stevinson Adventure",
     statusBarStyle: "black-translucent",
   },
 };

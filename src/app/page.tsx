@@ -25,7 +25,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent z-10" />
           <Image
             src="https://res.cloudinary.com/dpyqxho1q/image/upload/v1785354189/home_page_of_safari_tours_ggnpbc.jpg"
-            alt="DAZ safaris and tours premium SUV ready for Nairobi airport pickup and safari travel"
+            alt="Stevinson Adventure premium SUV ready for Nairobi airport pickup and safari travel"
             fill
             className="object-cover object-center scale-105 animate-[hero-zoom_18s_ease-out_forwards]"
             priority
@@ -36,7 +36,7 @@ export default function Home() {
         <div className="container relative z-20 mx-auto w-full px-4 sm:px-6">
           <div className="max-w-3xl animate-[fade-up_0.8s_ease-out]">
             <p className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase mb-3 sm:mb-4 backdrop-blur-sm border border-white/10">
-              DAZ safaris and tours · Nairobi
+              Stevinson Adventure · Nairobi
             </p>
 
             <h1 className="text-[1.65rem] leading-[1.15] sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-3 sm:mb-6">

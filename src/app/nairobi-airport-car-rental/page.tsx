@@ -76,7 +76,7 @@ export default function AirportRentalPage() {
         <article className="prose prose-neutral dark:prose-invert max-w-4xl mx-auto bg-white dark:bg-neutral-900 p-8 sm:p-12 rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
           <h2>Renting a Car at Jomo Kenyatta International Airport (JKIA)</h2>
           <p>
-            JKIA is East Africa's busiest airport and the main gateway for visitors to Kenya. Navigating arrival procedures and finding reliable transportation can be stressful after a long flight. <strong>DAZ safaris and tours</strong> eliminates this stress by providing premium car hire services directly at the airport terminals.
+            JKIA is East Africa's busiest airport and the main gateway for visitors to Kenya. Navigating arrival procedures and finding reliable transportation can be stressful after a long flight. <strong>Stevinson Adventure</strong> eliminates this stress by providing premium car hire services directly at the airport terminals.
           </p>
           
           <h3>Self-Drive Airport Pickup</h3>

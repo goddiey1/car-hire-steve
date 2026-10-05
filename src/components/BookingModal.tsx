@@ -122,7 +122,7 @@ export default function BookingModal({ isOpen, onClose, carBrand, carModel, pric
 
   const handleWhatsApp = () => {
     if (!siteConfig.whatsapp) return;
-    const text = `Hello DAZ safaris and tours! I just sent a booking request via email and want a fast response.\n\n*Car:* ${carBrand} ${carModel}\n*Driver Option:* ${formData.driverOption}\n*From:* ${formData.pickupDate}\n*To:* ${formData.returnDate}\n*Location:* ${formData.location}\n*Flight:* ${formData.flightNumber || "N/A"}`;
+    const text = `Hello Stevinson Adventure! I just sent a booking request via email and want a fast response.\n\n*Car:* ${carBrand} ${carModel}\n*Driver Option:* ${formData.driverOption}\n*From:* ${formData.pickupDate}\n*To:* ${formData.returnDate}\n*Location:* ${formData.location}\n*Flight:* ${formData.flightNumber || "N/A"}`;
     window.open(`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
     handleClose();
   };
