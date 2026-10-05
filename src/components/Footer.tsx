@@ -1,70 +1,98 @@
-import { Car, Mail, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site";
+
+const linkClass =
+  "inline-flex min-h-11 items-center transition-colors hover:text-expedition-sand";
 
 export default function Footer() {
   const phoneDisplay = siteConfig.phone.replace(/(\+\d{3})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
 
   return (
-    <footer id="contact" className="bg-neutral-950 pb-28 pt-10 text-neutral-400 sm:py-16 sm:pb-16 border-t border-neutral-900">
+    <footer
+      id="contact"
+      className="border-t border-expedition-forest-light bg-expedition-forest pb-28 pt-10 text-expedition-sand/70 sm:py-16 sm:pb-16"
+    >
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-12">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="bg-blue-500/10 text-blue-500 p-2 rounded-lg">
-                <Car className="w-6 h-6" aria-hidden="true" />
-              </div>
-              <span className="text-xl font-bold text-white tracking-tight">
-                Stevinson<span className="text-blue-500">Adventure</span>
-              </span>
-            </div>
+            <p className="mb-6 text-xl font-semibold tracking-tight text-expedition-sand">
+              {siteConfig.name}
+            </p>
             <p className="text-sm leading-relaxed">
-              Premium car rental and airport transfers in Nairobi, Kenya — built for international travellers who want a reliable handoff at JKIA or Wilson.
+              {siteConfig.description}
             </p>
           </div>
 
           <div>
-            <h2 className="text-white font-semibold mb-6 text-base">Quick Links</h2>
-            <ul className="space-y-3 text-sm">
-              <li><a href="#fleet" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Our Fleet</a></li>
-              <li><a href="#transfers" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Airport Transfers</a></li>
-              <li><a href="#how-it-works" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">How It Works</a></li>
-              <li><a href="#contact" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Contact Us</a></li>
-              <li><a href="/privacy" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Privacy</a></li>
-              <li><a href="/terms-and-conditions" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Terms &amp; Conditions</a></li> 
+            <h2 className="mb-6 text-base font-semibold text-expedition-sand">Quick Links</h2>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <Link href="/#fleet" className={linkClass}>
+                  Vehicles
+                </Link>
+              </li>
+              <li>
+                <Link href="/#transfers" className={linkClass}>
+                  Airport
+                </Link>
+              </li>
+              <li>
+                <Link href="/#trip-steps" className={linkClass}>
+                  How it works
+                </Link>
+              </li>
+              <li>
+                <a href="#contact" className={linkClass}>
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <Link href="/privacy" className={linkClass}>
+                  Privacy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms-and-conditions" className={linkClass}>
+                  Terms &amp; Conditions
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div className="md:col-span-2">
-            <h2 className="text-white font-semibold mb-6 text-base">Contact Us</h2>
+            <h2 className="mb-6 text-base font-semibold text-expedition-sand">Contact Us</h2>
             <div className="space-y-4 text-sm">
               <p className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
+                <MapPin className="h-5 w-5 shrink-0 text-expedition-accent" aria-hidden="true" />
                 <span>
                   {siteConfig.location.area}, {siteConfig.location.city}, {siteConfig.location.country}
                   <br />
-                  <span className="text-neutral-500">Available for airport pickups (JKIA &amp; Wilson)</span>
+                  <span className="text-expedition-sand/50">Available for airport pickups (JKIA &amp; Wilson)</span>
                 </span>
               </p>
               {siteConfig.phone && (
                 <p className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
-                  <a href={`tel:${siteConfig.phone}`} className="hover:text-blue-400 transition-colors">
+                  <Phone className="h-5 w-5 shrink-0 text-expedition-accent" aria-hidden="true" />
+                  <a href={`tel:${siteConfig.phone}`} className="transition-colors hover:text-expedition-sand">
                     {phoneDisplay}
                   </a>
                 </p>
               )}
-              <p className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
-                <a href={`mailto:${siteConfig.email}`} className="hover:text-blue-400 transition-colors">
-                  {siteConfig.email}
-                </a>
-              </p>
+              {siteConfig.email && (
+                <p className="flex items-center gap-3">
+                  <Mail className="h-5 w-5 shrink-0 text-expedition-accent" aria-hidden="true" />
+                  <a href={`mailto:${siteConfig.email}`} className="transition-colors hover:text-expedition-sand">
+                    {siteConfig.email}
+                  </a>
+                </p>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="border-t border-neutral-900 mt-12 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Stevinson Adventure. All rights reserved.</p>
+        <div className="mt-12 border-t border-expedition-forest-light/60 pt-8 text-center text-sm">
+          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>

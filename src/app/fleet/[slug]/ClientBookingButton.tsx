@@ -3,19 +3,29 @@
 import { useState } from "react";
 import { CalendarCheck } from "lucide-react";
 import BookingModal from "@/components/BookingModal";
+import Button from "@/components/ui/Button";
 
-export default function ClientBookingButton({ car }: { car: any }) {
+export default function ClientBookingButton({
+  car,
+}: {
+  car: {
+    brand: string;
+    model: string;
+    price_per_day: number;
+    currency: string;
+  };
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <button
+      <Button
         onClick={() => setIsModalOpen(true)}
-        className="w-full min-h-[56px] py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg rounded-xl transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.98]"
+        className="w-full min-h-[56px] text-lg"
       >
-        <CalendarCheck className="w-6 h-6" />
+        <CalendarCheck className="h-6 w-6" />
         <span>Check Availability & Book</span>
-      </button>
+      </Button>
 
       <BookingModal
         isOpen={isModalOpen}

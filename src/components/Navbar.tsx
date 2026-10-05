@@ -2,23 +2,29 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, Car } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { siteConfig } from "@/lib/site";
 
 const navLinks = [
-  { href: "#fleet", label: "Our Fleet" },
-  { href: "#transfers", label: "Airport Transfers" },
-  { href: "#how-it-works", label: "How It Works" },
+  { href: "#fleet", label: "Vehicles" },
+  { href: "#transfers", label: "Airport" },
+  { href: "#trip-steps", label: "How it works" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const solid = !isHome || isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -39,55 +45,72 @@ export default function Navbar() {
   return (
     <nav
       aria-label="Primary"
-      className={`fixed top-0 w-full z-50 transition-all duration-300 safe-top ${
-        isScrolled
-          ? "glass-panel shadow-sm py-2.5 sm:py-3"
+      className={`fixed top-0 z-50 w-full transition-all duration-300 safe-top ${
+        solid
+          ? "border-b border-expedition-sand-dark/80 bg-expedition-sand/95 py-2.5 backdrop-blur-sm dark:border-expedition-forest-light/50 dark:bg-expedition-forest/95 sm:py-3"
           : "bg-transparent py-3 sm:py-5"
       }`}
     >
       <div className="container mx-auto px-3 sm:px-4 md:px-6">
         <div className="flex items-center justify-between gap-3">
-          <Link href="/" className="flex items-center gap-1.5 sm:gap-2 group min-w-0" aria-label="Stevinson Adventure home">
-            <div className="bg-blue-500 text-white p-1.5 sm:p-2 rounded-lg group-hover:bg-blue-600 transition-colors shrink-0">
-              <Car className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
-            </div>
-            <span className={`text-lg sm:text-xl font-bold tracking-tight transition-colors truncate ${isScrolled ? "text-neutral-900 dark:text-white" : "text-white"}`}>
-              Stevinson<span className="text-blue-500">Adventure</span>
+          <Link
+            href="/"
+            className="min-w-0"
+            aria-label={`${siteConfig.name} home`}
+          >
+            <span
+              className={`block truncate text-lg font-semibold tracking-tight transition-colors sm:text-xl ${
+                solid
+                  ? "text-expedition-forest dark:text-expedition-sand"
+                  : "text-expedition-sand"
+              }`}
+            >
+              {siteConfig.name}
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
-                className={`text-sm font-medium hover:text-blue-500 transition-colors ${isScrolled ? "text-neutral-600 dark:text-neutral-300" : "text-neutral-200"}`}
+                href={isHome ? link.href : `/${link.href}`}
+                className={`text-sm font-medium transition-colors ${
+                  solid
+                    ? "text-expedition-forest/80 hover:text-expedition-forest dark:text-expedition-sand/80 dark:hover:text-expedition-sand"
+                    : "text-expedition-sand/90 hover:text-expedition-sand"
+                }`}
               >
                 {link.label}
               </Link>
             ))}
-            <ThemeToggle isScrolled={isScrolled} />
+            <ThemeToggle isScrolled={solid} />
             <a
-              href="#fleet"
-              className="px-5 py-2.5 bg-blue-500 text-white text-sm font-semibold rounded-full hover:bg-blue-600 transition-all hover:shadow-lg hover:shadow-blue-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+              href={isHome ? "#fleet" : "/#fleet"}
+              className={`inline-flex min-h-[40px] items-center justify-center rounded-md px-5 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+                solid
+                  ? "bg-expedition-accent text-white hover:bg-expedition-accent-hover focus-visible:ring-expedition-accent"
+                  : "bg-expedition-sand text-expedition-forest hover:bg-white focus-visible:ring-expedition-sand"
+              }`}
             >
-              Book Now
+              View fleet
             </a>
           </div>
 
           <div className="flex items-center gap-1 md:hidden">
-            <ThemeToggle isScrolled={isScrolled} />
+            <ThemeToggle isScrolled={solid} />
             <button
               type="button"
-              className={`p-2.5 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                isScrolled ? "text-neutral-900 dark:text-white" : "text-white"
+              className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 dark:focus-visible:ring-white ${
+                solid
+                  ? "text-expedition-forest dark:text-expedition-sand"
+                  : "text-expedition-sand"
               }`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
@@ -96,25 +119,27 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div
           id="mobile-menu"
-          className="absolute left-0 top-full flex max-h-[calc(100svh-4rem)] w-full flex-col gap-1 overflow-y-auto rounded-b-3xl border-t border-neutral-200 bg-white p-3 shadow-xl dark:border-neutral-800 dark:bg-neutral-950 md:hidden"
+          className="absolute left-0 top-full flex max-h-[calc(100svh-4rem)] w-full flex-col overflow-y-auto border-b border-t border-expedition-sand-dark bg-expedition-sand dark:border-expedition-forest-light dark:bg-expedition-forest md:hidden"
         >
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={isHome ? link.href : `/${link.href}`}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-base font-medium text-neutral-800 dark:text-neutral-200 px-3 py-3.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800 min-h-[48px] flex items-center"
+              className="flex min-h-[48px] items-center border-b border-expedition-sand-dark/70 px-4 py-3.5 text-base font-medium text-expedition-forest dark:border-expedition-forest-light/50 dark:text-expedition-sand"
             >
               {link.label}
             </Link>
           ))}
-          <a
-            href="#fleet"
-            onClick={() => setMobileMenuOpen(false)}
-            className="w-full text-center px-5 py-3.5 bg-blue-500 text-white font-semibold rounded-xl hover:bg-blue-600 mt-2 min-h-[48px] flex items-center justify-center"
-          >
-            Book Now
-          </a>
+          <div className="p-3">
+            <a
+              href={isHome ? "#fleet" : "/#fleet"}
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex min-h-[48px] w-full items-center justify-center rounded-md bg-expedition-accent px-5 py-3.5 font-semibold text-white"
+            >
+              View fleet
+            </a>
+          </div>
         </div>
       )}
     </nav>

@@ -1,36 +1,35 @@
 @import "tailwindcss";
 
+/* next-themes toggles .dark on <html>; make Tailwind dark: follow that class */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-brand-green: #25D366;
-  --color-brand-blue: #0ABAB5;
-  --color-brand-dark: #0a0a0a;
-  --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-
-  /* Tiffany Blue overrides for all Tailwind blue utilities */
-  --color-blue-50: #f0fdfc;
-  --color-blue-100: #ccfbf7;
-  --color-blue-200: #99f6ef;
-  --color-blue-300: #5eeade;
-  --color-blue-400: #2dd4c7;
-  --color-blue-500: #0ABAB5;
-  --color-blue-600: #0d948c;
-  --color-blue-700: #0f7671;
-  --color-blue-800: #115e5a;
-  --color-blue-900: #134e4a;
-  --color-blue-950: #042f2d;
+  --color-brand-dark: #1a2e1f;
+  --color-expedition-sand: #f4efe6;
+  --color-expedition-sand-dark: #e3d9c8;
+  --color-expedition-forest: #1a2e1f;
+  --color-expedition-forest-light: #2d4a32;
+  --color-expedition-accent: #c45c26;
+  --color-expedition-accent-hover: #a84d1f;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-dm-serif), "DM Serif Display", Georgia, "Times New Roman", serif;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  color-scheme: light dark;
+  --background: #f4efe6;
+  --foreground: #1a2e1f;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #1a2e1f;
+  --foreground: #f4efe6;
+  color-scheme: dark;
+}
+
+.font-display {
+  font-family: var(--font-display);
 }
 
 body {
@@ -61,18 +60,66 @@ section[id] {
   padding-top: max(0px, env(safe-area-inset-top));
 }
 
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  .glass-panel {
-    background: rgba(20, 20, 20, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.article {
+  color: #2d4a32;
+  line-height: 1.7;
+}
+
+.article h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: #1a2e1f;
+}
+
+.article h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #1a2e1f;
+}
+
+.article p {
+  margin-bottom: 1rem;
+}
+
+.article ul {
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.article li {
+  margin-bottom: 0.5rem;
+}
+
+.article strong {
+  font-weight: 600;
+  color: #1a2e1f;
+}
+
+.dark .article {
+  color: #cfc6b6;
+}
+
+.dark .article h2,
+.dark .article h3,
+.dark .article strong {
+  color: #f4efe6;
 }
 
 @keyframes fade-up {
@@ -83,15 +130,6 @@ section[id] {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes hero-zoom {
-  from {
-    transform: scale(1.08);
-  }
-  to {
-    transform: scale(1);
   }
 }
 

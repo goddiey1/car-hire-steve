@@ -5,33 +5,38 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export function ThemeToggle({ isScrolled = true }: { isScrolled?: boolean }) {
-  const { setTheme, theme, systemTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => setMounted(true), []);
+  const { setTheme, resolvedTheme } = useTheme();
+  const mounted = React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   if (!mounted) {
-    return <div className="min-w-[44px] min-h-[44px] p-2.5" />;
+    return <div className="min-h-[44px] min-w-[44px] p-2.5" />;
   }
 
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const isDark = resolvedTheme === "dark";
 
   return (
     <button
-      onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-      className={`relative inline-flex items-center justify-center rounded-full p-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 min-w-[44px] min-h-[44px] ${
-        isScrolled 
-          ? "hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300" 
-          : "hover:bg-white/10 text-white"
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className={`relative inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 dark:focus-visible:ring-white ${
+        isScrolled
+          ? "text-expedition-forest/80 hover:bg-expedition-sand-dark/50 dark:text-expedition-sand/80 dark:hover:bg-expedition-forest-light/40"
+          : "text-expedition-sand hover:bg-white/10"
       }`}
-      aria-label="Toggle theme"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {currentTheme === "dark" ? (
+      {isDark ? (
         <Sun className="h-5 w-5 transition-all" />
       ) : (
         <Moon className="h-5 w-5 transition-all" />
       )}
-      <span className="sr-only">Toggle theme</span>
+      <span className="sr-only">
+        {isDark ? "Switch to light mode" : "Switch to dark mode"}
+      </span>
     </button>
   );
 }

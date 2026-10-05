@@ -1,25 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { DM_Serif_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import MobileActionBar from "@/components/MobileActionBar";
 import JsonLd from "@/components/JsonLd";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, siteTitle } from "@/lib/site";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const dmSerif = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-dm-serif",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Stevinson Adventure | Premium Car Rental & Airport Transfers in Nairobi",
-    template: "%s | Stevinson Adventure",
+    default: siteTitle(),
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: [
@@ -30,7 +37,7 @@ export const metadata: Metadata = {
     "self drive Kenya",
     "safari car hire",
     "Nairobi airport transfer",
-    "Stevinson Adventure",
+    siteConfig.name,
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
@@ -40,20 +47,20 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: "Stevinson Adventure | Premium Car Rental & Airport Transfers in Nairobi",
+    title: siteTitle(),
     description: siteConfig.description,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Stevinson Adventure — premium car rental and airport transfers in Nairobi",
+        alt: `${siteConfig.name} — premium car rental and airport transfers in Nairobi`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stevinson Adventure | Car Hire & Airport Transfers in Nairobi",
+    title: siteTitle(),
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
@@ -73,15 +80,15 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "Stevinson Adventure",
+    title: siteConfig.shortName,
     statusBarStyle: "black-translucent",
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#f4efe6" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a2e1f" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -94,8 +101,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} scroll-smooth`}>
-      <body className="font-sans antialiased bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-50 transition-colors duration-300">
+    <html
+      lang="en"
+      className={`${inter.variable} ${dmSerif.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans antialiased bg-expedition-sand dark:bg-expedition-forest text-expedition-forest dark:text-expedition-sand transition-colors duration-300">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -103,7 +114,7 @@ export default function RootLayout({
         >
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100000] focus:rounded-lg focus:bg-blue-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100000] focus:rounded-md focus:bg-neutral-950 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white dark:focus:bg-white dark:focus:text-neutral-950"
           >
             Skip to content
           </a>
