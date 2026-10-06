@@ -25,7 +25,7 @@ export default function Home() {
         {/* Background Image & Overlays */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://res.cloudinary.com/dpyqxho1q/image/upload/v1785354189/home_page_of_safari_tours_ggnpbc.jpg"
+            src="https://res.cloudinary.com/dpyqxho1q/image/upload/v1791315382/homepage_img_luz0vq.jpg"
             alt="Safari vehicle in Kenya"
             fill
             className="object-cover object-center scale-105"
@@ -41,7 +41,7 @@ export default function Home() {
           {/* Top Pill */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#8b7355]/80 backdrop-blur-md border border-white/20 text-white/90 text-[10px] sm:text-xs font-medium tracking-[0.2em] uppercase mb-6 sm:mb-8">
             <Compass className="w-3.5 h-3.5" />
-            Handcrafted Safaris | Based in Nairobi, Kenya
+            Premium Safaris | Based in Nairobi, Kenya
           </div>
 
           {/* Main Headline */}
@@ -51,7 +51,7 @@ export default function Home() {
           </h1>
 
           <p className="mt-6 sm:mt-8 mx-auto max-w-3xl text-sm sm:text-base md:text-lg text-white/90 leading-relaxed font-medium drop-shadow-md">
-            Boutique inside-terminal airport transfers from J.K.I.A & Wilson Airport, paired with rugged 4x4 expedition cruisers handcrafted for the Masai Mara, Amboseli, and beyond.
+            Boutique inside-terminal airport transfers from J.K.I.A & Wilson Airport, paired with rugged 4x4 expedition cruisers custom-built for the Masai Mara, Amboseli, and beyond.
           </p>
 
           {/* CTA Buttons */}

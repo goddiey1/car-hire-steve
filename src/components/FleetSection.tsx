@@ -31,7 +31,7 @@ export default function FleetSection({ cars }: { cars: Car[] }) {
             Pristine Kenyan Overland Engineering
           </p>
           <h2 className="text-3xl sm:text-5xl font-serif font-bold text-[#2b3524] mb-4">
-            Our Handcrafted Safari & VIP Fleet
+            Our Exclusive Safari & VIP Fleet
           </h2>
           <p className="text-[#2b3524]/70 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">
             Every expedition vehicle in the Stevinson Adventure garage is purpose-built in Nairobi for extreme terrain, photography comfort, high-frequency radio connectivity, and effortless highway cruising.
