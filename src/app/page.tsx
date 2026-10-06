@@ -6,7 +6,7 @@ import FleetSection from "@/components/FleetSection";
 import TransferForm from "@/components/TransferForm";
 import ServicesSection from "@/components/ServicesSection";
 import Image from "next/image";
-import { ShieldCheck, Clock, MapPin, MessageSquare } from "lucide-react";
+import { ShieldCheck, Clock, MapPin, MessageSquare, Compass, CheckCircle2, Car as CarIcon } from "lucide-react";
 
 export const metadata: Metadata = {
   alternates: {
@@ -18,168 +18,106 @@ export default function Home() {
   const cars: Car[] = Array.isArray(carsData) ? carsData : ((carsData as { default?: Car[] }).default || []);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-screen">
-      <section className="relative flex min-h-[min(100svh,760px)] items-end justify-center overflow-hidden pb-8 pt-24 sm:min-h-[88vh] sm:items-center sm:pb-16 sm:pt-24">
+    <main id="main-content" className="flex flex-col min-h-screen bg-[#f7f5f0]">
+      
+      {/* Stitch Design Hero Section */}
+      <section className="relative flex flex-col items-center justify-center pt-40 pb-56 sm:pt-48 sm:pb-64 overflow-hidden">
+        {/* Background Image & Overlays */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-900/85 to-neutral-900/50 z-10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent z-10" />
           <Image
             src="https://res.cloudinary.com/dpyqxho1q/image/upload/v1785354189/home_page_of_safari_tours_ggnpbc.jpg"
-            alt="Stevinson Adventure premium SUV ready for Nairobi airport pickup and safari travel"
+            alt="Safari vehicle in Kenya"
             fill
-            className="object-cover object-center scale-105 animate-[hero-zoom_18s_ease-out_forwards]"
+            className="object-cover object-center scale-105"
             priority
             sizes="100vw"
           />
+          {/* Gradient Overlay to make text readable and blend at the bottom */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-[#f7f5f0] z-10" />
         </div>
 
-        <div className="container relative z-20 mx-auto w-full px-4 sm:px-6">
-          <div className="max-w-3xl animate-[fade-up_0.8s_ease-out]">
-            <p className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase mb-3 sm:mb-4 backdrop-blur-sm border border-white/10">
-              Stevinson Adventure · Nairobi
-            </p>
+        {/* Hero Content */}
+        <div className="container relative z-20 mx-auto px-4 text-center max-w-5xl">
+          {/* Top Pill */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#8b7355]/80 backdrop-blur-md border border-white/20 text-white/90 text-[10px] sm:text-xs font-medium tracking-[0.2em] uppercase mb-6 sm:mb-8">
+            <Compass className="w-3.5 h-3.5" />
+            Handcrafted Safaris | Based in Nairobi, Kenya
+          </div>
 
-            <h1 className="text-[1.65rem] leading-[1.15] sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-3 sm:mb-6">
-              Car Hire &amp;{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-sky-400">
-                Airport Transfers
+          {/* Main Headline */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white mb-4 drop-shadow-lg font-serif">
+            Your Kenyan Journey Begins
+            <span className="block italic font-light mt-2 sm:mt-4 text-white/90">The Moment You Touch Down</span>
+          </h1>
+
+          <p className="mt-6 sm:mt-8 mx-auto max-w-3xl text-sm sm:text-base md:text-lg text-white/90 leading-relaxed font-medium drop-shadow-md">
+            Boutique inside-terminal airport transfers from J.K.I.A & Wilson Airport, paired with rugged 4x4 expedition cruisers handcrafted for the Masai Mara, Amboseli, and beyond.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="#transfers"
+              className="w-full sm:w-auto inline-flex justify-center items-center px-8 py-4 bg-[#d66b44] hover:bg-[#c55a33] text-white text-sm font-bold tracking-wide uppercase rounded transition-all shadow-lg"
+            >
+              <MapPin className="w-4 h-4 mr-2" /> Book Airport Transfer
+            </a>
+            <a
+              href="#fleet"
+              className="w-full sm:w-auto inline-flex justify-center items-center px-8 py-4 bg-black/40 backdrop-blur-md hover:bg-black/60 border border-white/30 text-white text-sm font-bold tracking-wide uppercase rounded transition-all shadow-lg"
+            >
+              <CarIcon className="w-4 h-4 mr-2" /> Browse Safari Fleet
+            </a>
+          </div>
+
+          {/* Trust Badges */}
+          <div className="mt-12 sm:mt-16 flex flex-wrap justify-center gap-4 sm:gap-10 text-white/90">
+            <div className="flex items-center gap-2.5 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+              <span className="w-6 h-6 rounded-full bg-[#8b7355] flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-3.5 h-3.5 text-white" />
               </span>
-              <span className="block text-lg sm:text-4xl md:text-5xl mt-1.5 sm:mt-2 font-semibold text-neutral-200">
-                for travellers landing in Kenya
-              </span>
-            </h1>
-
-            <p className="mb-6 max-w-xl text-sm leading-relaxed text-neutral-300 sm:mb-8 sm:text-xl">
-              Clean vehicles, flight-tracked JKIA pickups, and easy booking — WhatsApp if you want an instant reply.
-            </p>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-              <a
-                href="#fleet"
-                className="inline-flex justify-center items-center min-h-[48px] px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-semibold text-neutral-900 bg-white rounded-xl hover:bg-neutral-100 transition-all shadow-xl shadow-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 active:scale-[0.98]"
-              >
-                Explore Fleet
-              </a>
-              <a
-                href="#transfers"
-                className="inline-flex justify-center items-center min-h-[48px] px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-semibold text-white bg-blue-500 rounded-xl hover:bg-blue-600 transition-all shadow-xl shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 active:scale-[0.98]"
-              >
-                Book Airport Transfer
-              </a>
+              <div className="text-left">
+                <p className="text-[11px] font-bold tracking-wide">Inside-Terminal Meet & Greet</p>
+                <p className="text-[9px] text-white/70">Outside baggage claim</p>
+              </div>
             </div>
-
-            <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-neutral-300 sm:mt-7 sm:text-sm">
-              <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-blue-400" />Fast WhatsApp replies</span>
-              <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-blue-400" />No taxi-queue stress</span>
+            
+            <div className="flex items-center gap-2.5 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+              <span className="w-6 h-6 rounded-full bg-[#8b7355] flex items-center justify-center shrink-0">
+                <Clock className="w-3.5 h-3.5 text-white" />
+              </span>
+              <div className="text-left">
+                <p className="text-[11px] font-bold tracking-wide">Automatic Flight Delay Tracking</p>
+                <p className="text-[9px] text-white/70">No extra charges for delays</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-2.5 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+              <span className="w-6 h-6 rounded-full bg-[#8b7355] flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-3.5 h-3.5 text-white" />
+              </span>
+              <div className="text-left">
+                <p className="text-[11px] font-bold tracking-wide">Comprehensive Safari Cover</p>
+                <p className="text-[9px] text-white/70">Full roadside assistance</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section aria-label="Why travellers choose us" className="bg-blue-900 dark:bg-blue-950 py-5 sm:py-8 border-y border-blue-800">
-        <div className="container mx-auto px-3 sm:px-4">
-          <ul className="grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-4 sm:gap-6 text-center text-blue-50 list-none p-0 m-0">
-            {[
-              { icon: ShieldCheck, label: "Fully Insured", short: "Insured" },
-              { icon: Clock, label: "24/7 Support", short: "24/7 Help" },
-              { icon: MapPin, label: "Airport Pickups", short: "JKIA Pickup" },
-              { icon: MessageSquare, label: "Fast WhatsApp Booking", short: "WhatsApp" },
-            ].map(({ icon: Icon, label, short }) => (
-              <li key={label} className="flex flex-col items-center justify-center px-1 py-1 sm:p-2">
-                <Icon className="w-6 h-6 sm:w-8 sm:h-8 mb-1.5 sm:mb-2 text-blue-400 shrink-0" aria-hidden="true" />
-                <span className="text-[11px] leading-tight sm:text-sm font-semibold max-w-[7.5rem] sm:max-w-none">
-                  <span className="sm:hidden">{short}</span>
-                  <span className="hidden sm:inline">{label}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
+      {/* Floating Booking Widget Placeholder Area */}
+      <section className="relative z-30 -mt-24 sm:-mt-32 container mx-auto px-4 max-w-5xl">
+        <div className="bg-white rounded shadow-2xl overflow-hidden border border-neutral-100 p-8 text-center min-h-[200px] flex items-center justify-center">
+            <p className="text-neutral-500 font-medium">[Floating Transfer Form will go here in Step 2]</p>
         </div>
       </section>
+
+      <div className="pt-24 bg-[#f7f5f0]">
+        <FleetSection cars={cars} />
+      </div>
 
       <ServicesSection />
 
-      <FleetSection cars={cars} />
-
-      <section id="transfers" className="relative bg-white py-14 dark:bg-neutral-900 sm:py-32">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-12 lg:gap-20">
-            <div className="w-full lg:w-1/2">
-              <span className="text-blue-500 font-semibold tracking-wider uppercase text-xs sm:text-sm mb-3 sm:mb-4 block">Arrivals Made Easy</span>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-4 sm:mb-6">
-                Seamless Airport Transfers
-              </h2>
-              <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 mb-6 sm:mb-8 leading-relaxed">
-                Skip the taxi queue after a long flight. We track your flight, meet you at arrivals, and drive you straight to your hotel.
-              </p>
-
-              <ul className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
-                {[
-                  "Meet & Greet at arrivals",
-                  "Free waiting for delays",
-                  "Clean, air-conditioned vehicles",
-                  "Fixed prices, no meters",
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-sm sm:text-base text-neutral-700 dark:text-neutral-300 font-medium">
-                    <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center shrink-0">
-                      <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" aria-hidden="true" />
-                    </div>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="w-full lg:w-1/2">
-              <TransferForm />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="how-it-works" className="py-12 sm:py-32 bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-3 sm:mb-4">How Airport Pickup Works</h2>
-            <p className="text-neutral-600 dark:text-neutral-400 text-base sm:text-lg">
-              Exactly how you get your vehicle at JKIA — no guesswork.
-            </p>
-          </div>
-
-          <ol className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 relative max-w-5xl mx-auto list-none p-0 m-0">
-            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-transparent via-blue-200 dark:via-blue-900 to-transparent z-0" aria-hidden="true" />
-
-            {[
-              {
-                step: "01",
-                title: "Provide Flight Details",
-                desc: "Share your flight number when booking. We track it so we know if you are early or delayed.",
-              },
-              {
-                step: "02",
-                title: "Meet Your Rep",
-                desc: "Your representative waits at Arrivals with a nameboard — no hunting for taxis or rental desks.",
-              },
-              {
-                step: "03",
-                title: "Quick Handover",
-                desc: "A brief vehicle check in the airport parking lot, then you are on the road.",
-              },
-            ].map((item) => (
-              <li
-                key={item.step}
-                className="relative z-10 flex flex-col items-center text-center p-5 sm:p-6 bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl shadow-sm border border-neutral-100 dark:border-neutral-800"
-              >
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-blue-50 dark:bg-blue-900/20 border-4 border-white dark:border-neutral-900 flex items-center justify-center text-lg sm:text-xl font-bold text-blue-500 mb-4 sm:mb-6 shadow-sm">
-                  {item.step}
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white mb-2 sm:mb-3">{item.title}</h3>
-                <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
     </main>
   );
 }

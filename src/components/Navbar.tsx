@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, Car } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Menu, X, Phone, Clock, ChevronDown } from "lucide-react";
+import { siteConfig } from "@/lib/site";
 
 const navLinks = [
-  { href: "#fleet", label: "Our Fleet" },
   { href: "#transfers", label: "Airport Transfers" },
+  { href: "#fleet", label: "Safari Fleet" },
+  { href: "#services", label: "Self-Drive & Chauffeur" },
   { href: "#how-it-works", label: "How It Works" },
 ];
 
@@ -16,107 +17,112 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (!mobileMenuOpen) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileMenuOpen(false);
-    };
-    document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
-    };
-  }, [mobileMenuOpen]);
-
   return (
-    <nav
-      aria-label="Primary"
-      className={`fixed top-0 w-full z-50 transition-all duration-300 safe-top ${
-        isScrolled
-          ? "glass-panel shadow-sm py-2.5 sm:py-3"
-          : "bg-transparent py-3 sm:py-5"
-      }`}
-    >
-      <div className="container mx-auto px-3 sm:px-4 md:px-6">
-        <div className="flex items-center justify-between gap-3">
-          <Link href="/" className="flex items-center gap-1.5 sm:gap-2 group min-w-0" aria-label="Stevinson Adventure home">
-            <div className="bg-blue-500 text-white p-1.5 sm:p-2 rounded-lg group-hover:bg-blue-600 transition-colors shrink-0">
-              <Car className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
-            </div>
-            <span className={`text-lg sm:text-xl font-bold tracking-tight transition-colors truncate ${isScrolled ? "text-neutral-900 dark:text-white" : "text-white"}`}>
-              Stevinson<span className="text-blue-500">Adventure</span>
-            </span>
-          </Link>
-
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium hover:text-blue-500 transition-colors ${isScrolled ? "text-neutral-600 dark:text-neutral-300" : "text-neutral-200"}`}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <ThemeToggle isScrolled={isScrolled} />
-            <a
-              href="#fleet"
-              className="px-5 py-2.5 bg-blue-500 text-white text-sm font-semibold rounded-full hover:bg-blue-600 transition-all hover:shadow-lg hover:shadow-blue-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
-            >
-              Book Now
-            </a>
+    <header className="fixed top-0 w-full z-50 transition-all duration-300 shadow-sm flex flex-col">
+      {/* Top utility bar */}
+      <div className="bg-[#1a2119] text-white/80 py-1.5 hidden md:block text-[11px] font-medium tracking-wide">
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          <div className="flex gap-6 items-center">
+            <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> J.K.I.A & Wilson Airport Type Booking Active</span>
+            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-white/50" /> International time (E.A.T +3)</span>
+            <span className="flex items-center gap-1.5">24/7 Dispatch</span>
           </div>
-
-          <div className="flex items-center gap-1 md:hidden">
-            <ThemeToggle isScrolled={isScrolled} />
-            <button
-              type="button"
-              className={`p-2.5 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                isScrolled ? "text-neutral-900 dark:text-white" : "text-white"
-              }`}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-menu"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+          <div className="flex gap-6 items-center">
+            <button className="flex items-center gap-1 hover:text-white transition-colors">Currency: USD ($) <ChevronDown className="w-3 h-3" /></button>
+            <a href={`tel:${siteConfig.phone}`} className="flex items-center gap-1.5 hover:text-white transition-colors">
+              <Phone className="w-3 h-3" /> {siteConfig.phone}
+            </a>
           </div>
         </div>
       </div>
 
-      {mobileMenuOpen && (
-        <div
-          id="mobile-menu"
-          className="absolute left-0 top-full flex max-h-[calc(100svh-4rem)] w-full flex-col gap-1 overflow-y-auto rounded-b-3xl border-t border-neutral-200 bg-white p-3 shadow-xl dark:border-neutral-800 dark:bg-neutral-950 md:hidden"
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-base font-medium text-neutral-800 dark:text-neutral-200 px-3 py-3.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800 min-h-[48px] flex items-center"
-            >
-              {link.label}
+      {/* Main Navbar */}
+      <nav className={`w-full transition-all duration-300 bg-white ${isScrolled ? "py-3" : "py-4 sm:py-5"}`}>
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex items-center justify-between gap-4">
+            
+            {/* Logo */}
+            <Link href="/" className="flex flex-col min-w-0" aria-label="Stevinson Adventure home">
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#2b3524] font-serif uppercase leading-none">
+                Stevinson
+              </span>
+              <span className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-[#d66b44] uppercase mt-1">
+                Adventure
+              </span>
+              <span className="text-[7px] sm:text-[9px] font-medium tracking-widest text-[#2b3524]/60 uppercase mt-1 hidden sm:block">
+                Safari • Airport Concierge • Car Hire
+              </span>
             </Link>
-          ))}
-          <a
-            href="#fleet"
-            onClick={() => setMobileMenuOpen(false)}
-            className="w-full text-center px-5 py-3.5 bg-blue-500 text-white font-semibold rounded-xl hover:bg-blue-600 mt-2 min-h-[48px] flex items-center justify-center"
-          >
-            Book Now
-          </a>
+
+            {/* Desktop Links */}
+            <div className="hidden lg:flex items-center gap-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-[13px] font-semibold text-[#2b3524]/80 hover:text-[#d66b44] transition-colors tracking-wide"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Right Side Actions */}
+            <div className="hidden lg:flex items-center gap-5">
+              <Link href="#reviews" className="text-[13px] font-medium text-[#2b3524]/70 hover:text-[#d66b44] transition-colors">Reviews</Link>
+              <Link href="#contact" className="text-[13px] font-medium text-[#2b3524]/70 hover:text-[#d66b44] transition-colors">Contact</Link>
+              
+              <a
+                href={`https://wa.me/${siteConfig.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 bg-[#25D366] text-white text-[13px] font-bold tracking-wide rounded hover:bg-[#1ebd5b] transition-all flex items-center gap-2 shadow-sm"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="flex items-center gap-2 lg:hidden">
+              <button
+                type="button"
+                className="p-2 text-[#2b3524]"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
         </div>
-      )}
-    </nav>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="absolute left-0 top-full flex w-full flex-col bg-white border-t border-neutral-100 p-4 shadow-xl lg:hidden">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm font-semibold text-[#2b3524] px-3 py-4 border-b border-neutral-50 hover:bg-neutral-50"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <a
+              href={`https://wa.me/${siteConfig.whatsapp}`}
+              className="w-full text-center px-5 py-3 mt-4 bg-[#25D366] text-white font-bold rounded flex items-center justify-center gap-2"
+            >
+              Chat on WhatsApp
+            </a>
+          </div>
+        )}
+      </nav>
+    </header>
   );
 }

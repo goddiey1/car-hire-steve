@@ -1,0 +1,488 @@
+diff --git a/src/components/TransferForm.tsx b/src/components/TransferForm.tsx
+index 1b876bb..dc8bda9 100644
+--- a/src/components/TransferForm.tsx
++++ b/src/components/TransferForm.tsx
+@@ -1,10 +1,33 @@
+ "use client";
+ 
+ import { useState } from "react";
+-import { Plane, Calendar, Users, Briefcase, MapPin, User, Mail, Send, MessageCircle, Check } from "lucide-react";
++import {
++  Plane,
++  Calendar,
++  Users,
++  Briefcase,
++  MapPin,
++  User,
++  Mail,
++  Send,
++  MessageCircle,
++  Check,
++  ArrowRight,
++} from "lucide-react";
+ import { motion, AnimatePresence } from "framer-motion";
+-import { siteConfig } from "@/lib/site";
++import { siteConfig, whatsappGreeting } from "@/lib/site";
+ import { submitEnquiry } from "@/lib/submit-enquiry";
++import Button from "@/components/ui/Button";
++
++const airports = [
++  { value: "JKIA", label: "JKIA", sub: "Jomo Kenyatta" },
++  { value: "Wilson Airport", label: "Wilson", sub: "Domestic & safari" },
++] as const;
++
++const inputClass =
++  "w-full rounded-md border-0 bg-transparent px-0 py-2 text-base text-expedition-sand outline-none placeholder:text-expedition-sand/35 focus:ring-0 sm:text-sm";
++const lightInputClass =
++  "w-full rounded-md border border-expedition-sand-dark/80 bg-white px-3 py-3 text-base text-expedition-forest outline-none placeholder:text-expedition-forest/35 focus:border-expedition-accent focus:ring-1 focus:ring-expedition-accent dark:border-expedition-forest-light/50 dark:bg-expedition-forest/50 dark:text-expedition-sand dark:placeholder:text-expedition-sand/35 sm:py-2.5 sm:text-sm";
+ 
+ export default function TransferForm() {
+   const [step, setStep] = useState<"form" | "success">("form");
+@@ -63,37 +86,27 @@ export default function TransferForm() {
+ 
+   const handleWhatsApp = () => {
+     if (!siteConfig.whatsapp) return;
+-    const text = `Hello Stevinson Adventure! I just sent a transfer request via email and want a fast response.\n\n*From:* ${formData.airport}\n*To:* ${formData.destination}\n*Date:* ${formData.date}\n*Time:* ${formData.time}\n*Flight:* ${formData.flightNumber || "N/A"}\n*Passengers:* ${formData.passengers}\n*Luggage:* ${formData.luggage} bags`;
++    const text = `${whatsappGreeting()} I just sent a transfer request via email and want a fast response.\n\n*From:* ${formData.airport}\n*To:* ${formData.destination}\n*Date:* ${formData.date}\n*Time:* ${formData.time}\n*Flight:* ${formData.flightNumber || "N/A"}\n*Passengers:* ${formData.passengers}\n*Luggage:* ${formData.luggage} bags`;
+     const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`;
+     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+   };
+ 
+   return (
+-    <motion.div 
++    <motion.div
+       initial={{ opacity: 0, y: 20 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       viewport={{ once: true }}
+-      className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-8 w-full max-w-4xl mx-auto shadow-2xl relative overflow-hidden"
++      className="relative w-full max-w-4xl overflow-hidden rounded-xl shadow-lg"
+     >
+-      <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
+-      
+-      <div className="text-center mb-6 sm:mb-8">
+-        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
+-          <Plane className="w-6 h-6 sm:w-8 sm:h-8" />
+-        </div>
+-        <h3 className="text-xl sm:text-3xl font-bold mb-2">Book an Airport Transfer</h3>
+-        <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400">JKIA or Wilson Airport pickups to your destination.</p>
+-      </div>
+-
+       <AnimatePresence mode="wait">
+         {step === "form" ? (
+-          <motion.form 
++          <motion.form
+             key="form"
+-            initial={{ opacity: 0, x: -20 }}
+-            animate={{ opacity: 1, x: 0 }}
+-            exit={{ opacity: 0, x: -20 }}
+-            onSubmit={handleSubmit} 
+-            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5"
++            initial={{ opacity: 0 }}
++            animate={{ opacity: 1 }}
++            exit={{ opacity: 0 }}
++            onSubmit={handleSubmit}
++            className="overflow-hidden"
+           >
+             <input
+               type="text"
+@@ -105,126 +118,310 @@ export default function TransferForm() {
+               aria-hidden="true"
+               className="hidden"
+             />
+-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:col-span-2">
+-              <div className="space-y-1.5">
+-                <label htmlFor="transfer-name" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Name</label>
+-                <div className="relative">
+-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+-                  <input id="transfer-name" required type="text" name="name" onChange={handleChange} className="w-full pl-10 pr-4 py-3.5 sm:py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-base sm:text-sm" />
+-                </div>
+-              </div>
+-              <div className="space-y-1.5">
+-                <label htmlFor="transfer-email" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Email</label>
+-                <div className="relative">
+-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+-                  <input id="transfer-email" required type="email" name="email" onChange={handleChange} className="w-full pl-10 pr-4 py-3.5 sm:py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-base sm:text-sm" />
++
++            {/* Flight-board header */}
++            <div className="bg-expedition-forest px-4 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6">
++              <div className="mb-5 flex items-start justify-between gap-3">
++                <div>
++                  <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-expedition-accent">
++                    Arrival desk
++                  </p>
++                  <h3 className="mt-1 font-display text-xl text-expedition-sand sm:text-2xl">
++                    Book airport pickup
++                  </h3>
+                 </div>
++                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-expedition-accent/20 text-expedition-accent">
++                  <Plane className="h-5 w-5" aria-hidden="true" strokeWidth={1.5} />
++                </span>
+               </div>
+-            </div>
+ 
+-            <div className="space-y-1.5">
+-              <label htmlFor="transfer-airport" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Pickup Location</label>
+-              <div className="relative">
+-                <Plane className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+-                <select id="transfer-airport" name="airport" value={formData.airport} onChange={handleChange} className="w-full pl-10 pr-4 py-3.5 sm:py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none text-base sm:text-sm" required>
+-                  <option value="JKIA">Jomo Kenyatta Int. Airport (JKIA)</option>
+-                  <option value="Wilson Airport">Wilson Airport</option>
+-                </select>
++              <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-expedition-sand/50">
++                Landing at
++              </p>
++              <div
++                className="grid grid-cols-2 gap-2"
++                role="radiogroup"
++                aria-label="Pickup airport"
++              >
++                {airports.map((airport) => {
++                  const selected = formData.airport === airport.value;
++                  return (
++                    <button
++                      key={airport.value}
++                      type="button"
++                      role="radio"
++                      aria-checked={selected}
++                      onClick={() =>
++                        setFormData((prev) => ({ ...prev, airport: airport.value }))
++                      }
++                      className={`rounded-lg px-3 py-3 text-left transition-colors sm:px-4 ${
++                        selected
++                          ? "bg-expedition-accent text-white"
++                          : "bg-expedition-forest-light/40 text-expedition-sand/80 hover:bg-expedition-forest-light/60"
++                      }`}
++                    >
++                      <span className="block text-sm font-semibold sm:text-base">
++                        {airport.label}
++                      </span>
++                      <span
++                        className={`mt-0.5 block text-[11px] ${
++                          selected ? "text-white/80" : "text-expedition-sand/50"
++                        }`}
++                      >
++                        {airport.sub}
++                      </span>
++                    </button>
++                  );
++                })}
+               </div>
+-            </div>
+ 
+-            <div className="space-y-1.5">
+-              <label htmlFor="transfer-destination" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Drop-off Destination</label>
+-              <div className="relative">
+-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+-                <input id="transfer-destination" type="text" name="destination" value={formData.destination} onChange={handleChange} placeholder="e.g. Kempinski Hotel" className="w-full pl-10 pr-4 py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all" required />
+-              </div>
+-            </div>
++              {/* Route strip */}
++              <div className="mt-5 rounded-lg bg-expedition-forest-light/30 p-4">
++                <div className="flex items-stretch gap-3">
++                  <div className="flex min-w-0 flex-1 flex-col">
++                    <label
++                      htmlFor="transfer-airport-display"
++                      className="text-[10px] font-medium uppercase tracking-[0.15em] text-expedition-sand/50"
++                    >
++                      From
++                    </label>
++                    <div className="mt-1 flex items-center gap-2 text-expedition-sand">
++                      <Plane className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" />
++                      <span id="transfer-airport-display" className="truncate text-sm font-semibold">
++                        {formData.airport}
++                      </span>
++                    </div>
++                  </div>
++
++                  <div className="flex flex-col items-center justify-center px-1">
++                    <ArrowRight className="h-4 w-4 text-expedition-accent" aria-hidden="true" />
++                  </div>
+ 
+-            <div className="grid grid-cols-2 gap-5">
+-              <div className="space-y-1.5">
+-                <label htmlFor="transfer-date" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Date</label>
+-                <div className="relative">
+-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+-                <input id="transfer-date" type="date" name="date" value={formData.date} min={minDate} onChange={handleChange} className="w-full pl-10 pr-4 py-3.5 sm:py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all" required />
++                  <div className="flex min-w-0 flex-1 flex-col">
++                    <label
++                      htmlFor="transfer-destination"
++                      className="text-[10px] font-medium uppercase tracking-[0.15em] text-expedition-sand/50"
++                    >
++                      Drop-off
++                    </label>
++                    <div className="mt-1 flex items-center gap-2">
++                      <MapPin className="h-4 w-4 shrink-0 text-expedition-accent" aria-hidden="true" />
++                      <input
++                        id="transfer-destination"
++                        name="destination"
++                        type="text"
++                        required
++                        value={formData.destination}
++                        onChange={handleChange}
++                        placeholder="Hotel or address"
++                        className={inputClass}
++                      />
++                    </div>
++                  </div>
+                 </div>
+               </div>
+-              <div className="space-y-1.5">
+-                <label htmlFor="transfer-time" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Time</label>
+-                <input id="transfer-time" type="time" name="time" value={formData.time} onChange={handleChange} className="w-full px-4 py-3.5 sm:py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all" required />
++
++              {/* Timetable */}
++              <div className="mt-3 grid grid-cols-3 gap-2 sm:gap-3">
++                <div className="rounded-lg bg-expedition-forest-light/30 px-3 py-2.5">
++                  <label
++                    htmlFor="transfer-date"
++                    className="flex items-center gap-1 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-sand/50"
++                  >
++                    <Calendar className="h-3 w-3" aria-hidden="true" />
++                    Date
++                  </label>
++                  <input
++                    id="transfer-date"
++                    name="date"
++                    type="date"
++                    required
++                    min={minDate}
++                    value={formData.date}
++                    onChange={handleChange}
++                    className={`${inputClass} [color-scheme:dark]`}
++                  />
++                </div>
++                <div className="rounded-lg bg-expedition-forest-light/30 px-3 py-2.5">
++                  <label
++                    htmlFor="transfer-time"
++                    className="text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-sand/50"
++                  >
++                    Time
++                  </label>
++                  <input
++                    id="transfer-time"
++                    name="time"
++                    type="time"
++                    required
++                    value={formData.time}
++                    onChange={handleChange}
++                    className={`${inputClass} [color-scheme:dark]`}
++                  />
++                </div>
++                <div className="rounded-lg bg-expedition-forest-light/30 px-3 py-2.5">
++                  <label
++                    htmlFor="transfer-flight-number"
++                    className="text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-sand/50"
++                  >
++                    Flight
++                  </label>
++                  <input
++                    id="transfer-flight-number"
++                    name="flightNumber"
++                    type="text"
++                    value={formData.flightNumber}
++                    onChange={handleChange}
++                    placeholder="KQ100"
++                    className={inputClass}
++                  />
++                </div>
+               </div>
+             </div>
+ 
+-            <div className="grid grid-cols-2 gap-5">
+-              <div className="space-y-1.5">
+-                <label htmlFor="transfer-passengers" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Passengers</label>
+-                <div className="relative">
+-                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+-                  <select id="transfer-passengers" name="passengers" value={formData.passengers} onChange={handleChange} className="w-full pl-10 pr-4 py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
+-                    {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n}</option>)}
++            {/* Light details band */}
++            <div className="border border-t-0 border-expedition-sand-dark/60 bg-expedition-sand px-4 py-5 dark:border-expedition-forest-light/40 dark:bg-expedition-sand/10 sm:px-6 sm:py-6">
++              <div className="mb-4 grid grid-cols-2 gap-3">
++                <div>
++                  <label
++                    htmlFor="transfer-passengers"
++                    className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-forest/55 dark:text-expedition-sand/55"
++                  >
++                    <Users className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" />
++                    Passengers
++                  </label>
++                  <select
++                    id="transfer-passengers"
++                    name="passengers"
++                    value={formData.passengers}
++                    onChange={handleChange}
++                    className={lightInputClass}
++                  >
++                    {[1, 2, 3, 4, 5, 6, 7].map((n) => (
++                      <option key={n} value={n}>
++                        {n} {n === 1 ? "guest" : "guests"}
++                      </option>
++                    ))}
+                   </select>
+                 </div>
+-              </div>
+-              <div className="space-y-1.5">
+-                <label htmlFor="transfer-luggage" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Luggage</label>
+-                <div className="relative">
+-                  <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+-                  <select id="transfer-luggage" name="luggage" value={formData.luggage} onChange={handleChange} className="w-full pl-10 pr-4 py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
+-                    {[0,1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n}</option>)}
++                <div>
++                  <label
++                    htmlFor="transfer-luggage"
++                    className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-forest/55 dark:text-expedition-sand/55"
++                  >
++                    <Briefcase className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" />
++                    Luggage
++                  </label>
++                  <select
++                    id="transfer-luggage"
++                    name="luggage"
++                    value={formData.luggage}
++                    onChange={handleChange}
++                    className={lightInputClass}
++                  >
++                    {[0, 1, 2, 3, 4, 5, 6, 7].map((n) => (
++                      <option key={n} value={n}>
++                        {n} {n === 1 ? "bag" : "bags"}
++                      </option>
++                    ))}
+                   </select>
+                 </div>
+               </div>
+-            </div>
+ 
+-            <div className="md:col-span-2 space-y-1.5">
+-              <label htmlFor="transfer-flight-number" className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Flight Number (Optional)</label>
+-              <div className="relative">
+-                <Plane className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+-                <input id="transfer-flight-number" type="text" name="flightNumber" value={formData.flightNumber} onChange={handleChange} placeholder="e.g. KQ100" className="w-full pl-10 pr-4 py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
++              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
++                <div>
++                  <label
++                    htmlFor="transfer-name"
++                    className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-forest/55 dark:text-expedition-sand/55"
++                  >
++                    <User className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" />
++                    Name
++                  </label>
++                  <input
++                    id="transfer-name"
++                    name="name"
++                    type="text"
++                    required
++                    onChange={handleChange}
++                    className={lightInputClass}
++                  />
++                </div>
++                <div>
++                  <label
++                    htmlFor="transfer-email"
++                    className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-expedition-forest/55 dark:text-expedition-sand/55"
++                  >
++                    <Mail className="h-3.5 w-3.5 text-expedition-accent" aria-hidden="true" />
++                    Email
++                  </label>
++                  <input
++                    id="transfer-email"
++                    name="email"
++                    type="email"
++                    required
++                    onChange={handleChange}
++                    className={lightInputClass}
++                  />
++                </div>
+               </div>
+-            </div>
+ 
+-            <div className="md:col-span-2 pt-2 sm:pt-4">
+-              <button type="submit" disabled={isSubmitting} className="w-full min-h-[48px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold py-3.5 sm:py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white disabled:opacity-70 active:scale-[0.98]">
+-                {isSubmitting ? (
+-                  <span className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+-                ) : (
+-                  <>
+-                    <span className="text-sm sm:text-base">Request Transfer Quote</span>
+-                    <Send className="w-5 h-5" />
+-                  </>
++              <div className="mt-5">
++                <Button type="submit" disabled={isSubmitting} className="w-full">
++                  {isSubmitting ? (
++                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
++                  ) : (
++                    <>
++                      <span>Request pickup quote</span>
++                      <Send className="h-4 w-4" aria-hidden="true" />
++                    </>
++                  )}
++                </Button>
++                {submissionError && (
++                  <p role="alert" className="mt-2 text-sm text-red-600 dark:text-red-400">
++                    {submissionError}
++                  </p>
+                 )}
+-              </button>
+-              {submissionError && (
+-                <p role="alert" className="text-sm text-red-600 dark:text-red-400">
+-                  {submissionError}
+-                </p>
+-              )}
++              </div>
+             </div>
+           </motion.form>
+         ) : (
+-          <motion.div 
++          <motion.div
+             key="success"
+-            initial={{ opacity: 0, x: 20 }}
+-            animate={{ opacity: 1, x: 0 }}
+-            className="text-center py-12"
++            initial={{ opacity: 0, y: 12 }}
++            animate={{ opacity: 1, y: 0 }}
++            className="border border-expedition-sand-dark/60 bg-expedition-sand px-6 py-12 text-center dark:border-expedition-forest-light/40 dark:bg-expedition-forest sm:px-10"
+           >
+-            <div className="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+-              <Check className="w-10 h-10" />
++            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-expedition-accent text-white">
++              <Check className="h-8 w-8" strokeWidth={2} />
+             </div>
+-            <h3 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">Request Sent!</h3>
+-            <p role="status" className="text-neutral-600 dark:text-neutral-400 mb-10 max-w-md mx-auto text-lg">
+-              We&apos;ve received your transfer details and will email you shortly. Want an instant confirmation right now?
++            <h3 className="mb-3 font-display text-2xl tracking-tight text-expedition-forest dark:text-expedition-sand sm:text-3xl">
++              Pickup request sent
++            </h3>
++            <p
++              role="status"
++              className="mx-auto mb-8 max-w-md text-expedition-forest/75 dark:text-expedition-sand/75"
++            >
++              We&apos;ll email your quote shortly. For a faster reply after landing plans change,
++              continue on WhatsApp.
+             </p>
+-            
++
+             {siteConfig.whatsapp && (
+-              <button type="button" onClick={handleWhatsApp} className="max-w-md mx-auto w-full py-4 bg-[#25D366] text-white font-bold text-lg rounded-xl flex items-center justify-center gap-2 hover:bg-[#1ebd5b] transition-colors shadow-lg shadow-[#25D366]/20">
+-                <MessageCircle className="w-6 h-6" aria-hidden="true" />
++              <Button
++                type="button"
++                variant="whatsapp"
++                onClick={handleWhatsApp}
++                className="mx-auto w-full max-w-md"
++              >
++                <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                 <span>Continue on WhatsApp →</span>
+-              </button>
++              </Button>
+             )}
+-            <button type="button" onClick={() => setStep("form")} className="mt-6 text-sm font-medium text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300">
+-              Submit another request
++            <button
++              type="button"
++              onClick={() => setStep("form")}
++              className="mt-6 text-sm font-medium text-expedition-forest/60 hover:text-expedition-accent dark:text-expedition-sand/60"
++            >
++              Book another pickup
+             </button>
+           </motion.div>
+         )}
