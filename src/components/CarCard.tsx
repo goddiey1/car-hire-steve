@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { siteConfig } from "@/lib/site";
 import { CheckCircle2 } from "lucide-react";
