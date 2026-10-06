@@ -106,10 +106,8 @@ export default function Home() {
       </section>
 
       {/* Floating Booking Widget Placeholder Area */}
-      <section className="relative z-30 -mt-24 sm:-mt-32 container mx-auto px-4 max-w-5xl">
-        <div className="bg-white rounded shadow-2xl overflow-hidden border border-neutral-100 p-8 text-center min-h-[200px] flex items-center justify-center">
-            <p className="text-neutral-500 font-medium">[Floating Transfer Form will go here in Step 2]</p>
-        </div>
+      <section className="relative z-30 -mt-24 sm:-mt-32 container mx-auto px-4 max-w-6xl">
+        <TransferForm />
       </section>
 
       <div className="pt-24 bg-[#f7f5f0]">

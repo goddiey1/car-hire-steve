@@ -8,6 +8,7 @@ import MobileActionBar from "@/components/MobileActionBar";
 import JsonLd from "@/components/JsonLd";
 import { siteConfig } from "@/lib/site";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { CurrencyProvider } from "@/components/CurrencyProvider";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -101,18 +102,20 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
         >
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100000] focus:rounded-lg focus:bg-blue-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
-          >
-            Skip to content
-          </a>
-          <JsonLd />
-          <Navbar />
-          {children}
-          <Footer />
-          <MobileActionBar />
-          <WhatsAppFloat />
+          <CurrencyProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100000] focus:rounded-lg focus:bg-blue-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+            >
+              Skip to content
+            </a>
+            <JsonLd />
+            <Navbar />
+            {children}
+            <Footer />
+            <MobileActionBar />
+            <WhatsAppFloat />
+          </CurrencyProvider>
         </ThemeProvider>
       </body>
     </html>

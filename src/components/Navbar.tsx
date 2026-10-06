@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X, Phone, Clock, ChevronDown } from "lucide-react";
 import { siteConfig } from "@/lib/site";
+import { useCurrency, Currency } from "./CurrencyProvider";
 
 const navLinks = [
   { href: "#transfers", label: "Airport Transfers" },
@@ -15,6 +16,8 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { currency, setCurrency } = useCurrency();
+  const [currencyOpen, setCurrencyOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -25,16 +28,39 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 w-full z-50 transition-all duration-300 shadow-sm flex flex-col">
       {/* Top utility bar */}
-      <div className="bg-[#1a2119] text-white/80 py-1.5 hidden md:block text-[11px] font-medium tracking-wide">
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex gap-6 items-center">
-            <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> J.K.I.A & Wilson Airport Type Booking Active</span>
-            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-white/50" /> International time (E.A.T +3)</span>
-            <span className="flex items-center gap-1.5">24/7 Dispatch</span>
+      <div className="bg-[#1a2119] text-white/80 py-1.5 text-[9px] sm:text-[11px] font-medium tracking-wide">
+        <div className="container mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-1.5">
+          <div className="flex gap-3 sm:gap-6 items-center w-full sm:w-auto overflow-x-auto whitespace-nowrap hide-scrollbar">
+            <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shrink-0"></span> <span className="hidden sm:inline">J.K.I.A & Wilson Airport Type </span>Booking Active</span>
+            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-white/50 shrink-0" /> <span className="hidden sm:inline">International time (E.A.T +3)</span><span className="sm:hidden">E.A.T +3</span></span>
+            <span className="flex items-center gap-1.5 shrink-0">24/7 Dispatch</span>
           </div>
-          <div className="flex gap-6 items-center">
-            <button className="flex items-center gap-1 hover:text-white transition-colors">Currency: USD ($) <ChevronDown className="w-3 h-3" /></button>
-            <a href={`tel:${siteConfig.phone}`} className="flex items-center gap-1.5 hover:text-white transition-colors">
+          <div className="flex gap-4 sm:gap-6 items-center w-full sm:w-auto justify-between sm:justify-end border-t border-white/10 sm:border-none pt-1 sm:pt-0">
+            <div className="relative">
+              <button 
+                onClick={() => setCurrencyOpen(!currencyOpen)}
+                className="flex items-center gap-1 hover:text-white transition-colors"
+              >
+                Currency: {currency} <ChevronDown className="w-3 h-3" />
+              </button>
+              {currencyOpen && (
+                <div className="absolute top-full left-0 mt-1 bg-white text-[#2b3524] rounded shadow-lg border border-neutral-200 overflow-hidden flex flex-col min-w-[100px] z-[60]">
+                  {(['KSh', 'USD', 'GBP'] as Currency[]).map((c) => (
+                    <button 
+                      key={c}
+                      className="px-4 py-2 text-left hover:bg-neutral-100 font-bold text-xs"
+                      onClick={() => {
+                        setCurrency(c);
+                        setCurrencyOpen(false);
+                      }}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <a href={`tel:${siteConfig.phone}`} className="flex items-center gap-1.5 hover:text-white transition-colors shrink-0">
               <Phone className="w-3 h-3" /> {siteConfig.phone}
             </a>
           </div>
