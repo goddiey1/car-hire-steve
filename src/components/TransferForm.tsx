@@ -34,14 +34,14 @@ export default function TransferForm() {
     
     let text = "";
     if (activeTab === "airport") {
-      text = \`Hello Stevinson Adventure! I'd like to reserve an airport transfer.\\n\\n*From:* \${formData.airport}\\n*To:* \${formData.destination || "Nairobi City"}\\n*Date:* \${formData.date}\\n*Flight:* \${formData.flight || "TBD"}\\n*Guests:* \${formData.guests}\`;
+      text = `Hello Stevinson Adventure! I'd like to reserve an airport transfer.\n\n*From:* ${formData.airport}\n*To:* ${formData.destination || "Nairobi City"}\n*Date:* ${formData.date}\n*Flight:* ${formData.flight || "TBD"}\n*Guests:* ${formData.guests}`;
     } else if (activeTab === "self-drive") {
-      text = \`Hello Stevinson Adventure! I'd like to inquire about a Self-Drive vehicle.\\n\\n*Vehicle:* \${formData.vehicle}\\n*Dates:* \${formData.date} to \${formData.endDate}\\n*Pickup:* \${formData.airport}\\n*Delivery:* \${formData.delivery}\`;
+      text = `Hello Stevinson Adventure! I'd like to inquire about a Self-Drive vehicle.\n\n*Vehicle:* ${formData.vehicle}\n*Dates:* ${formData.date} to ${formData.endDate}\n*Pickup:* ${formData.airport}\n*Delivery:* ${formData.delivery}`;
     } else {
-      text = \`Hello Stevinson Adventure! I'd like to book a Chauffeured Safari Guide.\\n\\n*Vehicle:* \${formData.vehicle}\\n*Dates:* \${formData.date} to \${formData.endDate}\\n*Pickup:* \${formData.airport}\\n*Itinerary:* \${formData.itinerary || "Not Decided"}\`;
+      text = `Hello Stevinson Adventure! I'd like to book a Chauffeured Safari Guide.\n\n*Vehicle:* ${formData.vehicle}\n*Dates:* ${formData.date} to ${formData.endDate}\n*Pickup:* ${formData.airport}\n*Itinerary:* ${formData.itinerary || "Not Decided"}`;
     }
     
-    const whatsappUrl = \`https://wa.me/\${siteConfig.whatsapp}?text=\${encodeURIComponent(text)}\`;
+    const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
 
@@ -52,19 +52,19 @@ export default function TransferForm() {
       <div className="flex flex-col sm:flex-row w-full bg-[#1a2119] text-white/70 text-xs sm:text-[11px] font-bold tracking-widest uppercase">
         <button 
           onClick={() => setActiveTab("airport")}
-          className={\`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all \${activeTab === "airport" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}\`}
+          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "airport" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
         >
           <Plane className="w-4 h-4" /> Airport Transfer (JKIA / Wilson)
         </button>
         <button 
           onClick={() => setActiveTab("self-drive")}
-          className={\`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all \${activeTab === "self-drive" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}\`}
+          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "self-drive" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
         >
           <Car className="w-4 h-4" /> Self-Drive & Safari 4x4
         </button>
         <button 
           onClick={() => setActiveTab("chauffeur")}
-          className={\`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all \${activeTab === "chauffeur" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}\`}
+          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "chauffeur" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
         >
           <User className="w-4 h-4" /> Chauffeured & Safari Guide
         </button>
@@ -357,7 +357,7 @@ export default function TransferForm() {
               <MessageCircle className="w-5 h-5" /> Reserve Instantly via WhatsApp
             </button>
             <a 
-              href={\`mailto:\${siteConfig.email}\`}
+              href={`mailto:${siteConfig.email}`}
               className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-white border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 text-[#2b3524] text-sm font-bold tracking-wide rounded transition-all"
             >
               <Mail className="w-4 h-4 text-neutral-400" /> Email Enquiry
