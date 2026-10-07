@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plane, Calendar, Users, MapPin, MessageCircle, Mail, Car, User } from "lucide-react";
+import { Plane, Calendar, Users, MapPin, MessageCircle, Mail, Car, User, Navigation, CheckCircle2 } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 
 import { useCurrency } from "./CurrencyProvider";
@@ -15,9 +15,13 @@ export default function TransferForm() {
     airport: "JKIA Terminal 1A",
     destination: "",
     date: "",
+    endDate: "",
     flight: "",
     guests: "2",
-    luggage: "4"
+    luggage: "4",
+    vehicle: "Safari 4x4 Cruiser",
+    delivery: "Self-Pickup (Office)",
+    itinerary: ""
   });
 
   const baseMinKsh = 4500;
@@ -27,8 +31,17 @@ export default function TransferForm() {
 
   const handleWhatsApp = () => {
     if (!siteConfig.whatsapp) return;
-    const text = `Hello Stevinson Adventure! I'd like to reserve an airport transfer.\n\n*From:* ${formData.airport}\n*To:* ${formData.destination || "Nairobi City"}\n*Date:* ${formData.date}\n*Flight:* ${formData.flight || "TBD"}\n*Guests:* ${formData.guests}`;
-    const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`;
+    
+    let text = "";
+    if (activeTab === "airport") {
+      text = \`Hello Stevinson Adventure! I'd like to reserve an airport transfer.\\n\\n*From:* \${formData.airport}\\n*To:* \${formData.destination || "Nairobi City"}\\n*Date:* \${formData.date}\\n*Flight:* \${formData.flight || "TBD"}\\n*Guests:* \${formData.guests}\`;
+    } else if (activeTab === "self-drive") {
+      text = \`Hello Stevinson Adventure! I'd like to inquire about a Self-Drive vehicle.\\n\\n*Vehicle:* \${formData.vehicle}\\n*Dates:* \${formData.date} to \${formData.endDate}\\n*Pickup:* \${formData.airport}\\n*Delivery:* \${formData.delivery}\`;
+    } else {
+      text = \`Hello Stevinson Adventure! I'd like to book a Chauffeured Safari Guide.\\n\\n*Vehicle:* \${formData.vehicle}\\n*Dates:* \${formData.date} to \${formData.endDate}\\n*Pickup:* \${formData.airport}\\n*Itinerary:* \${formData.itinerary || "Not Decided"}\`;
+    }
+    
+    const whatsappUrl = \`https://wa.me/\${siteConfig.whatsapp}?text=\${encodeURIComponent(text)}\`;
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
 
@@ -39,19 +52,19 @@ export default function TransferForm() {
       <div className="flex flex-col sm:flex-row w-full bg-[#1a2119] text-white/70 text-xs sm:text-[11px] font-bold tracking-widest uppercase">
         <button 
           onClick={() => setActiveTab("airport")}
-          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "airport" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
+          className={\`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all \${activeTab === "airport" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}\`}
         >
           <Plane className="w-4 h-4" /> Airport Transfer (JKIA / Wilson)
         </button>
         <button 
           onClick={() => setActiveTab("self-drive")}
-          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "self-drive" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
+          className={\`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all \${activeTab === "self-drive" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}\`}
         >
           <Car className="w-4 h-4" /> Self-Drive & Safari 4x4
         </button>
         <button 
           onClick={() => setActiveTab("chauffeur")}
-          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "chauffeur" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
+          className={\`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all \${activeTab === "chauffeur" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}\`}
         >
           <User className="w-4 h-4" /> Chauffeured & Safari Guide
         </button>
@@ -63,96 +76,275 @@ export default function TransferForm() {
         {/* Input Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6">
           
-          {/* Pickup */}
-          <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-            <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
-              <Plane className="w-3 h-3 text-[#d66b44]" /> Pickup Location
-            </label>
-            <select className="w-full bg-transparent text-sm font-semibold text-[#2b3524] outline-none appearance-none cursor-pointer">
-              <option>J.K.I.A Terminal 1A/1E (VIP Desk)</option>
-              <option>Wilson Airport</option>
-            </select>
-            <p className="text-[10px] text-neutral-400 mt-1">Flight monitor active (Free)</p>
-          </div>
+          {/* -------------------- AIRPORT TRANSFER FIELDS -------------------- */}
+          {activeTab === "airport" && (
+            <>
+              {/* Pickup */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <Plane className="w-3 h-3 text-[#d66b44]" /> Pickup Location
+                </label>
+                <select 
+                  className="w-full bg-transparent text-sm font-semibold text-[#2b3524] outline-none appearance-none cursor-pointer"
+                  onChange={(e) => setFormData({...formData, airport: e.target.value})}
+                >
+                  <option>J.K.I.A Terminal 1A/1E (VIP Desk)</option>
+                  <option>Wilson Airport</option>
+                </select>
+                <p className="text-[10px] text-neutral-400 mt-1">Flight monitor active (Free)</p>
+              </div>
 
-          {/* Destination */}
-          <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
-            <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
-              <MapPin className="w-3 h-3 text-[#d66b44]" /> Destination
-            </label>
-            <input 
-              type="text" 
-              placeholder="Nairobi City / Luxury Hotel" 
-              className="w-full bg-transparent text-sm font-semibold text-[#2b3524] placeholder:text-[#2b3524]/60 outline-none"
-              onChange={(e) => setFormData({...formData, destination: e.target.value})}
-            />
-            <p className="text-[10px] text-neutral-400 mt-1">Express expressway routing</p>
-          </div>
+              {/* Destination */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <MapPin className="w-3 h-3 text-[#d66b44]" /> Destination
+                </label>
+                <input 
+                  type="text" 
+                  placeholder="Nairobi City / Luxury Hotel" 
+                  className="w-full bg-transparent text-sm font-semibold text-[#2b3524] placeholder:text-[#2b3524]/60 outline-none"
+                  onChange={(e) => setFormData({...formData, destination: e.target.value})}
+                />
+                <p className="text-[10px] text-neutral-400 mt-1">Express expressway routing</p>
+              </div>
 
-          {/* Date & Flight */}
-          <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
-            <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
-              <Calendar className="w-3 h-3 text-[#d66b44]" /> Date & Flight No.
-            </label>
-            <div className="flex gap-2">
-              <input 
-                type="date" 
-                className="w-1/2 bg-transparent text-sm font-semibold text-[#2b3524] outline-none"
-                onChange={(e) => setFormData({...formData, date: e.target.value})}
-              />
-              <input 
-                type="text" 
-                placeholder="KQ 101" 
-                className="w-1/2 bg-transparent text-sm font-semibold text-[#2b3524] placeholder:text-[#2b3524]/60 outline-none"
-                onChange={(e) => setFormData({...formData, flight: e.target.value})}
-              />
-            </div>
-            <p className="text-[10px] text-neutral-400 mt-1">Free 90-minute customs buffer</p>
-          </div>
+              {/* Date & Flight */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <Calendar className="w-3 h-3 text-[#d66b44]" /> Date & Flight No.
+                </label>
+                <div className="flex gap-2">
+                  <input 
+                    type="date" 
+                    className="w-1/2 bg-transparent text-sm font-semibold text-[#2b3524] outline-none"
+                    onChange={(e) => setFormData({...formData, date: e.target.value})}
+                  />
+                  <input 
+                    type="text" 
+                    placeholder="KQ 101" 
+                    className="w-1/2 bg-transparent text-sm font-semibold text-[#2b3524] placeholder:text-[#2b3524]/60 outline-none"
+                    onChange={(e) => setFormData({...formData, flight: e.target.value})}
+                  />
+                </div>
+                <p className="text-[10px] text-neutral-400 mt-1">Free 90-minute customs buffer</p>
+              </div>
 
-          {/* Guests & Luggage */}
-          <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-            <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
-              <Users className="w-3 h-3 text-[#d66b44]" /> Guests & Luggage
-            </label>
-            <div className="flex items-center text-sm font-semibold text-[#2b3524]">
-              <select className="bg-transparent outline-none appearance-none cursor-pointer pr-2" onChange={(e) => setFormData({...formData, guests: e.target.value})}>
-                <option value="1">1 Guest</option>
-                <option value="2" selected>2 Guests</option>
-                <option value="3">3 Guests</option>
-                <option value="4">4 Guests</option>
-                <option value="5+">5+ Guests</option>
-              </select>
-              <span className="text-neutral-300 mx-2">|</span>
-              <select className="bg-transparent outline-none appearance-none cursor-pointer" onChange={(e) => setFormData({...formData, luggage: e.target.value})}>
-                <option value="1">1 Bag</option>
-                <option value="2">2 Bags</option>
-                <option value="4" selected>4 Safari Duffels</option>
-                <option value="5+">5+ Bags</option>
-              </select>
-            </div>
-            <p className="text-[10px] text-neutral-400 mt-1">+ Standard Size Speciality</p>
-          </div>
+              {/* Guests & Luggage */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <Users className="w-3 h-3 text-[#d66b44]" /> Guests & Luggage
+                </label>
+                <div className="flex items-center text-sm font-semibold text-[#2b3524]">
+                  <select className="bg-transparent outline-none appearance-none cursor-pointer pr-2" defaultValue="2" onChange={(e) => setFormData({...formData, guests: e.target.value})}>
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5+">5+ Guests</option>
+                  </select>
+                  <span className="text-neutral-300 mx-2">|</span>
+                  <select className="bg-transparent outline-none appearance-none cursor-pointer" defaultValue="4" onChange={(e) => setFormData({...formData, luggage: e.target.value})}>
+                    <option value="1">1 Bag</option>
+                    <option value="2">2 Bags</option>
+                    <option value="4">4 Safari Duffels</option>
+                    <option value="5+">5+ Bags</option>
+                  </select>
+                </div>
+                <p className="text-[10px] text-neutral-400 mt-1">+ Standard Size Speciality</p>
+              </div>
+            </>
+          )}
+
+          {/* -------------------- SELF-DRIVE FIELDS -------------------- */}
+          {activeTab === "self-drive" && (
+            <>
+              {/* Pickup Location */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <MapPin className="w-3 h-3 text-[#d66b44]" /> Starting Location
+                </label>
+                <select 
+                  className="w-full bg-transparent text-sm font-semibold text-[#2b3524] outline-none appearance-none cursor-pointer"
+                  onChange={(e) => setFormData({...formData, airport: e.target.value})}
+                >
+                  <option>Nairobi City Center</option>
+                  <option>J.K.I.A Airport</option>
+                  <option>Wilson Airport</option>
+                </select>
+                <p className="text-[10px] text-neutral-400 mt-1">Where will you begin?</p>
+              </div>
+
+              {/* Vehicle Type */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <Car className="w-3 h-3 text-[#d66b44]" /> Vehicle Preference
+                </label>
+                <select 
+                  className="w-full bg-transparent text-sm font-semibold text-[#2b3524] outline-none appearance-none cursor-pointer"
+                  onChange={(e) => setFormData({...formData, vehicle: e.target.value})}
+                >
+                  <option>Safari 4x4 Cruiser</option>
+                  <option>Executive SUV (Prado)</option>
+                  <option>Family Minivan</option>
+                  <option>Economy Sedan</option>
+                </select>
+                <p className="text-[10px] text-neutral-400 mt-1">Fully serviced & insured</p>
+              </div>
+
+              {/* Dates */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <Calendar className="w-3 h-3 text-[#d66b44]" /> Rental Dates
+                </label>
+                <div className="flex gap-2 items-center">
+                  <input 
+                    type="date" 
+                    className="w-[45%] bg-transparent text-[13px] font-semibold text-[#2b3524] outline-none"
+                    onChange={(e) => setFormData({...formData, date: e.target.value})}
+                  />
+                  <span className="text-neutral-300 w-[10%] text-center">to</span>
+                  <input 
+                    type="date" 
+                    className="w-[45%] bg-transparent text-[13px] font-semibold text-[#2b3524] outline-none"
+                    onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+                  />
+                </div>
+                <p className="text-[10px] text-neutral-400 mt-1">Unlimited mileage available</p>
+              </div>
+
+              {/* Delivery */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <CheckCircle2 className="w-3 h-3 text-[#d66b44]" /> Delivery Option
+                </label>
+                <select 
+                  className="w-full bg-transparent text-sm font-semibold text-[#2b3524] outline-none appearance-none cursor-pointer"
+                  onChange={(e) => setFormData({...formData, delivery: e.target.value})}
+                >
+                  <option>Self-Pickup (Office)</option>
+                  <option>Deliver to My Hotel</option>
+                  <option>Deliver to Airport</option>
+                </select>
+                <p className="text-[10px] text-neutral-400 mt-1">Convenient handover</p>
+              </div>
+            </>
+          )}
+
+          {/* -------------------- CHAUFFEUR FIELDS -------------------- */}
+          {activeTab === "chauffeur" && (
+            <>
+              {/* Pickup Location */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <MapPin className="w-3 h-3 text-[#d66b44]" /> Pickup Location
+                </label>
+                <select 
+                  className="w-full bg-transparent text-sm font-semibold text-[#2b3524] outline-none appearance-none cursor-pointer"
+                  onChange={(e) => setFormData({...formData, airport: e.target.value})}
+                >
+                  <option>Nairobi Hotel</option>
+                  <option>J.K.I.A Airport</option>
+                  <option>Wilson Airport</option>
+                </select>
+                <p className="text-[10px] text-neutral-400 mt-1">Meet & Greet included</p>
+              </div>
+
+              {/* Vehicle Type */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <Car className="w-3 h-3 text-[#d66b44]" /> Vehicle Preference
+                </label>
+                <select 
+                  className="w-full bg-transparent text-sm font-semibold text-[#2b3524] outline-none appearance-none cursor-pointer"
+                  onChange={(e) => setFormData({...formData, vehicle: e.target.value})}
+                >
+                  <option>Custom Safari 4x4 Cruiser</option>
+                  <option>VIP Executive SUV</option>
+                  <option>Spacious Safari Minivan</option>
+                </select>
+                <p className="text-[10px] text-neutral-400 mt-1">Expert driver-guide assigned</p>
+              </div>
+
+              {/* Dates */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <Calendar className="w-3 h-3 text-[#d66b44]" /> Safari / Tour Dates
+                </label>
+                <div className="flex gap-2 items-center">
+                  <input 
+                    type="date" 
+                    className="w-[45%] bg-transparent text-[13px] font-semibold text-[#2b3524] outline-none"
+                    onChange={(e) => setFormData({...formData, date: e.target.value})}
+                  />
+                  <span className="text-neutral-300 w-[10%] text-center">to</span>
+                  <input 
+                    type="date" 
+                    className="w-[45%] bg-transparent text-[13px] font-semibold text-[#2b3524] outline-none"
+                    onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+                  />
+                </div>
+                <p className="text-[10px] text-neutral-400 mt-1">Full day / Multi-day</p>
+              </div>
+
+              {/* Itinerary */}
+              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+                  <Navigation className="w-3 h-3 text-[#d66b44]" /> Intended Route / Parks
+                </label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. Masai Mara, Amboseli" 
+                  className="w-full bg-transparent text-sm font-semibold text-[#2b3524] placeholder:text-[#2b3524]/60 outline-none"
+                  onChange={(e) => setFormData({...formData, itinerary: e.target.value})}
+                />
+                <p className="text-[10px] text-neutral-400 mt-1">We can help you plan!</p>
+              </div>
+            </>
+          )}
 
         </div>
 
         {/* Bottom Action Bar */}
         <div className="mt-8 pt-6 border-t border-neutral-100 flex flex-col md:flex-row items-center justify-between gap-6">
           
-          {/* Price Estimate */}
+          {/* Status / Notice */}
           <div className="flex items-start gap-4 max-w-lg">
             <div className="w-10 h-10 rounded-full bg-[#f7f5f0] flex items-center justify-center shrink-0 border border-neutral-200">
               <span className="w-4 h-4 rounded-full bg-[#d66b44]"></span>
             </div>
             <div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Price Estimate:</span>
-                <span className="text-lg font-serif font-bold text-[#2b3524]">{minPrice.symbol}{minPrice.amount} - {maxPrice.symbol}{maxPrice.amount} {minPrice.code}</span>
-                <span className="text-[10px] font-bold text-red-500 bg-red-50 px-1.5 py-0.5 rounded">Flat Rate</span>
-              </div>
-              <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-relaxed">
-                Includes inside-terminal meet & greet, incident management, parking fees, and roadblock navigating. No hidden extras.
-              </p>
+              {activeTab === "airport" ? (
+                <>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Price Estimate:</span>
+                    <span className="text-lg font-serif font-bold text-[#2b3524]">{minPrice.symbol}{minPrice.amount} - {maxPrice.symbol}{maxPrice.amount} {minPrice.code}</span>
+                    <span className="text-[10px] font-bold text-red-500 bg-red-50 px-1.5 py-0.5 rounded">Flat Rate</span>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-relaxed">
+                    Includes inside-terminal meet & greet, incident management, parking fees, and roadblock navigating. No hidden extras.
+                  </p>
+                </>
+              ) : activeTab === "self-drive" ? (
+                <>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Self-Drive Fleet:</span>
+                    <span className="text-lg font-serif font-bold text-[#2b3524]">Check Fleet Section</span>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-relaxed">
+                    View our fleet below for daily rates. Comprehensive insurance and 24/7 roadside assistance included in all self-drive rentals.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Bespoke Safari:</span>
+                    <span className="text-lg font-serif font-bold text-[#2b3524]">Custom Quote</span>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-relaxed">
+                    Chauffeur and guide rates depend on the itinerary and duration. Contact us for a personalized package tailored to your exact needs.
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
@@ -164,9 +356,12 @@ export default function TransferForm() {
             >
               <MessageCircle className="w-5 h-5" /> Reserve Instantly via WhatsApp
             </button>
-            <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-white border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 text-[#2b3524] text-sm font-bold tracking-wide rounded transition-all">
+            <a 
+              href={\`mailto:\${siteConfig.email}\`}
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-white border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 text-[#2b3524] text-sm font-bold tracking-wide rounded transition-all"
+            >
               <Mail className="w-4 h-4 text-neutral-400" /> Email Enquiry
-            </button>
+            </a>
           </div>
 
         </div>
