@@ -4,9 +4,9 @@ export const siteConfig = {
   description:
     "Premium car hire and airport transfers in Nairobi, Kenya. Self-drive and chauffeur-driven vehicles for international tourists. JKIA & Wilson Airport pickups with WhatsApp booking.",
   locale: "en_KE",
-  phone: "+254 715 927 397",
+  phone: "+254 715 494 311",
   email: "dazsafaris19@gmail.com",
-  whatsapp: "254715927397",
+  whatsapp: "254715494311",
   ogImage:
     "https://res.cloudinary.com/dpyqxho1q/image/upload/v1776721279/68d2434a7b13f_wdkrva.jpg",
   location: {
