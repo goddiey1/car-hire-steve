@@ -106,7 +106,7 @@ export default function Home() {
       </section>
 
       {/* Floating Booking Widget Placeholder Area */}
-      <section className="relative z-30 -mt-24 sm:-mt-32 container mx-auto px-4 max-w-6xl">
+      <section id="transfers" className="relative z-30 -mt-24 sm:-mt-32 container mx-auto px-4 max-w-6xl">
         <TransferForm />
       </section>
 
