@@ -19,8 +19,8 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Stevinson Adventure | Premium Car Rental & Airport Transfers in Nairobi",
-    template: "%s | Stevinson Adventure",
+    default: "Stevinson Adventure Safari | Premium Car Rental & Airport Transfers in Nairobi",
+    template: "%s | Stevinson Adventure Safari",
   },
   description: siteConfig.description,
   keywords: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     "self drive Kenya",
     "safari car hire",
     "Nairobi airport transfer",
-    "Stevinson Adventure",
+    "Stevinson Adventure Safari",
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
@@ -41,20 +41,20 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: "Stevinson Adventure | Premium Car Rental & Airport Transfers in Nairobi",
+    title: "Stevinson Adventure Safari | Premium Car Rental & Airport Transfers in Nairobi",
     description: siteConfig.description,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Stevinson Adventure — premium car rental and airport transfers in Nairobi",
+        alt: "Stevinson Adventure Safari — premium car rental and airport transfers in Nairobi",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stevinson Adventure | Car Hire & Airport Transfers in Nairobi",
+    title: "Stevinson Adventure Safari | Car Hire & Airport Transfers in Nairobi",
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "Stevinson Adventure",
+    title: "Stevinson Adventure Safari",
     statusBarStyle: "black-translucent",
   },
 };

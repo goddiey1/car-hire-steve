@@ -73,12 +73,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between gap-4">
             
             {/* Logo */}
-            <Link href="/" className="flex flex-col min-w-0" aria-label="Stevinson Adventure home">
+            <Link href="/" className="flex flex-col min-w-0" aria-label="Stevinson Adventure Safari home">
               <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#2b3524] font-serif uppercase leading-none">
                 Stevinson
               </span>
               <span className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-[#d66b44] uppercase mt-1">
-                Adventure
+                Adventure Safari
               </span>
               <span className="text-[7px] sm:text-[9px] font-medium tracking-widest text-[#2b3524]/60 uppercase mt-1 hidden sm:block">
                 Safari • Airport Concierge • Car Hire

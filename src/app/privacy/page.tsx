@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Notice",
-  description: "How Stevinson Adventure handles booking and transfer enquiry information.",
+  description: "How Stevinson Adventure Safari handles booking and transfer enquiry information.",
   alternates: { canonical: "/privacy" },
 };
 

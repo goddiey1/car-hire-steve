@@ -34,11 +34,11 @@ export default function TransferForm() {
     
     let text = "";
     if (activeTab === "airport") {
-      text = `Hello Stevinson Adventure! I'd like to reserve an airport transfer.\n\n*From:* ${formData.airport}\n*To:* ${formData.destination || "Nairobi City"}\n*Date:* ${formData.date}\n*Flight:* ${formData.flight || "TBD"}\n*Guests:* ${formData.guests}`;
+      text = `Hello Stevinson Adventure Safari! I'd like to reserve an airport transfer.\n\n*From:* ${formData.airport}\n*To:* ${formData.destination || "Nairobi City"}\n*Date:* ${formData.date}\n*Flight:* ${formData.flight || "TBD"}\n*Guests:* ${formData.guests}`;
     } else if (activeTab === "self-drive") {
-      text = `Hello Stevinson Adventure! I'd like to inquire about a Self-Drive vehicle.\n\n*Vehicle:* ${formData.vehicle}\n*Dates:* ${formData.date} to ${formData.endDate}\n*Pickup:* ${formData.airport}\n*Delivery:* ${formData.delivery}`;
+      text = `Hello Stevinson Adventure Safari! I'd like to inquire about a Self-Drive vehicle.\n\n*Vehicle:* ${formData.vehicle}\n*Dates:* ${formData.date} to ${formData.endDate}\n*Pickup:* ${formData.airport}\n*Delivery:* ${formData.delivery}`;
     } else {
-      text = `Hello Stevinson Adventure! I'd like to book a Chauffeured Safari Guide.\n\n*Vehicle:* ${formData.vehicle}\n*Dates:* ${formData.date} to ${formData.endDate}\n*Pickup:* ${formData.airport}\n*Itinerary:* ${formData.itinerary || "Not Decided"}`;
+      text = `Hello Stevinson Adventure Safari! I'd like to book a Chauffeured Safari Guide.\n\n*Vehicle:* ${formData.vehicle}\n*Dates:* ${formData.date} to ${formData.endDate}\n*Pickup:* ${formData.airport}\n*Itinerary:* ${formData.itinerary || "Not Decided"}`;
     }
     
     const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`;

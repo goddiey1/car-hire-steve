@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Stevinson Adventure",
+  name: "Stevinson Adventure Safari",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://StevinsonAdventure.com",
   description:
     "Premium car hire and airport transfers in Nairobi, Kenya. Self-drive and chauffeur-driven vehicles for international tourists. JKIA & Wilson Airport pickups with WhatsApp booking.",

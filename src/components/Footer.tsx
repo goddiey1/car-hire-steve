@@ -14,7 +14,7 @@ export default function Footer() {
                 <Car className="w-6 h-6" aria-hidden="true" />
               </div>
               <span className="text-xl font-bold text-white tracking-tight">
-                Stevinson<span className="text-blue-500">Adventure</span>
+                Stevinson<span className="text-blue-500">Adventure Safari</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed">
@@ -64,7 +64,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-neutral-900 mt-12 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Stevinson Adventure. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Stevinson Adventure Safari. All rights reserved.</p>
         </div>
       </div>
     </footer>

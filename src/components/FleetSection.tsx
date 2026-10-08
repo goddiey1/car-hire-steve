@@ -34,7 +34,7 @@ export default function FleetSection({ cars }: { cars: Car[] }) {
             Our Exclusive Safari & VIP Fleet
           </h2>
           <p className="text-[#2b3524]/70 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">
-            Every expedition vehicle in the Stevinson Adventure garage is purpose-built in Nairobi for extreme terrain, photography comfort, high-frequency radio connectivity, and effortless highway cruising.
+            Every expedition vehicle in the Stevinson Adventure Safari garage is purpose-built in Nairobi for extreme terrain, photography comfort, high-frequency radio connectivity, and effortless highway cruising.
           </p>
         </div>
 

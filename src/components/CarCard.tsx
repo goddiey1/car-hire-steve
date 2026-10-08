@@ -31,7 +31,7 @@ export default function CarCard({ car }: { car: Car }) {
 
   const handleWhatsApp = () => {
     if (!siteConfig.whatsapp) return;
-    const text = `Hello Stevinson Adventure! I am interested in booking the ${car.brand} ${car.model} (${price.symbol}${price.amount}/day).`;
+    const text = `Hello Stevinson Adventure Safari! I am interested in booking the ${car.brand} ${car.model} (${price.symbol}${price.amount}/day).`;
     const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
