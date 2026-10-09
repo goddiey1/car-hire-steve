@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Car, Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 
@@ -9,9 +10,15 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="bg-blue-500/10 text-blue-500 p-2 rounded-lg">
-                <Car className="w-6 h-6" aria-hidden="true" />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-white/10 p-1.5 rounded-lg flex items-center justify-center">
+                <Image 
+                  src="/logo.png" 
+                  alt="Stevinson Safari Logo" 
+                  width={32} 
+                  height={32} 
+                  className="object-contain brightness-0 invert" 
+                />
               </div>
               <span className="text-xl font-bold text-white tracking-tight">
                 Stevinson<span className="text-blue-500">Adventure Safari</span>

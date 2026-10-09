@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import CarCard, { Car } from "./CarCard";
-import { ShieldCheck, Navigation2, BadgeCheck, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Navigation2, BadgeCheck, CheckCircle2, FileText } from "lucide-react";
 
 export default function FleetSection({ cars }: { cars: Car[] }) {
   const [activeTab, setActiveTab] = useState("all");
@@ -62,21 +62,35 @@ export default function FleetSection({ cars }: { cars: Car[] }) {
           ))}
         </div>
 
-        {/* Guarantee Banner */}
-        <div className="mt-16 bg-white border border-[#e5e0d8] rounded p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+        {/* Guarantee Banner & Contract Download */}
+        <div className="mt-16 bg-white border border-[#e5e0d8] rounded p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-sm">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-[#1a2119] rounded-full flex items-center justify-center shrink-0">
               <ShieldCheck className="w-6 h-6 text-[#25D366]" />
             </div>
             <div>
               <h4 className="text-[#2b3524] font-serif font-bold text-lg">Stevinson Transparent Rental Promise</h4>
-              <p className="text-[#2b3524]/60 text-xs mt-1">From unlimited mileage options to 24/7 roadside assistance anywhere in East Africa, your peace of mind is included.</p>
+              <p className="text-[#2b3524]/60 text-xs mt-1 max-w-xl">From unlimited mileage options to 24/7 roadside assistance anywhere in East Africa, your peace of mind is included.</p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-6 items-center shrink-0 text-xs font-bold text-[#2b3524] uppercase tracking-wider">
-            <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#d66b44]" /> No Hidden Fees</div>
-            <div className="flex items-center gap-2"><Navigation2 className="w-4 h-4 text-[#d66b44]" /> GPS Tracked Fleet</div>
-            <div className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-[#d66b44]" /> KATO Registered</div>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-6 shrink-0 w-full lg:w-auto border-t lg:border-t-0 pt-6 lg:pt-0 border-neutral-100">
+            <div className="flex flex-col gap-3 text-xs font-bold text-[#2b3524] uppercase tracking-wider">
+              <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#d66b44]" /> No Hidden Fees</div>
+              <div className="flex items-center gap-2"><Navigation2 className="w-4 h-4 text-[#d66b44]" /> GPS Tracked Fleet</div>
+              <div className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-[#d66b44]" /> KATO Registered</div>
+            </div>
+            
+            <div className="h-full w-px bg-neutral-200 hidden sm:block"></div>
+            
+            <a 
+              href="/Stevinson_Rental_Contract.pdf" 
+              download="Stevinson_Adventure_Safari_Contract.pdf"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 bg-[#2b3524] hover:bg-[#1a2119] text-white text-xs font-bold tracking-widest uppercase rounded transition-colors shadow-md group"
+            >
+              <FileText className="w-4 h-4 text-[#d66b44] group-hover:scale-110 transition-transform" />
+              Download Rental Contract
+            </a>
           </div>
         </div>
 
