@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Car, Mail, MapPin, Phone } from "lucide-react";
+import { Car, Mail, MapPin, Phone, ExternalLink } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 
 export default function Footer() {
@@ -24,9 +24,15 @@ export default function Footer() {
                 Stevinson<span className="text-blue-500">Adventure Safari</span>
               </span>
             </div>
-            <p className="text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed mb-4">
               Premium car rental and airport transfers in Nairobi, Kenya — built for international travellers who want a reliable handoff at JKIA or Wilson.
             </p>
+            {/* 5.0 Star Google Rating Badge */}
+            <div className="inline-flex items-center gap-2 bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-2 text-xs">
+              <span className="text-amber-400 tracking-wider">★★★★★</span>
+              <span className="font-bold text-white">5.0</span>
+              <span className="text-neutral-400">on Google Maps</span>
+            </div>
           </div>
 
           <div>
@@ -34,7 +40,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li><a href="#fleet" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Our Fleet</a></li>
               <li><a href="#transfers" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Airport Transfers</a></li>
-              <li><a href="#how-it-works" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">How It Works</a></li>
+              <li><a href="#services" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Long-Term Hires</a></li>
               <li><a href="#contact" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Contact Us</a></li>
               <li><a href="/privacy" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Privacy</a></li>
               <li><a href="/terms-and-conditions" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Terms &amp; Conditions</a></li> 
@@ -44,18 +50,31 @@ export default function Footer() {
           <div className="md:col-span-2">
             <h2 className="text-white font-semibold mb-6 text-base">Contact Us</h2>
             <div className="space-y-4 text-sm">
-              <p className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
-                <span>
-                  {siteConfig.location.area}, {siteConfig.location.city}, {siteConfig.location.country}
-                  <br />
-                  <span className="text-neutral-500">Available for airport pickups (JKIA &amp; Wilson)</span>
-                </span>
-              </p>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" aria-hidden="true" />
+                <div>
+                  <p className="text-white font-medium">
+                    {siteConfig.location.address}, {siteConfig.location.city}, {siteConfig.location.country}
+                  </p>
+                  <p className="text-neutral-500 text-xs mt-0.5">
+                    Available for airport pickups (JKIA &amp; Wilson Airport)
+                  </p>
+                  <a 
+                    href={siteConfig.location.googleMapsUrl}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-[#d66b44] hover:text-[#e77c55] font-semibold mt-1.5 transition-colors group"
+                  >
+                    <span>View on Google Maps</span>
+                    <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  </a>
+                </div>
+              </div>
+
               {siteConfig.phone && (
                 <p className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
-                  <a href={`tel:${siteConfig.phone}`} className="hover:text-blue-400 transition-colors">
+                  <a href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`} className="hover:text-blue-400 transition-colors">
                     {phoneDisplay}
                   </a>
                 </p>

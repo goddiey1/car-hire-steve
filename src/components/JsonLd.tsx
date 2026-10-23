@@ -23,16 +23,24 @@ export default function JsonLd() {
     image: siteConfig.ogImage,
     email: siteConfig.email,
     priceRange: "$$",
+    hasMap: siteConfig.location.googleMapsUrl,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: "1",
+      bestRating: "5",
+    },
     address: {
       "@type": "PostalAddress",
+      streetAddress: siteConfig.location.address,
       addressLocality: siteConfig.location.city,
       addressRegion: siteConfig.location.area,
       addressCountry: "KE",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: -1.286389,
-      longitude: 36.817223,
+      latitude: siteConfig.location.coordinates.lat,
+      longitude: siteConfig.location.coordinates.lng,
     },
     areaServed: [
       { "@type": "City", name: "Nairobi" },
