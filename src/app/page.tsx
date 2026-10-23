@@ -4,7 +4,7 @@ import carsData from "@/data/cars.json";
 import { Car } from "@/components/CarCard";
 import FleetSection from "@/components/FleetSection";
 import TransferForm from "@/components/TransferForm";
-import ServicesSection from "@/components/ServicesSection";
+import LongTermAndContactSection from "@/components/LongTermAndContactSection";
 import Image from "next/image";
 import { ShieldCheck, Clock, MapPin, MessageSquare, Compass, CheckCircle2, Car as CarIcon } from "lucide-react";
 
@@ -105,7 +105,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Floating Booking Widget Placeholder Area */}
+      {/* Floating Booking Widget Area */}
       <section id="transfers" className="relative z-30 -mt-24 sm:-mt-32 container mx-auto px-4 max-w-6xl">
         <TransferForm />
       </section>
@@ -114,7 +114,8 @@ export default function Home() {
         <FleetSection cars={cars} />
       </div>
 
-      <ServicesSection />
+      {/* Long-Term Hires & Talk To Us Section */}
+      <LongTermAndContactSection />
 
     </main>
   );
