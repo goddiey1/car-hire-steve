@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Car, Mail, MapPin, Phone, ExternalLink } from "lucide-react";
+import { Car, Mail, MapPin, Phone, ExternalLink, Navigation } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 
 export default function Footer() {
@@ -9,6 +9,8 @@ export default function Footer() {
     <footer id="contact" className="bg-neutral-950 pb-28 pt-10 text-neutral-400 sm:py-16 sm:pb-16 border-t border-neutral-900">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+          
+          {/* Brand & Rating Column */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-6">
               <div className="bg-white/10 p-1.5 rounded-lg flex items-center justify-center">
@@ -35,6 +37,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Quick Links Column */}
           <div>
             <h2 className="text-white font-semibold mb-6 text-base">Quick Links</h2>
             <ul className="space-y-3 text-sm">
@@ -47,46 +50,77 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Contact Details & Interactive Map Column */}
           <div className="md:col-span-2">
-            <h2 className="text-white font-semibold mb-6 text-base">Contact Us</h2>
-            <div className="space-y-4 text-sm">
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" aria-hidden="true" />
-                <div>
-                  <p className="text-white font-medium">
-                    {siteConfig.location.address}, {siteConfig.location.city}, {siteConfig.location.country}
-                  </p>
-                  <p className="text-neutral-500 text-xs mt-0.5">
-                    Available for airport pickups (JKIA &amp; Wilson Airport)
-                  </p>
-                  <a 
-                    href={siteConfig.location.googleMapsUrl}
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-[#d66b44] hover:text-[#e77c55] font-semibold mt-1.5 transition-colors group"
-                  >
-                    <span>View on Google Maps</span>
-                    <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                  </a>
+            <h2 className="text-white font-semibold mb-6 text-base">Contact &amp; Location</h2>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+              {/* Contact Information */}
+              <div className="space-y-4 text-sm">
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="text-white font-medium">
+                      {siteConfig.location.address}, {siteConfig.location.city}, {siteConfig.location.country}
+                    </p>
+                    <p className="text-neutral-500 text-xs mt-0.5">
+                      Available for airport pickups (JKIA &amp; Wilson Airport)
+                    </p>
+                    <a 
+                      href={siteConfig.location.googleMapsUrl}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs text-[#d66b44] hover:text-[#e77c55] font-semibold mt-2 transition-colors group"
+                    >
+                      <Navigation className="w-3.5 h-3.5" />
+                      <span>Get Directions on Google Maps</span>
+                      <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </a>
+                  </div>
                 </div>
-              </div>
 
-              {siteConfig.phone && (
+                {siteConfig.phone && (
+                  <p className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
+                    <a href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`} className="hover:text-blue-400 transition-colors">
+                      {phoneDisplay}
+                    </a>
+                  </p>
+                )}
+
                 <p className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
-                  <a href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`} className="hover:text-blue-400 transition-colors">
-                    {phoneDisplay}
+                  <Mail className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
+                  <a href={`mailto:${siteConfig.email}`} className="hover:text-blue-400 transition-colors">
+                    {siteConfig.email}
                   </a>
                 </p>
-              )}
-              <p className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-blue-500 shrink-0" aria-hidden="true" />
-                <a href={`mailto:${siteConfig.email}`} className="hover:text-blue-400 transition-colors">
-                  {siteConfig.email}
+              </div>
+
+              {/* Interactive Live Embedded Google Map */}
+              <div className="relative rounded-xl overflow-hidden border border-neutral-800 bg-neutral-900 shadow-md group">
+                <iframe
+                  title="Stevinson Adventure Safari Location Map"
+                  src="https://maps.google.com/maps?q=-1.273757,36.826639&hl=en&z=15&output=embed"
+                  width="100%"
+                  height="170"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full opacity-90 hover:opacity-100 transition-opacity"
+                />
+                <a
+                  href={siteConfig.location.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-2 right-2 bg-neutral-950/90 backdrop-blur-sm border border-neutral-700/80 hover:border-[#d66b44] text-white px-2.5 py-1 rounded text-[11px] font-medium flex items-center gap-1.5 transition-all shadow-sm"
+                >
+                  <span>Open Maps</span>
+                  <ExternalLink className="w-3 h-3 text-[#d66b44]" />
                 </a>
-              </p>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div className="border-t border-neutral-900 mt-12 pt-8 text-center text-sm">
