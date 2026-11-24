@@ -11,6 +11,11 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: [
+          "Googlebot",
+          "Bingbot",
+          "Bravebot",
+          "Applebot",
+          "DuckAssistBot",
           "OAI-SearchBot",
           "ChatGPT-User",
           "Claude-SearchBot",
@@ -18,6 +23,7 @@ export default function robots(): MetadataRoute.Robots {
           "PerplexityBot",
         ],
         allow: "/",
+        disallow: ["/api/"],
       },
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,

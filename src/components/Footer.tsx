@@ -100,7 +100,7 @@ export default function Footer() {
               <div className="relative rounded-xl overflow-hidden border border-neutral-800 bg-neutral-900 shadow-md group">
                 <iframe
                   title="Stevinson Adventure Safari Location Map"
-                  src="https://maps.google.com/maps?q=-1.273757,36.826639&hl=en&z=15&output=embed"
+                  src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s-1.273757,36.826639!6i15!3m1!1sen!5m1!1sen"
                   width="100%"
                   height="170"
                   style={{ border: 0 }}

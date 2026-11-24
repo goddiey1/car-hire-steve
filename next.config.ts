@@ -6,7 +6,7 @@ const securityHeaders = [
   {
     key: "Content-Security-Policy",
     value:
-      "default-src 'self'; base-uri 'self'; connect-src 'self' https://api.web3forms.com; font-src 'self'; frame-ancestors 'none'; img-src 'self' data: blob: https://res.cloudinary.com https://images.unsplash.com; object-src 'none'; script-src 'self' 'unsafe-inline'" +
+      "default-src 'self'; base-uri 'self'; connect-src 'self' https://api.web3forms.com; font-src 'self'; frame-ancestors 'none'; frame-src 'self' https://www.google.com https://maps.google.com; img-src 'self' data: blob: https://res.cloudinary.com https://images.unsplash.com; object-src 'none'; script-src 'self' 'unsafe-inline'" +
       (isDevelopment ? " 'unsafe-eval'" : "") +
       "; style-src 'self' 'unsafe-inline'",
   },
