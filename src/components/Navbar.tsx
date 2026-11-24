@@ -8,10 +8,10 @@ import { siteConfig } from "@/lib/site";
 import { useCurrency, Currency } from "./CurrencyProvider";
 
 const navLinks = [
-  { href: "#transfers", label: "Airport Transfers" },
-  { href: "#fleet", label: "Safari Fleet" },
-  { href: "#services", label: "Self-Drive & Chauffeur" },
-  { href: "#how-it-works", label: "How It Works" },
+  { href: "/fleet", label: "Safari Fleet" },
+  { href: "/#transfers", label: "Airport Transfers" },
+  { href: "/4x4-self-drive-kenya", label: "4x4 Self-Drive" },
+  { href: "/#faq", label: "FAQs & Logistics" },
 ];
 
 export default function Navbar() {
@@ -26,34 +26,40 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const phoneDisplay = siteConfig.phone.replace(/(\+\d{3})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
+
   return (
-    <header className="fixed top-0 w-full z-50 transition-all duration-300 shadow-sm flex flex-col">
-      {/* Top utility bar */}
-      <div className="bg-[#1a2119] text-white/80 py-1.5 text-[9px] sm:text-[11px] font-medium tracking-wide">
-        <div className="container mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-1.5">
-          <div className="flex gap-3 sm:gap-6 items-center w-full sm:w-auto overflow-x-auto whitespace-nowrap hide-scrollbar">
-            <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shrink-0"></span> <span className="hidden sm:inline">J.K.I.A & Wilson Airport Type </span>Booking Active</span>
-            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-white/50 shrink-0" /> <span className="hidden sm:inline">International time (E.A.T +3)</span><span className="sm:hidden">E.A.T +3</span></span>
-            <span className="flex items-center gap-1.5 shrink-0">24/7 Dispatch</span>
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans shadow-sm">
+      {/* Top Utility Bar */}
+      <div className="bg-[#2b3524] text-[#f7f5f0]/80 py-2 text-[11px] font-medium tracking-wider border-b border-[#3b4732]">
+        <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
+          <div className="flex items-center gap-6">
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-[#d66b44]" /> 24/7 JKIA &amp; Wilson Airport Handoff
+            </span>
+            <span className="hidden sm:inline-block text-[#f7f5f0]/40">•</span>
+            <span className="hidden sm:inline-block">Park-Ready 4x4 Cruisers</span>
           </div>
-          <div className="flex gap-4 sm:gap-6 items-center w-full sm:w-auto justify-between sm:justify-end border-t border-white/10 sm:border-none pt-1 sm:pt-0">
+          
+          <div className="flex items-center gap-4 sm:gap-6">
+            {/* Currency Selector */}
             <div className="relative">
               <button 
                 onClick={() => setCurrencyOpen(!currencyOpen)}
-                className="flex items-center gap-1 hover:text-white transition-colors"
+                className="flex items-center gap-1 hover:text-white transition-colors bg-black/20 px-2 py-0.5 rounded border border-white/10"
+                aria-label="Select currency"
               >
-                Currency: {currency} <ChevronDown className="w-3 h-3" />
+                <span className="text-white font-bold">{currency}</span>
+                <ChevronDown className="w-3 h-3 text-[#d66b44]" />
               </button>
+              
               {currencyOpen && (
-                <div className="absolute top-full left-0 mt-1 bg-white text-[#2b3524] rounded shadow-lg border border-neutral-200 overflow-hidden flex flex-col min-w-[100px] z-[60]">
+                <div className="absolute right-0 top-full mt-1 bg-[#2b3524] border border-[#3b4732] rounded shadow-lg py-1 z-50 text-white min-w-[70px]">
                   {(['KSh', 'USD', 'GBP'] as Currency[]).map((c) => (
-                    <button 
+                    <button
                       key={c}
-                      className="px-4 py-2 text-left hover:bg-neutral-100 font-bold text-xs"
-                      onClick={() => {
-                        setCurrency(c);
-                        setCurrencyOpen(false);
-                      }}
+                      onClick={() => { setCurrency(c); setCurrencyOpen(false); }}
+                      className={`w-full text-left px-3 py-1 hover:bg-[#3b4732] text-xs ${currency === c ? 'text-[#d66b44] font-bold' : ''}`}
                     >
                       {c}
                     </button>
@@ -61,14 +67,19 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-            <a href={`tel:${siteConfig.phone}`} className="flex items-center gap-1.5 hover:text-white transition-colors shrink-0">
-              <Phone className="w-3 h-3" /> {siteConfig.phone}
+
+            <a
+              href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`}
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
+            >
+              <Phone className="w-3.5 h-3.5 text-[#d66b44]" />
+              <span>{phoneDisplay}</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navigation Bar */}
       <nav className={`w-full transition-all duration-300 bg-white ${isScrolled ? "py-3" : "py-4 sm:py-5"}`}>
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between gap-4">
@@ -111,8 +122,9 @@ export default function Navbar() {
 
             {/* Right Side Actions */}
             <div className="hidden lg:flex items-center gap-5">
-              <Link href="#reviews" className="text-[13px] font-medium text-[#2b3524]/70 hover:text-[#d66b44] transition-colors">Reviews</Link>
-              <Link href="#contact" className="text-[13px] font-medium text-[#2b3524]/70 hover:text-[#d66b44] transition-colors">Contact</Link>
+              <Link href="/#contact" className="text-[13px] font-medium text-[#2b3524]/70 hover:text-[#d66b44] transition-colors">
+                Contact
+              </Link>
               
               <a
                 href={`https://wa.me/${siteConfig.whatsapp}`}

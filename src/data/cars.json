@@ -6,7 +6,7 @@
     "model": "Noah",
     "category": "Minivan",
     "price_per_day": 8000,
-    "currency": "KSH",
+    "currency": "KES",
     "images": [
       "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785355629/Toyota-noah_l4ws7r.png"
     ],
@@ -34,7 +34,7 @@
     "model": "Fielder",
     "category": "Estate",
     "price_per_day": 5000,
-    "currency": "KSH",
+    "currency": "KES",
     "images": [
       "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785355578/toyota-fielder_xkpzxb.png"
     ],
@@ -62,7 +62,7 @@
     "model": "Prado TX",
     "category": "SUV",
     "price_per_day": 15000,
-    "currency": "KSH",
+    "currency": "KES",
     "images": [
       "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785355578/prado_tx_qseohl.png"
     ],
@@ -90,7 +90,7 @@
     "model": "Axio",
     "category": "Sedan",
     "price_per_day": 5000,
-    "currency": "KSH",
+    "currency": "KES",
     "images": [
       "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785355578/toyota-axio_xlgitx.png"
     ],
@@ -118,7 +118,7 @@
     "model": "RAV4",
     "category": "SUV",
     "price_per_day": 8000,
-    "currency": "KSH",
+    "currency": "KES",
     "images": [
       "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785356845/copy_of_toyota-rav4_bjn0ur.jpg"
     ],
@@ -146,7 +146,7 @@
     "model": "570",
     "category": "SUV",
     "price_per_day": 35000,
-    "currency": "KSH",
+    "currency": "KES",
     "images": [
       "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785434869/toyota_Lexus_570_mul3av.jpg"
     ],
@@ -174,7 +174,7 @@
     "model": "Land Cruiser V8",
     "category": "SUV",
     "price_per_day": 25000,
-    "currency": "KSH",
+    "currency": "KES",
     "images": [
       "https://res.cloudinary.com/dpyqxho1q/image/upload/v1785434870/toyota-land-cruiser-v8_zcog9a.png"
     ],

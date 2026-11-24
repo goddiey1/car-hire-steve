@@ -1,30 +1,74 @@
 import { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
 import carsData from "@/data/cars.json";
-import CarCard from "@/components/CarCard";
+import CarCard, { Car } from "@/components/CarCard";
 import Link from "next/link";
 import { ChevronRight, ShieldCheck, MapPin, Compass } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "4x4 Self Drive Car Hire in Kenya | Nairobi Safari Rentals",
-  description: "Explore Kenya at your own pace with our reliable 4x4 self-drive car rentals in Nairobi. Toyota Prado, RAV4, and more. Instant WhatsApp booking.",
+  description:
+    "Explore Kenya at your own pace with our reliable 4x4 self-drive car rentals in Nairobi. Toyota Prado TX and Land Cruisers with instant WhatsApp booking.",
   alternates: {
     canonical: `${siteConfig.url}/4x4-self-drive-kenya`,
-  }
+  },
+  openGraph: {
+    title: "4x4 Self Drive Car Hire in Kenya | Nairobi Safari Rentals",
+    description:
+      "Explore Kenya at your own pace with our reliable 4x4 self-drive car rentals in Nairobi. Toyota Prado TX, Land Cruisers, and SUVs.",
+    url: `${siteConfig.url}/4x4-self-drive-kenya`,
+    images: [{ url: siteConfig.ogImage }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "4x4 Self Drive Car Hire in Kenya | Nairobi Safari Rentals",
+    description: "Reliable 4x4 self-drive rentals in Nairobi. JKIA handover and park-ready 4WDs.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function SelfDriveKenyaPage() {
-  // Filter for 4x4 or self-drive suitable cars
-  const fourByFourCars = carsData.filter(car => 
-    car.drivetrain.includes("4WD") || car.drivetrain.includes("4x4") || car.category === "SUV"
+  const cars: Car[] = Array.isArray(carsData) ? (carsData as Car[]) : (((carsData as any).default || []) as Car[]);
+
+  const fourByFourCars = cars.filter(
+    (car) => car.drivetrain.includes("4WD") || car.drivetrain.includes("4x4") || car.category === "SUV"
   );
+
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "4x4 Self Drive Kenya",
+        "item": `${siteConfig.url}/4x4-self-drive-kenya`,
+      },
+    ],
+  };
 
   return (
     <main id="main-content" className="pt-24 pb-16 sm:pt-32 sm:pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Breadcrumb Navigation */}
-        <nav className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 mb-8 overflow-x-auto whitespace-nowrap hide-scrollbar">
-          <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 mb-8 overflow-x-auto whitespace-nowrap hide-scrollbar"
+        >
+          <Link href="/" className="hover:text-blue-500 transition-colors">
+            Home
+          </Link>
           <ChevronRight className="w-4 h-4" />
           <span className="text-neutral-900 dark:text-neutral-100 font-medium">4x4 Self Drive Kenya</span>
         </nav>
@@ -38,7 +82,10 @@ export default function SelfDriveKenyaPage() {
             Experience the freedom of exploring Kenya's stunning landscapes, from the Maasai Mara to the Great Rift Valley, with our reliable and fully serviced 4x4 vehicles.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="#available-4x4" className="px-8 py-4 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30">
+            <a
+              href="#available-4x4"
+              className="px-8 py-4 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30"
+            >
               View Available 4x4s
             </a>
           </div>
@@ -59,7 +106,7 @@ export default function SelfDriveKenyaPage() {
             <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-6">
               <ShieldCheck className="w-7 h-7 text-blue-600 dark:text-blue-400" />
             </div>
-            <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-3">Fully Serviced & Insured</h3>
+            <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-3">Fully Serviced &amp; Insured</h3>
             <p className="text-neutral-600 dark:text-neutral-400">
               Our 4x4 vehicles are rigorously maintained and come with comprehensive insurance for your peace of mind on rough terrains.
             </p>
@@ -82,7 +129,7 @@ export default function SelfDriveKenyaPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {fourByFourCars.map((car) => (
-              <CarCard key={car.id} car={car as any} />
+              <CarCard key={car.id} car={car} />
             ))}
           </div>
         </div>

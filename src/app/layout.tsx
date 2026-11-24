@@ -96,6 +96,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${plusJakarta.variable} scroll-smooth`}>
+      <head>
+        {/* Global shim to prevent minification __name ReferenceError during Googlebot & AI web crawling */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `typeof globalThis.__name === "undefined" && (globalThis.__name = function (fn) { return fn.name; });`,
+          }}
+        />
+      </head>
       <body className="font-sans antialiased bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-50 transition-colors duration-300">
         <ThemeProvider
           attribute="class"

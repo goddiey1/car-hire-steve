@@ -1,5 +1,6 @@
 import { siteConfig } from "@/lib/site";
 import carsData from "@/data/cars.json";
+import { faqItems } from "./FaqSection";
 
 type CarItem = {
   brand: string;
@@ -7,12 +8,19 @@ type CarItem = {
   price_per_day: number;
   currency: string;
   category: string;
+  slug?: string;
+  specs?: {
+    seats?: number;
+    transmission?: string;
+    fuel_type?: string;
+  };
+  drivetrain?: string;
 };
 
 export default function JsonLd() {
   const cars: CarItem[] = Array.isArray(carsData)
-    ? carsData
-    : ((carsData as { default?: CarItem[] }).default || []);
+    ? (carsData as CarItem[])
+    : (((carsData as { default?: CarItem[] }).default || []) as CarItem[]);
 
   const business = {
     "@context": "https://schema.org",
@@ -78,47 +86,36 @@ export default function JsonLd() {
         "@type": "Car",
         name: `${car.brand} ${car.model}`,
         vehicleConfiguration: car.category,
+        ...(car.specs?.seats ? { seatingCapacity: car.specs.seats } : {}),
+        ...(car.specs?.transmission ? { vehicleTransmission: car.specs.transmission } : {}),
+        ...(car.specs?.fuel_type ? { fuelType: car.specs.fuel_type } : {}),
+        ...(car.drivetrain ? { driveWheelConfiguration: car.drivetrain } : {}),
       },
       price: car.price_per_day,
-      priceCurrency: car.currency,
+      priceCurrency: "KES",
+      priceValidUntil: "2027-12-31",
+      availability: "https://schema.org/InStock",
       priceSpecification: {
         "@type": "UnitPriceSpecification",
         price: car.price_per_day,
-        priceCurrency: car.currency,
+        priceCurrency: "KES",
         unitText: "DAY",
       },
     })),
   };
 
+  // 1:1 Synchronized with visible FAQSection to prevent Google hidden schema penalty
   const faqPage = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What cars do you have available and what are the prices?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We offer a range of vehicles including the Toyota Axio (5,000 KSH/day), Toyota Noah (8,000 KSH/day), Toyota Prado (15,000 KSH/day), Toyota Land Cruiser V8 (25,000 KSH/day), and Lexus 570 (35,000 KSH/day)."
-        }
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
       },
-      {
-        "@type": "Question",
-        "name": "Do you offer Airport Transfers?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes! We provide comfortable and reliable airport transfers from JKIA and Wilson Airport. Just let us know your arrival time, number of passengers, and luggage details."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How can I book a car or transfer?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You can book by messaging us on WhatsApp. Our team will assist you within 5 minutes."
-        }
-      }
-    ]
+    })),
   };
 
   return (

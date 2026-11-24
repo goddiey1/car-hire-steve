@@ -2,23 +2,66 @@ import { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
 import TransferForm from "@/components/TransferForm";
 import Link from "next/link";
-import { ChevronRight, Plane, Clock, ShieldCheck, MapPin } from "lucide-react";
+import { ChevronRight, Plane, Clock, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Nairobi Airport Car Rental & Transfers | JKIA Pickups",
-  description: "Reliable airport car rental and transfers at Jomo Kenyatta International Airport (JKIA) and Wilson Airport in Nairobi. Book your pickup today.",
+  title: "Nairobi Airport Car Rental & Transfers | JKIA & Wilson Pickups",
+  description:
+    "Reliable airport car rental and transfers at Jomo Kenyatta International Airport (JKIA) and Wilson Airport in Nairobi. Inside-terminal meet & greet with WhatsApp booking.",
   alternates: {
     canonical: `${siteConfig.url}/nairobi-airport-car-rental`,
-  }
+  },
+  openGraph: {
+    title: "Nairobi Airport Car Rental & Transfers | JKIA & Wilson Pickups",
+    description:
+      "Reliable airport car rental and transfers at Jomo Kenyatta International Airport (JKIA) and Wilson Airport in Nairobi.",
+    url: `${siteConfig.url}/nairobi-airport-car-rental`,
+    images: [{ url: siteConfig.ogImage }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nairobi Airport Car Rental & Transfers | JKIA & Wilson Pickups",
+    description: "Reliable airport car rental and transfers at JKIA & Wilson Airport in Nairobi.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function AirportRentalPage() {
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Nairobi Airport Car Rental",
+        "item": `${siteConfig.url}/nairobi-airport-car-rental`,
+      },
+    ],
+  };
+
   return (
     <main id="main-content" className="pt-24 pb-16 sm:pt-32 sm:pb-24 bg-neutral-50 dark:bg-neutral-950">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Breadcrumb Navigation */}
-        <nav className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 mb-8 overflow-x-auto whitespace-nowrap hide-scrollbar">
-          <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 mb-8 overflow-x-auto whitespace-nowrap hide-scrollbar"
+        >
+          <Link href="/" className="hover:text-blue-500 transition-colors">
+            Home
+          </Link>
           <ChevronRight className="w-4 h-4" />
           <span className="text-neutral-900 dark:text-neutral-100 font-medium">Nairobi Airport Car Rental</span>
         </nav>
@@ -27,7 +70,7 @@ export default function AirportRentalPage() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
           <div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 dark:text-white mb-6 leading-tight">
-              Nairobi Airport <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-sky-400">Car Rental & Transfers</span>
+              Nairobi Airport <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-sky-400">Car Rental &amp; Transfers</span>
             </h1>
             <p className="text-lg sm:text-xl text-neutral-600 dark:text-neutral-300 mb-8">
               Skip the taxi queues. Whether you need a self-drive rental waiting for you at the parking lot, or a chauffeur-driven transfer to your hotel, we ensure a seamless arrival at JKIA and Wilson Airport.
@@ -59,7 +102,7 @@ export default function AirportRentalPage() {
                   <ShieldCheck className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-neutral-900 dark:text-white mb-1">Meet & Greet</h3>
+                  <h3 className="text-lg font-bold text-neutral-900 dark:text-white mb-1">Meet &amp; Greet</h3>
                   <p className="text-neutral-600 dark:text-neutral-400">Our representative will be waiting at arrivals with a name sign.</p>
                 </div>
               </div>

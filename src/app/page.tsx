@@ -5,17 +5,18 @@ import { Car } from "@/components/CarCard";
 import FleetSection from "@/components/FleetSection";
 import TransferForm from "@/components/TransferForm";
 import LongTermAndContactSection from "@/components/LongTermAndContactSection";
+import FaqSection from "@/components/FaqSection";
 import Image from "next/image";
-import { ShieldCheck, Clock, MapPin, MessageSquare, Compass, CheckCircle2, Car as CarIcon } from "lucide-react";
+import { ShieldCheck, Clock, MapPin, Compass, CheckCircle2, Car as CarIcon } from "lucide-react";
 
 export const metadata: Metadata = {
   alternates: {
     canonical: siteConfig.url,
-  }
+  },
 };
 
 export default function Home() {
-  const cars: Car[] = Array.isArray(carsData) ? carsData : ((carsData as { default?: Car[] }).default || []);
+  const cars: Car[] = Array.isArray(carsData) ? (carsData as Car[]) : (((carsData as any).default || []) as Car[]);
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen bg-[#f7f5f0]">
@@ -51,7 +52,7 @@ export default function Home() {
           </h1>
 
           <p className="mt-6 sm:mt-8 mx-auto max-w-3xl text-sm sm:text-base md:text-lg text-white/90 leading-relaxed font-medium drop-shadow-md">
-            Boutique inside-terminal airport transfers from J.K.I.A & Wilson Airport, paired with rugged 4x4 expedition cruisers custom-built for the Masai Mara, Amboseli, and beyond.
+            Boutique inside-terminal airport transfers from J.K.I.A &amp; Wilson Airport, paired with rugged 4x4 expedition cruisers custom-built for the Masai Mara, Amboseli, and beyond.
           </p>
 
           {/* CTA Buttons */}
@@ -77,7 +78,7 @@ export default function Home() {
                 <CheckCircle2 className="w-3.5 h-3.5 text-white" />
               </span>
               <div className="text-left">
-                <p className="text-[11px] font-bold tracking-wide">Inside-Terminal Meet & Greet</p>
+                <p className="text-[11px] font-bold tracking-wide">Inside-Terminal Meet &amp; Greet</p>
                 <p className="text-[9px] text-white/70">Outside baggage claim</p>
               </div>
             </div>
@@ -113,6 +114,9 @@ export default function Home() {
       <div className="pt-24 bg-[#f7f5f0]">
         <FleetSection cars={cars} />
       </div>
+
+      {/* Synchronized FAQ Section (AEO & GEO) */}
+      <FaqSection />
 
       {/* Long-Term Hires & Talk To Us Section */}
       <LongTermAndContactSection />

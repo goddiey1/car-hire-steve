@@ -3,44 +3,26 @@ import { siteConfig } from "@/lib/site";
 import carsData from "@/data/cars.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [
+  // Commercial landing pages
+  const routes: MetadataRoute.Sitemap = [
     {
       url: siteConfig.url,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 1,
     },
     {
-      url: `${siteConfig.url}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.5,
-    },
-    {
-      url: `${siteConfig.url}/terms-and-conditions`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.5,
+      url: `${siteConfig.url}/fleet`,
     },
     {
       url: `${siteConfig.url}/4x4-self-drive-kenya`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
     },
     {
       url: `${siteConfig.url}/nairobi-airport-car-rental`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
     },
   ];
 
-  const carRoutes = carsData.map((car) => ({
+  // Product / Car pages with direct Google Image indexing tags
+  const carRoutes: MetadataRoute.Sitemap = carsData.map((car) => ({
     url: `${siteConfig.url}/fleet/${car.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
+    images: Array.isArray(car.images) ? car.images : [],
   }));
 
   return [...routes, ...carRoutes];
