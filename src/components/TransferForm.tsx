@@ -49,39 +49,45 @@ export default function TransferForm() {
     <div className="w-full bg-white rounded-xl shadow-2xl overflow-hidden border border-neutral-200/60 font-sans">
       
       {/* Top Tabs */}
-      <div className="flex flex-col sm:flex-row w-full bg-[#1a2119] text-white/70 text-xs sm:text-[11px] font-bold tracking-widest uppercase">
+      <div className="grid grid-cols-3 sm:flex sm:flex-row w-full bg-[#1a2119] text-white/70 text-[11px] sm:text-[11px] font-bold tracking-wider sm:tracking-widest uppercase">
         <button 
           onClick={() => setActiveTab("airport")}
-          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "airport" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
+          className={`py-2.5 sm:py-5 px-1 sm:px-2 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 transition-all ${activeTab === "airport" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
         >
-          <Plane className="w-4 h-4" /> Airport Transfer (JKIA / Wilson)
+          <Plane className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+          <span className="sm:hidden text-center leading-tight">Airport</span>
+          <span className="hidden sm:inline">Airport Transfer (JKIA / Wilson)</span>
         </button>
         <button 
           onClick={() => setActiveTab("self-drive")}
-          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "self-drive" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
+          className={`py-2.5 sm:py-5 px-1 sm:px-2 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 transition-all ${activeTab === "self-drive" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
         >
-          <Car className="w-4 h-4" /> Self-Drive & Safari 4x4
+          <Car className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+          <span className="sm:hidden text-center leading-tight">Self-Drive</span>
+          <span className="hidden sm:inline">Self-Drive & Safari 4x4</span>
         </button>
         <button 
           onClick={() => setActiveTab("chauffeur")}
-          className={`flex-1 py-4 sm:py-5 px-2 flex items-center justify-center gap-2 transition-all ${activeTab === "chauffeur" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
+          className={`py-2.5 sm:py-5 px-1 sm:px-2 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 transition-all ${activeTab === "chauffeur" ? "bg-white text-[#2b3524]" : "hover:bg-white/10"}`}
         >
-          <User className="w-4 h-4" /> Chauffeured & Safari Guide
+          <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+          <span className="sm:hidden text-center leading-tight">Chauffeur</span>
+          <span className="hidden sm:inline">Chauffeured & Safari Guide</span>
         </button>
       </div>
 
       {/* Form Body */}
-      <div className="p-6 sm:p-8">
+      <div className="p-3.5 sm:p-8">
         
         {/* Input Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2.5 sm:gap-6">
           
           {/* -------------------- AIRPORT TRANSFER FIELDS -------------------- */}
           {activeTab === "airport" && (
             <>
               {/* Pickup */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <Plane className="w-3 h-3 text-[#d66b44]" /> Pickup Location
                 </label>
                 <select 
@@ -91,12 +97,12 @@ export default function TransferForm() {
                   <option>J.K.I.A Terminal 1A/1E (VIP Desk)</option>
                   <option>Wilson Airport</option>
                 </select>
-                <p className="text-[10px] text-neutral-400 mt-1">Flight monitor active (Free)</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Flight monitor active (Free)</p>
               </div>
 
               {/* Destination */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <MapPin className="w-3 h-3 text-[#d66b44]" /> Destination
                 </label>
                 <input 
@@ -105,12 +111,12 @@ export default function TransferForm() {
                   className="w-full bg-transparent text-sm font-semibold text-[#2b3524] placeholder:text-[#2b3524]/60 outline-none"
                   onChange={(e) => setFormData({...formData, destination: e.target.value})}
                 />
-                <p className="text-[10px] text-neutral-400 mt-1">Express expressway routing</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Express expressway routing</p>
               </div>
 
               {/* Date & Flight */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <Calendar className="w-3 h-3 text-[#d66b44]" /> Date & Flight No.
                 </label>
                 <div className="flex gap-2">
@@ -126,12 +132,12 @@ export default function TransferForm() {
                     onChange={(e) => setFormData({...formData, flight: e.target.value})}
                   />
                 </div>
-                <p className="text-[10px] text-neutral-400 mt-1">Free 90-minute customs buffer</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Free 90-minute customs buffer</p>
               </div>
 
               {/* Guests & Luggage */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <Users className="w-3 h-3 text-[#d66b44]" /> Guests & Luggage
                 </label>
                 <div className="flex items-center text-sm font-semibold text-[#2b3524]">
@@ -150,7 +156,7 @@ export default function TransferForm() {
                     <option value="5+">5+ Bags</option>
                   </select>
                 </div>
-                <p className="text-[10px] text-neutral-400 mt-1">+ Standard Size Speciality</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">+ Standard Size Speciality</p>
               </div>
             </>
           )}
@@ -159,8 +165,8 @@ export default function TransferForm() {
           {activeTab === "self-drive" && (
             <>
               {/* Pickup Location */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <MapPin className="w-3 h-3 text-[#d66b44]" /> Starting Location
                 </label>
                 <select 
@@ -171,12 +177,12 @@ export default function TransferForm() {
                   <option>J.K.I.A Airport</option>
                   <option>Wilson Airport</option>
                 </select>
-                <p className="text-[10px] text-neutral-400 mt-1">Where will you begin?</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Where will you begin?</p>
               </div>
 
               {/* Vehicle Type */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <Car className="w-3 h-3 text-[#d66b44]" /> Vehicle Preference
                 </label>
                 <select 
@@ -188,12 +194,12 @@ export default function TransferForm() {
                   <option>Family Minivan</option>
                   <option>Economy Sedan</option>
                 </select>
-                <p className="text-[10px] text-neutral-400 mt-1">Fully serviced & insured</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Fully serviced & insured</p>
               </div>
 
               {/* Dates */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <Calendar className="w-3 h-3 text-[#d66b44]" /> Rental Dates
                 </label>
                 <div className="flex gap-2 items-center">
@@ -209,12 +215,12 @@ export default function TransferForm() {
                     onChange={(e) => setFormData({...formData, endDate: e.target.value})}
                   />
                 </div>
-                <p className="text-[10px] text-neutral-400 mt-1">Unlimited mileage available</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Unlimited mileage available</p>
               </div>
 
               {/* Delivery */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <CheckCircle2 className="w-3 h-3 text-[#d66b44]" /> Delivery Option
                 </label>
                 <select 
@@ -225,7 +231,7 @@ export default function TransferForm() {
                   <option>Deliver to My Hotel</option>
                   <option>Deliver to Airport</option>
                 </select>
-                <p className="text-[10px] text-neutral-400 mt-1">Convenient handover</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Convenient handover</p>
               </div>
             </>
           )}
@@ -234,8 +240,8 @@ export default function TransferForm() {
           {activeTab === "chauffeur" && (
             <>
               {/* Pickup Location */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <MapPin className="w-3 h-3 text-[#d66b44]" /> Pickup Location
                 </label>
                 <select 
@@ -246,12 +252,12 @@ export default function TransferForm() {
                   <option>J.K.I.A Airport</option>
                   <option>Wilson Airport</option>
                 </select>
-                <p className="text-[10px] text-neutral-400 mt-1">Meet & Greet included</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Meet & Greet included</p>
               </div>
 
               {/* Vehicle Type */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <Car className="w-3 h-3 text-[#d66b44]" /> Vehicle Preference
                 </label>
                 <select 
@@ -262,12 +268,12 @@ export default function TransferForm() {
                   <option>VIP Executive SUV</option>
                   <option>Spacious Safari Minivan</option>
                 </select>
-                <p className="text-[10px] text-neutral-400 mt-1">Expert driver-guide assigned</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Expert driver-guide assigned</p>
               </div>
 
               {/* Dates */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <Calendar className="w-3 h-3 text-[#d66b44]" /> Safari / Tour Dates
                 </label>
                 <div className="flex gap-2 items-center">
@@ -283,12 +289,12 @@ export default function TransferForm() {
                     onChange={(e) => setFormData({...formData, endDate: e.target.value})}
                   />
                 </div>
-                <p className="text-[10px] text-neutral-400 mt-1">Full day / Multi-day</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Full day / Multi-day</p>
               </div>
 
               {/* Itinerary */}
-              <div className="relative border border-neutral-200 rounded-lg p-3 hover:border-[#d66b44] transition-colors group cursor-text">
-                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">
+              <div className="relative border border-neutral-200 rounded-lg p-2.5 sm:p-3 hover:border-[#d66b44] transition-colors group cursor-text">
+                <label className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5 sm:mb-1">
                   <Navigation className="w-3 h-3 text-[#d66b44]" /> Intended Route / Parks
                 </label>
                 <input 
@@ -297,7 +303,7 @@ export default function TransferForm() {
                   className="w-full bg-transparent text-sm font-semibold text-[#2b3524] placeholder:text-[#2b3524]/60 outline-none"
                   onChange={(e) => setFormData({...formData, itinerary: e.target.value})}
                 />
-                <p className="text-[10px] text-neutral-400 mt-1">We can help you plan!</p>
+                <p className="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">We can help you plan!</p>
               </div>
             </>
           )}
@@ -305,43 +311,43 @@ export default function TransferForm() {
         </div>
 
         {/* Bottom Action Bar */}
-        <div className="mt-8 pt-6 border-t border-neutral-100 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-4 sm:mt-8 pt-3.5 sm:pt-6 border-t border-neutral-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-3.5 sm:gap-6">
           
           {/* Status / Notice */}
-          <div className="flex items-start gap-4 max-w-lg">
-            <div className="w-10 h-10 rounded-full bg-[#f7f5f0] flex items-center justify-center shrink-0 border border-neutral-200">
+          <div className="flex items-start gap-3 sm:gap-4 max-w-lg w-full">
+            <div className="hidden sm:flex w-10 h-10 rounded-full bg-[#f7f5f0] items-center justify-center shrink-0 border border-neutral-200">
               <span className="w-4 h-4 rounded-full bg-[#d66b44]"></span>
             </div>
-            <div>
+            <div className="w-full">
               {activeTab === "airport" ? (
                 <>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Price Estimate:</span>
-                    <span className="text-lg font-serif font-bold text-[#2b3524]">{minPrice.symbol}{minPrice.amount} - {maxPrice.symbol}{maxPrice.amount} {minPrice.code}</span>
-                    <span className="text-[10px] font-bold text-red-500 bg-red-50 px-1.5 py-0.5 rounded">Flat Rate</span>
+                  <div className="flex items-baseline justify-between sm:justify-start gap-2 flex-wrap">
+                    <span className="text-[11px] sm:text-xs font-bold text-neutral-500 uppercase tracking-wider sm:tracking-widest">Price Estimate:</span>
+                    <span className="text-base sm:text-lg font-serif font-bold text-[#2b3524]">{minPrice.symbol}{minPrice.amount} - {maxPrice.symbol}{maxPrice.amount}</span>
+                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">Flat Rate</span>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-relaxed">
-                    Includes inside-terminal meet & greet, incident management, parking fees, and roadblock navigating. No hidden extras.
+                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-0.5 sm:mt-1 leading-snug sm:leading-relaxed">
+                    Includes inside-terminal meet & greet, parking, tolls & luggage assistance. No hidden extras.
                   </p>
                 </>
               ) : activeTab === "self-drive" ? (
                 <>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Self-Drive Fleet:</span>
-                    <span className="text-lg font-serif font-bold text-[#2b3524]">Check Fleet Section</span>
+                  <div className="flex items-baseline justify-between sm:justify-start gap-2 flex-wrap">
+                    <span className="text-[11px] sm:text-xs font-bold text-neutral-500 uppercase tracking-wider sm:tracking-widest">Self-Drive Fleet:</span>
+                    <span className="text-base sm:text-lg font-serif font-bold text-[#2b3524]">Check Fleet Section</span>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-relaxed">
-                    View our fleet below for daily rates. Comprehensive insurance and 24/7 roadside assistance included in all self-drive rentals.
+                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-0.5 sm:mt-1 leading-snug sm:leading-relaxed">
+                    View fleet below for daily rates. Comprehensive insurance and 24/7 roadside assistance included.
                   </p>
                 </>
               ) : (
                 <>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Bespoke Safari:</span>
-                    <span className="text-lg font-serif font-bold text-[#2b3524]">Custom Quote</span>
+                  <div className="flex items-baseline justify-between sm:justify-start gap-2 flex-wrap">
+                    <span className="text-[11px] sm:text-xs font-bold text-neutral-500 uppercase tracking-wider sm:tracking-widest">Bespoke Safari:</span>
+                    <span className="text-base sm:text-lg font-serif font-bold text-[#2b3524]">Custom Quote</span>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-relaxed">
-                    Chauffeur and guide rates depend on the itinerary and duration. Contact us for a personalized package tailored to your exact needs.
+                  <p className="text-[10px] sm:text-xs text-neutral-500 mt-0.5 sm:mt-1 leading-snug sm:leading-relaxed">
+                    Chauffeur & guide rates depend on itinerary. Contact us for a personalized package.
                   </p>
                 </>
               )}
@@ -349,18 +355,20 @@ export default function TransferForm() {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row w-full md:w-auto gap-3 shrink-0">
+          <div className="flex flex-row w-full md:w-auto gap-2 sm:gap-3 shrink-0">
             <button 
               onClick={handleWhatsApp}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-[#25D366] hover:bg-[#1ebd5b] text-white text-sm font-bold tracking-wide rounded transition-all shadow-lg shadow-[#25D366]/30"
+              className="flex-1 md:flex-none flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-3 sm:py-3.5 bg-[#25D366] hover:bg-[#1ebd5b] text-white text-xs sm:text-sm font-bold tracking-wide rounded transition-all shadow-md shadow-[#25D366]/20 active:scale-[0.98]"
             >
-              <MessageCircle className="w-5 h-5" /> Reserve Instantly via WhatsApp
+              <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+              <span>Reserve via WhatsApp</span>
             </button>
             <a 
               href={`mailto:${siteConfig.email}`}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-white border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 text-[#2b3524] text-sm font-bold tracking-wide rounded transition-all"
+              className="flex-none flex items-center justify-center gap-1.5 px-3 sm:px-6 py-3 sm:py-3.5 bg-white border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 text-[#2b3524] text-xs sm:text-sm font-bold tracking-wide rounded transition-all active:scale-[0.98]"
             >
-              <Mail className="w-4 h-4 text-neutral-400" /> Email Enquiry
+              <Mail className="w-4 h-4 text-neutral-400 shrink-0" />
+              <span>Email</span>
             </a>
           </div>
 
