@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, Clock, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, Clock, ChevronDown, Home } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 import { useCurrency, Currency } from "./CurrencyProvider";
 
@@ -16,6 +17,8 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isNotHome = pathname !== "/";
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { currency, setCurrency } = useCurrency();
@@ -109,7 +112,17 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Links */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+              {isNotHome && (
+                <Link
+                  href="/"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#2b3524] text-white hover:bg-[#3b4732] text-[12px] font-bold transition-all shadow-xs active:scale-[0.98]"
+                  aria-label="Back to Homepage"
+                >
+                  <Home className="w-3.5 h-3.5 text-[#d66b44]" />
+                  <span>Homepage</span>
+                </Link>
+              )}
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -137,8 +150,18 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Actions & Menu Button */}
             <div className="flex items-center gap-2 lg:hidden">
+              {isNotHome && (
+                <Link
+                  href="/"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#2b3524] text-white text-xs font-bold shadow-xs active:scale-95"
+                  aria-label="Back to Homepage"
+                >
+                  <Home className="w-3.5 h-3.5 text-[#d66b44]" />
+                  <span>Home</span>
+                </Link>
+              )}
               <button
                 type="button"
                 className="p-2 text-[#2b3524]"
@@ -154,6 +177,16 @@ export default function Navbar() {
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
           <div className="absolute left-0 top-full flex w-full flex-col bg-white border-t border-neutral-100 p-4 shadow-xl lg:hidden">
+            {isNotHome && (
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2.5 text-sm font-bold text-[#2b3524] px-3.5 py-3 rounded-lg bg-[#fbf5f2] border border-[#d66b44]/20 mb-2"
+              >
+                <Home className="w-4 h-4 text-[#d66b44]" />
+                <span>Return to Homepage</span>
+              </Link>
+            )}
             {navLinks.map((link) => (
               <Link
                 key={link.href}

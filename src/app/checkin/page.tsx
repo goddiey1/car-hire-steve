@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 
 export default function CheckInPage() {
   return (
-    <main className="min-h-screen bg-[#f7f5f0] pt-36 sm:pt-40 pb-20 font-sans print:pt-0 print:pb-0 print:bg-white print:min-h-0">
-      <div className="container mx-auto px-4 max-w-4xl print:max-w-none print:p-0 print:m-0">
+    <main className="min-h-screen bg-[#f7f5f0] pt-28 sm:pt-36 pb-28 sm:pb-24 px-3 sm:px-4 font-sans print:pt-0 print:pb-0 print:bg-white print:min-h-0">
+      <div className="container mx-auto px-0 sm:px-4 max-w-4xl print:max-w-none print:p-0 print:m-0">
         
         {/* Page Header (Hidden on Print) */}
         <div className="text-center mb-8 sm:mb-12 no-print print:hidden">

@@ -25,6 +25,31 @@ export async function POST(request: Request) {
       );
     }
 
+    // Strict Server-Side Format Validation
+    const nameTrimmed = String(fullName).trim();
+    if (nameTrimmed.length < 4 || !/^[a-zA-Z\s'-]+$/.test(nameTrimmed)) {
+      return NextResponse.json(
+        { error: "Invalid legal name format. Letters, spaces, hyphens, and apostrophes only." },
+        { status: 400 }
+      );
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(String(email).trim())) {
+      return NextResponse.json(
+        { error: "Invalid email format. Please provide a valid email address." },
+        { status: 400 }
+      );
+    }
+
+    const phoneDigits = String(phone).replace(/\D/g, "");
+    if (phoneDigits.length < 9 || phoneDigits.length > 15) {
+      return NextResponse.json(
+        { error: "Invalid phone number. Must contain between 9 and 15 digits including country code." },
+        { status: 400 }
+      );
+    }
+
     // Generate unique verification receipt code
     const randomSuffix = Math.random().toString(36).substring(2, 7).toUpperCase();
     const refCode = `SAS-CKIN-${randomSuffix}`;
