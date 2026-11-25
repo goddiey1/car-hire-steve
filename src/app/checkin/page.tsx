@@ -21,32 +21,34 @@ export default function CheckInPage() {
       <div className="container mx-auto px-0 sm:px-4 max-w-4xl print:max-w-none print:p-0 print:m-0">
         
         {/* Page Header (Hidden on Print) */}
-        <div className="text-center mb-8 sm:mb-12 no-print print:hidden">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2b3524]/10 text-[#2b3524] text-xs font-bold tracking-wider uppercase mb-3">
+        <div className="text-center mb-4 sm:mb-8 no-print print:hidden">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2b3524]/10 text-[#2b3524] text-xs font-bold tracking-wider uppercase mb-2">
             <FileCheck className="w-3.5 h-3.5 text-[#d66b44]" />
             <span>Fast-Track Airport Concierge</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#2b3524] tracking-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold text-[#2b3524] tracking-tight">
             Online Rental Check-In
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-2 text-xs sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed">
             Pre-verify your driving license, identification, and rental agreement ahead of time for an express 3-minute vehicle handover at J.K.I.A, Wilson Airport, or your hotel.
           </p>
 
-          {/* Trust Pillars */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mt-6">
-            <div className="flex items-center justify-center gap-2 bg-white/80 border border-neutral-200/80 rounded-lg py-2.5 px-3 text-xs text-neutral-700 font-medium">
-              <Clock className="w-4 h-4 text-[#d66b44] shrink-0" />
+          {/* Trust Indicators: Compact, subtle inline strip without oversized mobile boxes */}
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] sm:text-xs text-neutral-500 font-medium mt-3">
+            <span className="inline-flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-[#d66b44] shrink-0" />
               <span>Instant Airport Handover</span>
-            </div>
-            <div className="flex items-center justify-center gap-2 bg-white/80 border border-neutral-200/80 rounded-lg py-2.5 px-3 text-xs text-neutral-700 font-medium">
-              <ShieldCheck className="w-4 h-4 text-[#d66b44] shrink-0" />
+            </span>
+            <span className="text-neutral-300 hidden sm:inline">•</span>
+            <span className="inline-flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#d66b44] shrink-0" />
               <span>256-Bit SSL Encrypted</span>
-            </div>
-            <div className="flex items-center justify-center gap-2 bg-white/80 border border-neutral-200/80 rounded-lg py-2.5 px-3 text-xs text-neutral-700 font-medium">
-              <CheckCircle2 className="w-4 h-4 text-[#d66b44] shrink-0" />
+            </span>
+            <span className="text-neutral-300 hidden sm:inline">•</span>
+            <span className="inline-flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#d66b44] shrink-0" />
               <span>Kenya DPA Compliant</span>
-            </div>
+            </span>
           </div>
         </div>
 

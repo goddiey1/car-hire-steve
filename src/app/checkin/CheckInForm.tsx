@@ -17,6 +17,7 @@ import {
   ArrowLeft,
   Loader2,
   Printer,
+  Download,
   MessageCircle,
   Compass,
   Info,
@@ -102,6 +103,7 @@ const validateEndDate = (startDate: string, endDate: string): string | null => {
 export default function CheckInForm() {
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [confirmationCode, setConfirmationCode] = useState<string>("");
   const [submissionTimestamp, setSubmissionTimestamp] = useState<string>("");
@@ -283,6 +285,200 @@ export default function CheckInForm() {
     const text = `Hello Stevinson Adventure Safari! I have completed my Online Check-In.\n\n*Reference:* ${confirmationCode}\n*Service:* ${serviceLabel}\n*Name:* ${formData.fullName}\n*Vehicle:* ${formData.vehicle}\n*Dates:* ${formData.rentalStartDate} to ${formData.rentalEndDate || "TBD"}\n*Pickup/Flight:* ${formData.flightOrLocation || "JKIA Airport"}\n\nMy details, identification, and signed agreement are submitted.`;
     const url = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const handleDownloadReceipt = () => {
+    setIsDownloading(true);
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = 1200;
+      canvas.height = 1450;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        setIsDownloading(false);
+        return;
+      }
+
+      // Background
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Outer Border
+      ctx.strokeStyle = "#e5e7eb";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+
+      // Top Header Banner
+      ctx.fillStyle = "#2b3524";
+      ctx.fillRect(32, 32, canvas.width - 64, 150);
+
+      // Title
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 40px serif";
+      ctx.fillText("STEVINSON ADVENTURE SAFARI", 60, 95);
+
+      ctx.fillStyle = "#d66b44";
+      ctx.font = "bold 18px sans-serif";
+      ctx.fillText("FAST-TRACK CHECK-IN VOUCHER & RECEIPT", 60, 135);
+
+      // Confirmation Code Box
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(canvas.width - 390, 60, 330, 90);
+      ctx.strokeStyle = "#3b4732";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(canvas.width - 390, 60, 330, 90);
+
+      ctx.fillStyle = "#666666";
+      ctx.font = "bold 15px sans-serif";
+      ctx.fillText("CONFIRMATION CODE", canvas.width - 370, 92);
+
+      ctx.fillStyle = "#2b3524";
+      ctx.font = "bold 26px monospace";
+      ctx.fillText(confirmationCode || "SAS-CKIN-CONFIRMED", canvas.width - 370, 130);
+
+      // Section 1: Lead Traveler Details (Left Column)
+      ctx.fillStyle = "#888888";
+      ctx.font = "bold 16px sans-serif";
+      ctx.fillText("LEAD TRAVELER / RENTER", 60, 250);
+
+      ctx.fillStyle = "#111827";
+      ctx.font = "bold 26px sans-serif";
+      ctx.fillText(formData.fullName || "Traveler", 60, 290);
+
+      ctx.fillStyle = "#4b5563";
+      ctx.font = "20px sans-serif";
+      ctx.fillText(`${formData.phone} • ${formData.email}`, 60, 325);
+
+      if (formData.nationality) {
+        ctx.fillStyle = "#6b7280";
+        ctx.font = "18px sans-serif";
+        ctx.fillText(`Origin / Nationality: ${formData.nationality}`, 60, 360);
+      }
+
+      // Section 2: Assigned Vehicle / Service (Right Column)
+      ctx.fillStyle = "#888888";
+      ctx.font = "bold 16px sans-serif";
+      ctx.fillText("SERVICE & VEHICLE ASSIGNED", 640, 250);
+
+      ctx.fillStyle = "#111827";
+      ctx.font = "bold 26px sans-serif";
+      ctx.fillText(formData.vehicle || "Service Booked", 640, 290);
+
+      ctx.fillStyle = "#d66b44";
+      ctx.font = "bold 20px sans-serif";
+      const serviceDisplay =
+        serviceType === "transfer"
+          ? "Airport Executive Transfer (Chauffeured)"
+          : serviceType === "chauffeur"
+          ? "Safari Tour (Chauffeured Guide)"
+          : "Self-Drive 4x4 Vehicle Hire";
+      ctx.fillText(serviceDisplay, 640, 325);
+
+      // Dates & Pickup
+      ctx.fillStyle = "#888888";
+      ctx.font = "bold 16px sans-serif";
+      ctx.fillText("DATES & SCHEDULE", 60, 430);
+      ctx.fillStyle = "#111827";
+      ctx.font = "bold 22px sans-serif";
+      ctx.fillText(
+        `${formData.rentalStartDate} ${formData.rentalEndDate ? `to ${formData.rentalEndDate}` : ""}`,
+        60,
+        465
+      );
+
+      ctx.fillStyle = "#888888";
+      ctx.font = "bold 16px sans-serif";
+      ctx.fillText("PICKUP / FLIGHT", 640, 430);
+      ctx.fillStyle = "#111827";
+      ctx.font = "bold 22px sans-serif";
+      ctx.fillText(formData.flightOrLocation || "J.K.I.A Terminal (To be coordinated)", 640, 465);
+
+      // Verification Box
+      ctx.fillStyle = "#fbfaf8";
+      ctx.fillRect(60, 520, canvas.width - 120, 210);
+      ctx.strokeStyle = "#e5e7eb";
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(60, 520, canvas.width - 120, 210);
+
+      ctx.fillStyle = "#2b3524";
+      ctx.font = "bold 22px sans-serif";
+      ctx.fillText("VERIFICATION AUDIT STATUS", 90, 565);
+
+      ctx.fillStyle = "#059669";
+      ctx.font = "bold 19px sans-serif";
+      ctx.fillText("✔ Passport / ID Verified & Encrypted On File", 90, 610);
+      ctx.fillText(
+        isSelfDrive ? "✔ Driving License Verified (Front & Back)" : "✔ Professional Chauffeur Assigned",
+        90,
+        650
+      );
+      ctx.fillText("✔ Rental Agreement Digitally Countersigned", 90, 690);
+
+      ctx.fillStyle = "#6b7280";
+      ctx.font = "18px sans-serif";
+      ctx.fillText(`Issued: ${submissionTimestamp || new Date().toLocaleDateString()}`, 640, 690);
+
+      // Finish & trigger download
+      const finishDownload = () => {
+        // Approval Stamp
+        ctx.strokeStyle = "#059669";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(canvas.width - 380, 800, 310, 95);
+        ctx.fillStyle = "#059669";
+        ctx.font = "bold 22px sans-serif";
+        ctx.fillText("FAST-TRACK APPROVED", canvas.width - 365, 842);
+        ctx.font = "15px sans-serif";
+        ctx.fillText("Stevinson Safari Operations", canvas.width - 340, 872);
+
+        // Footer
+        ctx.fillStyle = "#9ca3af";
+        ctx.font = "17px sans-serif";
+        ctx.fillText(
+          "Stevinson Adventure Safari • Murang'a Rd, Ngara, Nairobi",
+          60,
+          canvas.height - 90
+        );
+        ctx.fillText(
+          "Tel: +254 715 494 311 • Stevinsonadventure44@gmail.com",
+          60,
+          canvas.height - 60
+        );
+
+        // Trigger Download
+        const a = document.createElement("a");
+        a.download = `Stevinson-CheckIn-${confirmationCode || "Voucher"}.png`;
+        a.href = canvas.toDataURL("image/png");
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setIsDownloading(false);
+      };
+
+      if (signatureData) {
+        const sigImg = new window.Image();
+        sigImg.crossOrigin = "anonymous";
+        sigImg.onload = () => {
+          ctx.fillStyle = "#6b7280";
+          ctx.font = "bold 16px sans-serif";
+          ctx.fillText("AUTHORIZED DIGITAL SIGNATURE:", 60, 785);
+          ctx.drawImage(sigImg, 60, 800, 260, 90);
+          ctx.fillStyle = "#9ca3af";
+          ctx.font = "15px sans-serif";
+          ctx.fillText("Kenya Electronic Transactions Act Compliance", 60, 920);
+          finishDownload();
+        };
+        sigImg.onerror = () => {
+          finishDownload();
+        };
+        sigImg.src = signatureData;
+      } else {
+        finishDownload();
+      }
+    } catch (err) {
+      console.error("Receipt download failed:", err);
+      setIsDownloading(false);
+      window.print();
+    }
   };
 
   return (
@@ -1143,11 +1339,11 @@ export default function CheckInForm() {
             </div>
 
             {/* Screen Action Buttons (Hidden when printing!) */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 max-w-md mx-auto no-print print:hidden">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 pt-2 max-w-xl mx-auto no-print print:hidden">
               <button
                 type="button"
                 onClick={handleWhatsAppConfirmation}
-                className="w-full sm:flex-1 flex items-center justify-center gap-2 px-5 py-3.5 bg-[#25D366] hover:bg-[#1ebd5b] text-white text-xs sm:text-sm font-bold tracking-wide rounded-lg transition-all shadow-md shadow-[#25D366]/20 active:scale-[0.98]"
+                className="w-full sm:flex-1 flex items-center justify-center gap-2 px-4 py-3.5 bg-[#25D366] hover:bg-[#1ebd5b] text-white text-xs sm:text-sm font-bold tracking-wide rounded-lg transition-all shadow-md shadow-[#25D366]/20 active:scale-[0.98]"
               >
                 <MessageCircle className="w-4 h-4 shrink-0" />
                 <span>Confirm on WhatsApp</span>
@@ -1155,11 +1351,25 @@ export default function CheckInForm() {
 
               <button
                 type="button"
+                onClick={handleDownloadReceipt}
+                disabled={isDownloading}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3.5 bg-[#2b3524] hover:bg-[#3b4732] text-white text-xs sm:text-sm font-bold rounded-lg transition-all shadow-xs active:scale-[0.98]"
+              >
+                {isDownloading ? (
+                  <Loader2 className="w-4 h-4 animate-spin shrink-0 text-[#d66b44]" />
+                ) : (
+                  <Download className="w-4 h-4 text-[#d66b44] shrink-0" />
+                )}
+                <span>{isDownloading ? "Generating..." : "Download Receipt"}</span>
+              </button>
+
+              <button
+                type="button"
                 onClick={() => window.print()}
-                className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-5 py-3.5 bg-white border border-neutral-300 hover:bg-neutral-50 text-[#2b3524] text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-xs active:scale-[0.98]"
+                className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-3.5 bg-white border border-neutral-300 hover:bg-neutral-50 text-[#2b3524] text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-xs active:scale-[0.98]"
               >
                 <Printer className="w-4 h-4 text-neutral-500 shrink-0" />
-                <span>Print Receipt (1-Page)</span>
+                <span>Print / PDF</span>
               </button>
             </div>
 
