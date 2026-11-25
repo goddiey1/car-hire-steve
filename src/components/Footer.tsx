@@ -6,7 +6,7 @@ export default function Footer() {
   const phoneDisplay = siteConfig.phone.replace(/(\+\d{3})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
 
   return (
-    <footer id="contact" className="bg-neutral-950 pb-28 pt-10 text-neutral-400 sm:py-16 sm:pb-16 border-t border-neutral-900">
+    <footer id="contact" className="bg-neutral-950 pb-28 pt-10 text-neutral-400 sm:py-16 sm:pb-16 border-t border-neutral-900 print:hidden no-print">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           
@@ -41,10 +41,10 @@ export default function Footer() {
           <div>
             <h2 className="text-white font-semibold mb-6 text-base">Quick Links</h2>
             <ul className="space-y-3 text-sm">
-              <li><a href="#fleet" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Our Fleet</a></li>
-              <li><a href="#transfers" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Airport Transfers</a></li>
-              <li><a href="#services" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Long-Term Hires</a></li>
-              <li><a href="#contact" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Contact Us</a></li>
+              <li><a href="/fleet" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Our Fleet</a></li>
+              <li><a href="/#transfers" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Airport Transfers</a></li>
+              <li><a href="/checkin" className="inline-flex min-h-11 items-center text-[#d66b44] hover:text-[#e77c55] font-semibold transition-colors">Online Check-In</a></li>
+              <li><a href="/#contact" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Contact Us</a></li>
               <li><a href="/privacy" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Privacy</a></li>
               <li><a href="/terms-and-conditions" className="inline-flex min-h-11 items-center hover:text-blue-400 transition-colors">Terms &amp; Conditions</a></li> 
             </ul>

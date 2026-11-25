@@ -17,6 +17,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${siteConfig.url}/nairobi-airport-car-rental`,
     },
+    {
+      url: `${siteConfig.url}/checkin`,
+    },
   ];
 
   // Product / Car pages with direct Google Image indexing tags

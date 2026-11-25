@@ -7,7 +7,7 @@ export default function MobileActionBar() {
   );
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200/80 bg-white/95 px-3 pt-2 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] backdrop-blur-lg safe-bottom dark:border-neutral-800 dark:bg-neutral-950/95 sm:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200/80 bg-white/95 px-3 pt-2 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] backdrop-blur-lg safe-bottom dark:border-neutral-800 dark:bg-neutral-950/95 sm:hidden print:hidden no-print">
       <div className="mx-auto flex max-w-md gap-2">
         <a
           href="#transfers"

@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/fleet", label: "Safari Fleet" },
   { href: "/#transfers", label: "Airport Transfers" },
   { href: "/4x4-self-drive-kenya", label: "4x4 Self-Drive" },
+  { href: "/checkin", label: "Online Check-In" },
   { href: "/#faq", label: "FAQs & Logistics" },
 ];
 
@@ -29,7 +30,7 @@ export default function Navbar() {
   const phoneDisplay = siteConfig.phone.replace(/(\+\d{3})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans shadow-sm print:hidden no-print">
       {/* Top Utility Bar */}
       <div className="bg-[#2b3524] text-[#f7f5f0]/80 py-2 text-[11px] font-medium tracking-wider border-b border-[#3b4732]">
         <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
